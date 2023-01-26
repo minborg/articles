@@ -12,12 +12,13 @@ Happy Reading! /Per Minborg | image:images/wide_SF2_small.png[alt=Golden Gate,sc
 
 == Articles 2023
 
-link:2023/February/4-ImagePerformanceImprovements/README.adoc[Java 21: Image Performance Improvements] (2023-Feb-4)
+=== link:2023/February/4-ImagePerformanceImprovements/README.adoc[Java 21: Image Performance Improvements] (2023-Feb-4)
 
 _In a link:2023/January/26-PerformanceImprovementsRevealed/[previous article], I talked about how serialization and file I/O performance was improved in Java 21 thanks to the use of `VarHandle` constructs. The method employed there has now also been applied to Java’s image-handling library making it faster. Here is what happened._
 
-link:2023/January/26-PerformanceImprovementsRevealed/README.adoc[Java 21: Performance Improvements Revealed] (2023-Jan-26)
+=== link:2023/January/26-PerformanceImprovementsRevealed/README.adoc[Java 21: Performance Improvements Revealed] (2023-Jan-26)
 
 _In Java 21, old code might run significantly faster due to recent internal performance optimizations made in the Java Core Libraries. In this article, we will take a closer look at some of these changes and see how much faster your favorite programming language has become. Buckle up, for we are about to run at full speed!_
 
+== Copyright Notice
 link:LICENSE[Copyright (c) 2023, Oracle and/or its affiliates.]
