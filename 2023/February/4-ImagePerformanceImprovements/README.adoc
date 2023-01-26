@@ -1,4 +1,4 @@
-= Java 21: Image Performance Improvements
+= JDK 21: Image Performance Improvements
 Per Minborg
 :toc:
 :homepage: http://minborgsjavapot.blogspot.com/
@@ -7,7 +7,7 @@ Per Minborg
 In a link:../../January/26-PerformanceImprovementsRevealed/[previous article], I talked about how serialization and file I/O performance was improved in Java 21 thanks to the use of `VarHandle` constructs. The method employed there has now also been applied to Java’s image-handling library making it faster. Here is what happened:
 
 == Background
-When packing/unpacking primitive values (such as `int` and `long`) into/from a byte array, conversion was previously made using explicit bit shifting as shown in the `ImageInputStreamImpl::readInt` method below:
+When packing/unpacking primitive values (such as `int` and `long` primitives) into/from a byte array, conversion was previously made using explicit bit shifting as shown in the `ImageInputStreamImpl::readInt` method below:
 
 [source,java]
 ----
@@ -31,9 +31,9 @@ public int readInt() throws IOException {
 <1> Big-endian unpacking via bit shifting
 <2> Little-endian unpacking via bit shifting
 
-The scheme used here is similar to what is described in my previous article so, I will not dive into the details again. In short, this method is complex and challenging for Java to fully optimize. Also, it is hard to read for us humans.
+The scheme used here is similar to what is described in my link:../../January/26-PerformanceImprovementsRevealed/[previous article] so, I will not dive into the details again. In short, this method is complex and challenging for Java to fully optimize. Also, it is hard to read for us humans.
 
-== Improvements in Java 21
+== Improvements in JDK 21
 In Java 21, conversions are instead made with `VarHandle` constructs via the new `jdk.internal.util.ByteArray class`. Here is what parts of the internal `ByteArray` class look like:
 
 [source,java]
@@ -47,7 +47,7 @@ static int getInt(byte[] b, int off) {
 }
 ----
 
-Using VarHandles means Java is able to optimize methods better compared to explicit bit shifting. Again, you can read more about how VarHandles work in my previous article.
+Using VarHandles means Java is able to optimize methods better compared to explicit bit shifting. Again, you can read more about link:../../January/26-PerformanceImprovementsRevealed/[how VarHandles work in my previous article].
 
 The class above handles _big-endian_ and now there is also a new class that can pack/unpack values using _little-endian_ called `ByteArrayLittleEndian`. This means the `readInt()` method can be simplified and improved like this:
 
@@ -69,8 +69,8 @@ Nice! It looks much cleaner now.
 == Affected Classes and Impact
 The following classes were directly improved:
 
-* ImageInputStreamImpl
-* ImageOutputStreamImpl
+* `ImageInputStreamImpl`
+* `ImageOutputStreamImpl`
 
 The good news is that these classes provide the foundation for a large number of other image-handling classes in the `javax.imageio.stream` package and perhaps elsewhere (after all, the above classes are in the public API).
 

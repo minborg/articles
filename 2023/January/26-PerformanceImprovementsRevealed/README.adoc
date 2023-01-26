@@ -1,4 +1,4 @@
-= Java 21: Image Performance Improvements
+= JDK 21: Image Performance Improvements
 Per Minborg
 :toc:
 :homepage: http://minborgsjavapot.blogspot.com/
