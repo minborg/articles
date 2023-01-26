@@ -1,7 +1,9 @@
-= Articles by Per Minborg
+= Articles about Java by Per Minborg
 
-This repository contains articles about Java.
+I am a Java Core Library developer at Oracle and here are some of my articles about the inner workings of Java.
 
+== link:Java21/ImagePerformanceImprovements/README.adoc[Java 21: Image Performance Improvements]
 
+In my previous article, I talked about how serialization and file I/O performance was improved in Java 21 thanks to the use of `VarHandle` constructs. The method employed there has now also been applied to Java’s image-handling library making it faster. Here is what happened.
 
 link:LICENSE[Copyright (c) 2023, Oracle and/or its affiliates.]
