@@ -18,11 +18,11 @@ public int readInt() throws IOException {
 
     if (byteOrder == ByteOrder.BIG_ENDIAN) {
         return
-            (((byteBuf[0] & 0xff) << 24) | ((byteBuf[1] & 0xff) << 16) |      <1>
+            (((byteBuf[0] & 0xff) << 24) | ((byteBuf[1] & 0xff) << 16) |      // <1>
              ((byteBuf[2] & 0xff) <<  8) | ((byteBuf[3] & 0xff) <<  0));
     } else {
         return
-            (((byteBuf[3] & 0xff) << 24) | ((byteBuf[2] & 0xff) << 16) |      <2>
+            (((byteBuf[3] & 0xff) << 24) | ((byteBuf[2] & 0xff) << 16) |      // <2>
              ((byteBuf[1] & 0xff) <<  8) | ((byteBuf[0] & 0xff) <<  0));
     }
 }
