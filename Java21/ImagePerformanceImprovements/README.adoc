@@ -14,15 +14,18 @@ public int readInt() throws IOException {
 
     if (byteOrder == ByteOrder.BIG_ENDIAN) {
         return
-            (((byteBuf[0] & 0xff) << 24) | ((byteBuf[1] & 0xff) << 16) |
+            (((byteBuf[0] & 0xff) << 24) | ((byteBuf[1] & 0xff) << 16) |      (1)
              ((byteBuf[2] & 0xff) <<  8) | ((byteBuf[3] & 0xff) <<  0));
     } else {
         return
-            (((byteBuf[3] & 0xff) << 24) | ((byteBuf[2] & 0xff) << 16) |
+            (((byteBuf[3] & 0xff) << 24) | ((byteBuf[2] & 0xff) << 16) |      (2)
              ((byteBuf[1] & 0xff) <<  8) | ((byteBuf[0] & 0xff) <<  0));
     }
 }
 ----
+
+(1) Big-endian unpacking
+(2) Little-endian unpacking
 
 The scheme used here is similar to what is described in my previous article so, I will not dive into the details again. In short, this method is complex and challenging for Java to fully optimize. Also, it is hard to read for us humans.
 
