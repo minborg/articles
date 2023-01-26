@@ -64,14 +64,14 @@ Almost all methods in Bits/ByteArray got rewritten, not only `getLong()`. So, bo
 == Affected Classes and Impact
 The improved `java.util.ByteArray` class is used directly by the following Core Library classes:
 
-* ObjectInputStream
-* ObjectOutputStream
-* ObjectStreamClass
-* RandomAccessFile
+* `ObjectInputStream`
+* `ObjectOutputStream`
+* `ObjectStreamClass`
+* `RandomAccessFile`
 
 Even though it appears the direct usage of `ByteArray` is limited, there is an enormous transitive use of these classes. For example, the three Object Stream classes above are used extensively in conjunction with serialization.
 
-This means, in many cases, *Java serialization is much faster now*!
+This means, in many cases, #Java serialization is much faster now#!
 
 The `RandomAccessFile` class is used internally in the JDK for graphics and sound input/output as well as Zip and directory handling.
 
