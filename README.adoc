@@ -6,7 +6,7 @@
 |===
 | I am a Java Core Library developer at Oracle and here are some of my articles about the inner workings of Java. The views on this blog are my own and are not necessarily the ones of Oracle, Inc.
 
-Happy Reading! /Per Minborg | image:images/wide_SF2_small.png[alt=Golden Gate,scaledwidth=50%, role="related thumb left"]
+Happy Reading! /Per Minborg | image:images/per-brighter.png[alt=Golden Gate,scaledwidth=50%, role="related thumb left"]
 |===
 
 
