@@ -88,4 +88,4 @@ So, the throughput of the benchmarked method has improved from about 579,800,000
 == Actual Application Performance Increase
 How much faster will your image applications run under Java 21 in reality? There is only one way to find out: Run your own code on Java 21 today by downloading a https://jdk.java.net[JDK 21 Early-Access Build].
 
-link:../../README.adoc[Copyright (c) 2023, Oracle and/or its affiliates.]
+link:../../LICENSE[Copyright (c) 2023, Oracle and/or its affiliates.]
