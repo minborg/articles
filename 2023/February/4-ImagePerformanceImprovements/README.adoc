@@ -28,8 +28,8 @@ public int readInt() throws IOException {
 }
 ----
 
-<1> Big-endian unpacking via bit shifting
-<2> Little-endian unpacking via bit shifting
+<1> _Big-endian_ unpacking via bit shifting
+<2> _Little-endian_ unpacking via bit shifting
 
 The scheme used here is similar to what is described in my link:../../January/26-PerformanceImprovementsRevealed/[previous article] so, I will not dive into the details again. In short, this method is complex and challenging for Java to fully optimize. Also, it is hard to read for us humans.
 
