@@ -156,3 +156,5 @@ There are several other classes in the JDK that look similar and that might bene
 
 == Actual Application Performance Increase
 How much faster will your applications run under Java 21 in reality if you use one or more of these improved classes (directly or indirectly)? There is only one way to find out: Run your own code on Java 21 today by downloading a https://jdk.java.net[JDK 21 Early-Access Build].
+
+link:../../LICENSE[Copyright (c) 2023, Oracle and/or its affiliates.]
