@@ -4,7 +4,7 @@ Per Minborg
 :homepage: http://minborgsjavapot.blogspot.com/
 
 == Introduction
-In my previous article, I talked about how serialization and file I/O performance was improved in Java 21 thanks to the use of `VarHandle` constructs. The method employed there has now also been applied to Java’s image-handling library making it faster. Here is what happened:
+In a previous article, I talked about how serialization and file I/O performance was improved in Java 21 thanks to the use of `VarHandle` constructs. The method employed there has now also been applied to Java’s image-handling library making it faster. Here is what happened:
 
 == Background
 When packing/unpacking primitive values (such as `int` and `long`) into/from a byte array, conversion was previously made using explicit bit shifting as shown in the `ImageInputStreamImpl::readInt` method below:

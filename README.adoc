@@ -1,9 +1,19 @@
 = Articles about Java by Per Minborg
 
-I am a Java Core Library developer at Oracle and here are some of my articles about the inner workings of Java.
+== About Me
+
+[cols="1,1", frame=none, grid=none]
+|===
+| I am a Java Core Library developer at Oracle and here are some of my articles about the inner workings of Java. The views on this blog are my own and are not necessarily the ones of Oracle, Inc.
+
+Happy Reading! /Per Minborg | image:images/wide_SF2_small.png[alt=Golden Gate,width=320,height=240, role="related thumb left"]
+|===
+
+
+== Articles 2023
 
 == link:Java21/ImagePerformanceImprovements/README.adoc[Java 21: Image Performance Improvements]
 
-In my previous article, I talked about how serialization and file I/O performance was improved in Java 21 thanks to the use of `VarHandle` constructs. The method employed there has now also been applied to Java’s image-handling library making it faster. Here is what happened.
+_In a previous article, I talked about how serialization and file I/O performance was improved in Java 21 thanks to the use of `VarHandle` constructs. The method employed there has now also been applied to Java’s image-handling library making it faster. Here is what happened._
 
 link:LICENSE[Copyright (c) 2023, Oracle and/or its affiliates.]
