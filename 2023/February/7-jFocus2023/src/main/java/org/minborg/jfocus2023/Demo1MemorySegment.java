@@ -22,15 +22,18 @@ public class Demo1MemorySegment {
         point.set(ValueLayout.JAVA_DOUBLE, 0, 3d);
         point.set(ValueLayout.JAVA_DOUBLE, 8, 4d);
 
-        byte[] bytes = point.toArray(ValueLayout.JAVA_BYTE);
-        double[] doubles = point.toArray(ValueLayout.JAVA_DOUBLE);
+        byte[] bytesCopy = point.toArray(ValueLayout.JAVA_BYTE);
+        double[] doublesCopy = point.toArray(ValueLayout.JAVA_DOUBLE);
         ByteBuffer byteBufferView = point.asByteBuffer();
 
-        System.out.println(Arrays.toString(bytes));
-        System.out.println(Arrays.toString(doubles));
+        // Interop FFM -> legacy
+        System.out.println(Arrays.toString(bytesCopy));
+        System.out.println(Arrays.toString(doublesCopy));
         System.out.println(byteBufferView);
 
-
+        // Interop legacy -> FFM
+        MemorySegment arrayView = MemorySegment.ofArray(new byte[]{1, 2, 3, 4, 5});
+        MemorySegment segmentView = MemorySegment.ofBuffer(ByteBuffer.allocateDirect(100));
     }
 
 }

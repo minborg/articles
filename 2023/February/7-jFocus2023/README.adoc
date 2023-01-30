@@ -49,6 +49,11 @@ This class shows how large arrays of custom `MemoryLayout` can be constructed. T
 
 In this example, we explore how to call native methods using the built-in FFM linker.
 
+=== link:https://github.com/openjdk/jextract/tree/panama/samples/libzstd[Demo 9: Integrating with zstd]
+
+In this demo, we will see how easy it is to integrate with an existing native library and call it directly from Java.
+
+
 == Interesting Panama Projects and Resources
 https://github.com/carldea/panama4newbies/tree/main[Panama 4 Newbies]
 
