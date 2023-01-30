@@ -39,7 +39,7 @@ In this example, we explore how to call native methods using the built-in FFM li
 
 In this demo, we will see how large `MemorySegments` (up to 64 TiB) can be created by means of memory mapping.
 
-=== link:src/main/java/org/minborg/jfocus2023/Demo8InfiniteArena.java[Demo 8: Infinite Area]
+=== link:src/main/java/org/minborg/jfocus2023/Demo8InfiniteArena.java[Demo 8: Infinite Arena]
 
 This class outlines an implementation of an `Arena` that appears to be able to provide an almost unlimited amount of memory. The concept also allows post-mortem analysis of memory segments used.
 
