@@ -4,7 +4,7 @@ Per Minborg
 :homepage: http://minborgsjavapot.blogspot.com/
 
 == Introduction
-In my talk at jFocus 2023 in Stockholm, I talked about project Panama and more specifically the Foreign Function and Memory API (FFM).
+In my talk at jFocus 2023 in Stockholm, I talked about project Panama and more specifically about the Foreign Function and Memory API (FFM).
 
 == Live Demos
 
@@ -15,13 +15,14 @@ This class shows basic use of a `MemorySegment` which is an abstraction of a con
 * _Spatial_, _temporal_ and _thread-confinement_ safety
 * Bidirectional interoperability with arrays and various `ByteBuffer` types.
 
-=== link:src/main/java/org/minborg/jfocus2023/Demo2Arena.java[Demo 2: Arena]
-
-This class shows how an `Arena` can be used to provide safe and deterministic release of memory resources.
-
-=== link:src/main/java/org/minborg/jfocus2023/Demo3MemoryMapping.java[Demo 3: Memory Mapping]
+=== link:src/main/java/org/minborg/jfocus2023/Demo3MemoryMapping.java[Demo 2: Memory Mapping]
 
 In this demo, we will see how large `MemorySegments` (up to 64 TiB) can be created by means of memory mapping. Read more about memory mapping in http://minborgsjavapot.blogspot.com/2023/01/java-20-colossal-sparse-memory-segments.html[this separate article].
+
+
+=== link:src/main/java/org/minborg/jfocus2023/Demo2Arena.java[Demo 3: Arena]
+
+This class shows how an `Arena` can be used to provide safe and deterministic release of memory resources.
 
 === link:src/main/java/org/minborg/jfocus2023/Demo4InfiniteArena.java[Demo 4: Infinite Arena]
 

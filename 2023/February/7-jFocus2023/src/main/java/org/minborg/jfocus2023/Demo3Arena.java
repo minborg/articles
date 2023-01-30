@@ -5,7 +5,7 @@ import java.lang.foreign.MemorySegment;
 import java.lang.foreign.ValueLayout;
 import java.util.Arrays;
 
-public class Demo2Arena {
+public class Demo3Arena {
 
     public static void main(String[] args) {
 

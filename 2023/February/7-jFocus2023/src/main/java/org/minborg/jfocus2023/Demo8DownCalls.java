@@ -91,7 +91,7 @@ public class Demo8DownCalls {
 
         // C code: extern double distance(struct Point2d p)
 
-        // You must have a library that implements the above available or else the code will not run
+        // You *must* have a library that implements the above available or else the code will not run
         MemorySegment symbol = SymbolLookup.loaderLookup()
                 .find("distance")
                 .orElseThrow(() -> new IllegalStateException("Cannot find an implementation of 'distance'"));

@@ -3,6 +3,7 @@ package org.minborg.jfocus2023;
 import java.lang.foreign.MemorySegment;
 import java.lang.foreign.SegmentScope;
 import java.lang.foreign.ValueLayout;
+import java.nio.ByteBuffer;
 import java.util.Arrays;
 
 // Make sure you set your JAVA_HOME to a JDK 20 build and provide "--enable-preview" when run
@@ -21,9 +22,14 @@ public class Demo1MemorySegment {
         point.set(ValueLayout.JAVA_DOUBLE, 0, 3d);
         point.set(ValueLayout.JAVA_DOUBLE, 8, 4d);
 
-        System.out.println(Arrays.toString(
-                point.toArray(ValueLayout.JAVA_DOUBLE)
-        ));
+        byte[] bytes = point.toArray(ValueLayout.JAVA_BYTE);
+        double[] doubles = point.toArray(ValueLayout.JAVA_DOUBLE);
+        ByteBuffer byteBufferView = point.asByteBuffer();
+
+        System.out.println(Arrays.toString(bytes));
+        System.out.println(Arrays.toString(doubles));
+        System.out.println(byteBufferView);
+
 
     }
 
