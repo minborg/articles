@@ -1,0 +1,13 @@
+= jFocus 2023
+Per Minborg
+:toc:
+:homepage: http://minborgsjavapot.blogspot.com/
+
+== Introduction
+In my talk at jFocus 2023 in Stockholm, I talked about project Panama and more specifically the Foreign Function and Memory API.
+
+== Background
+
+
+
+link:../../LICENSE[Copyright (c) 2023, Oracle and/or its affiliates.]
