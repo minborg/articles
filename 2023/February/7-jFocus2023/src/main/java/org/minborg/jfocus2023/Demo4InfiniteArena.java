@@ -5,7 +5,6 @@ import java.lang.foreign.Arena;
 import java.lang.foreign.MemorySegment;
 import java.lang.foreign.SegmentScope;
 import java.nio.channels.FileChannel;
-import java.nio.file.Files;
 import java.nio.file.OpenOption;
 import java.nio.file.Path;
 import java.util.Set;
@@ -15,7 +14,7 @@ import static java.nio.channels.FileChannel.MapMode.READ_WRITE;
 import static java.nio.file.StandardOpenOption.*;
 import static java.util.Objects.requireNonNull;
 
-public final class Demo8InfiniteArena implements Arena {
+public final class Demo4InfiniteArena implements Arena {
 
     private static final Set<OpenOption> OPTS =
             Set.of(CREATE_NEW, SPARSE, READ, WRITE);
@@ -24,7 +23,7 @@ public final class Demo8InfiniteArena implements Arena {
     private final AtomicLong cnt;
     private final Arena delegate;
 
-    public Demo8InfiniteArena() {
+    public Demo4InfiniteArena() {
         this.fileName = "InfiniteArena";
         this.cnt = new AtomicLong();
         this.delegate = Arena.openShared();
@@ -58,7 +57,7 @@ public final class Demo8InfiniteArena implements Arena {
     }
 
     public static void main(String[] args) {
-        try (Arena arena = new Demo8InfiniteArena()) {
+        try (Arena arena = new Demo4InfiniteArena()) {
 
             // Allocate 1 TiB
             MemorySegment s0 = arena.allocate(1L << 40);

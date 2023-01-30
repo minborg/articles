@@ -1,10 +1,10 @@
-= jFocus 2023
+= jFocus 2023 Stockholm
 Per Minborg
 :toc:
 :homepage: http://minborgsjavapot.blogspot.com/
 
 == Introduction
-In my talk at jFocus 2023 in Stockholm, I talked about project Panama and more specifically the Foreign Function and Memory API.
+In my talk at jFocus 2023 in Stockholm, I talked about project Panama and more specifically the Foreign Function and Memory API (FFM).
 
 == Live Demos
 
@@ -19,28 +19,29 @@ This class shows basic use of a `MemorySegment` which is an abstraction of a con
 
 This class shows how an `Arena` can be used to provide safe and deterministic release of memory resources.
 
-=== link:src/main/java/org/minborg/jfocus2023/Demo3MemoryLayout.java[Demo 3: MemoryLayout]
-
-This class shows how the concept of `MemoryLayout` provides a structured way of describing the layout of linear memory. It also shows how memory segments can be dereferenced using `VarHandle` objects that, in turn, can be derived directly from a `MemoryLayout` instance.
-
-=== link:src/main/java/org/minborg/jfocus2023/Demo4Encapsulation.java[Demo 4: Encapsulation]
-
-This class exemplifies how `MemoryLayout` constructs can be encapsulated in normal classes providing "Java-like use" for simplified use with retained performance.
-
-=== link:src/main/java/org/minborg/jfocus2023/Demo5HugeArrays.java[Demo 5: Huge Arrays]
-
-This class shows how large arrays of custom `MemoryLayout` can be constructed. These arrays do not suffer from the normal Java second level of indirection that normal arrays have. These arrays are furthermore not limited to having 2^31^ - ε elements but are instead only limited by the amount of allocated memory.
-
-=== link:src/main/java/org/minborg/jfocus2023/Demo6DownCalls.java[Demo 6: Downcalls]
-
-In this example, we explore how to call native methods using the built-in FFM linker.
-
-=== link:src/main/java/org/minborg/jfocus2023/Demo7MemoryMapping.java[Demo 7: Memory Mapping]
+=== link:src/main/java/org/minborg/jfocus2023/Demo3MemoryMapping.java[Demo 3: Memory Mapping]
 
 In this demo, we will see how large `MemorySegments` (up to 64 TiB) can be created by means of memory mapping. Read more about memory mapping in http://minborgsjavapot.blogspot.com/2023/01/java-20-colossal-sparse-memory-segments.html[this separate article].
 
-=== link:src/main/java/org/minborg/jfocus2023/Demo8InfiniteArena.java[Demo 8: Infinite Arena]
+=== link:src/main/java/org/minborg/jfocus2023/Demo4InfiniteArena.java[Demo 4: Infinite Arena]
 
 This class outlines an implementation of an `Arena` that appears to be able to provide an almost unlimited amount of memory. The concept also allows post-mortem analysis of memory segments used. Read more about the `InfiniteArena` in a separate article http://minborgsjavapot.blogspot.com/2023/01/java-20-almost-infinite-memory-segment.html[here].
+
+
+=== link:src/main/java/org/minborg/jfocus2023/Demo5MemoryLayout.java[Demo 5: MemoryLayout]
+
+This class shows how the concept of `MemoryLayout` provides a structured way of describing the layout of linear memory. It also shows how memory segments can be dereferenced using `VarHandle` objects that, in turn, can be derived directly from a `MemoryLayout` instance.
+
+=== link:src/main/java/org/minborg/jfocus2023/Demo6Encapsulation.java[Demo 6: Encapsulation]
+
+This class exemplifies how `MemoryLayout` constructs can be encapsulated in normal classes providing "Java-like use" for simplified use with retained performance.
+
+=== link:src/main/java/org/minborg/jfocus2023/Demo7HugeArrays.java[Demo 7: Huge Arrays]
+
+This class shows how large arrays of custom `MemoryLayout` can be constructed. These arrays do not suffer from the normal Java second level of indirection that normal arrays have. These arrays are furthermore not limited to having 2^31^ - ε elements but are instead only limited by the amount of allocated memory.
+
+=== link:src/main/java/org/minborg/jfocus2023/Demo8DownCalls.java[Demo 8: Downcalls]
+
+In this example, we explore how to call native methods using the built-in FFM linker.
 
 link:../../LICENSE[Copyright (c) 2023, Oracle and/or its affiliates.]

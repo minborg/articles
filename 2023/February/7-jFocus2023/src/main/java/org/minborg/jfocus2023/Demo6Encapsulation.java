@@ -1,33 +1,63 @@
 package org.minborg.jfocus2023;
 
 import java.lang.foreign.Arena;
-import java.lang.foreign.FunctionDescriptor;
-import java.lang.foreign.Linker;
 import java.lang.foreign.MemoryLayout;
-import java.lang.foreign.MemoryLayout.PathElement;
 import java.lang.foreign.MemorySegment;
-import java.lang.foreign.SymbolLookup;
-import java.lang.foreign.ValueLayout;
-import java.lang.invoke.MethodHandle;
 import java.lang.invoke.VarHandle;
 
 import static java.lang.foreign.MemoryLayout.*;
 import static java.lang.foreign.MemoryLayout.PathElement.*;
-import static java.lang.foreign.MemorySegment.*;
 import static java.lang.foreign.ValueLayout.*;
 import static java.util.Objects.requireNonNull;
 
-public class Demo6DownCalls {
+public class Demo6Encapsulation {
 
     interface Point2D {
         double x();
-
         double y();
-
         void x(double x);
-
         void y(double y);
     }
+
+    static final class HeapPoint2D implements Point2D {
+        double x;
+        double y;
+
+        private HeapPoint2D() {}
+
+        @Override
+        public double x() {
+            return x;
+        }
+
+        @Override
+        public double y() {
+            return y;
+        }
+
+        @Override
+        public void x(double x) {
+            this.x = x;
+        }
+
+        @Override
+        public void y(double y) {
+            this.y = y;
+        }
+
+        @Override
+        public String toString() {
+            return "[" + x() + ", " + y() + "]";
+        }
+
+        // Equals and hashcode not desirable for double fields
+
+        static Point2D create() {
+            return new HeapPoint2D();
+        }
+
+    }
+
 
     static final class SegmentPoint2D implements Point2D {
 
@@ -74,42 +104,26 @@ public class Demo6DownCalls {
             return "[" + x() + ", " + y() + "]";
         }
 
-        public MemorySegment segment() {
-            return segment;
-        }
-
-        static SegmentPoint2D create(Arena arena) {
-            return create(allocateNative(POINT_2D_LAYOUT, arena.scope()));
-        }
-
-        static SegmentPoint2D create(MemorySegment segment) {
-            return new SegmentPoint2D(segment);
+        static Point2D create(Arena arena) {
+            return new SegmentPoint2D(
+                    MemorySegment.allocateNative(POINT_2D_LAYOUT, arena.scope())
+            );
         }
 
     }
 
-
-    public static void main(String[] args) throws Throwable {
-
-        // C code: extern double distance(struct Point2d p)
-
-        // You must have a library that implements the above available or else the code will not run
-        MemorySegment symbol = SymbolLookup.loaderLookup()
-                .find("distance")
-                .orElseThrow(() -> new IllegalStateException("Cannot find an implementation of 'distance'"));
-
-        MethodHandle distanceHandle = Linker.nativeLinker().downcallHandle(
-                symbol, FunctionDescriptor.of(JAVA_DOUBLE, SegmentPoint2D.POINT_2D_LAYOUT));
+    public static void main(String[] args) {
 
         try (Arena arena = Arena.openConfined()) {
 
-            SegmentPoint2D point = SegmentPoint2D.create(arena);
-            point.x(3.0);
-            point.y(4.0);
-            double dist = (double) distanceHandle.invoke(point.segment());
-            System.out.println(dist); // -> 5d
+            Point2D point = SegmentPoint2D.create(arena);
+            point.x(3d);
+            point.y(4d);
+
+            System.out.println(point);
         } // free
 
     }
+
 
 }

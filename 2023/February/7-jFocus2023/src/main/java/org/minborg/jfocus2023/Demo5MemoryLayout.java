@@ -8,7 +8,7 @@ import java.lang.foreign.ValueLayout;
 import java.lang.invoke.VarHandle;
 import java.util.Arrays;
 
-public class Demo3MemoryLayout {
+public class Demo5MemoryLayout {
 
     // struct point2d {
     //     double x;
