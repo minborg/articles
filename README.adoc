@@ -9,8 +9,10 @@
 Happy Reading! /Per Minborg | image:images/per-brighter.png[alt=Golden Gate,scaledwidth=50%, role="related thumb left"]
 |===
 
-
 == Articles 2023
+
+=== link:2023/February/7-jFocus2023/README.adoc[jFocus 2023 Presentation: Panama Foreign Function and Memory API] (2023-Feb-7)
+The Panama FFM API previewed for a second time in JDK 20. In this article, we will see how to make use of the new APIs and how to call native functions from a native library. This article summarized key points made at https://www.jfokus.se[jFocus 2023 in Stockholm].
 
 === link:2023/February/4-ImagePerformanceImprovements/README.adoc[JDK 21: Image Performance Improvements] (2023-Feb-4)
 

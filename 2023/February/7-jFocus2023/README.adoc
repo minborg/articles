@@ -6,8 +6,41 @@ Per Minborg
 == Introduction
 In my talk at jFocus 2023 in Stockholm, I talked about project Panama and more specifically the Foreign Function and Memory API.
 
-== Background
+== Live Demo
 
+link:src/main/java/org/minborg/jfocus2023/Demo1MemorySegment.java[Demo 1: Memory Segment]
 
+This class shows basic use of a `MemorySegment` which is an abstraction of a contiguous 64-bit memory region providing:
+
+* _Spatial_, _temporal_ and _thread-confinement_ safety
+* Bidirectional interoperability with arrays and various `ByteBuffer` types.
+
+link:src/main/java/org/minborg/jfocus2023/Demo2Arena.java[Demo 2: Arena]
+
+This class shows how an `Arena` can be used to provide safe and deterministic release of memory resources.
+
+link:src/main/java/org/minborg/jfocus2023/Demo3MemoryLayout.java[Demo 3: MemoryLayout]
+
+This class shows how the concept of `MemoryLayout` provides a structured way of describing the layout of linear memory. It also shows how memory segments can be dereferenced using `VarHandle` objects that, in turn, can be derived directly from a `MemoryLayout` instance.
+
+link:src/main/java/org/minborg/jfocus2023/Demo4Encapsulation.java[Demo 4: Encapsulation]
+
+This class exemplifies how `MemoryLayout` constructs can be encapsulated in normal classes providing "Java-like use" for simplified use with retained performance.
+
+link:src/main/java/org/minborg/jfocus2023/Demo5HugeArrays.java[Demo 5: Huge Arrays]
+
+This class shows how large arrays of custom `MemoryLayout` can be constructed. These arrays do not suffer from the normal Java second level of indirection that normal arrays have. These arrays are furthermore not limited to having 2^31 element but are only limited by the amount of allocated memory.
+
+link:src/main/java/org/minborg/jfocus2023/Demo6DownCalls.java[Demo 6: Downcalls]
+
+In this example, we explore how to call native methods using the built-in FFM linker.
+
+link:src/main/java/org/minborg/jfocus2023/Demo7MemoryMapping.java[Demo 7: Memory Mapping]
+
+In this demo, we will see how large `MemorySegments` (up to 64 TiB) can be created by means of memory mapping.
+
+link:src/main/java/org/minborg/jfocus2023/Demo8InfiniteArena.java[Demo 8: Infinite Area]
+
+This class outlines an implementation of an Arena that appears to be able to provide an almost unlimited amount of memory. The concept also allows post-mortem analysis of memory used.
 
 link:../../LICENSE[Copyright (c) 2023, Oracle and/or its affiliates.]
