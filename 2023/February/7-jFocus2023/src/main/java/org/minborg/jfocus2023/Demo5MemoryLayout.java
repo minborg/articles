@@ -6,7 +6,6 @@ import java.lang.foreign.MemoryLayout.PathElement;
 import java.lang.foreign.MemorySegment;
 import java.lang.foreign.ValueLayout;
 import java.lang.invoke.VarHandle;
-import java.util.Arrays;
 
 public class Demo5MemoryLayout {
 
@@ -26,6 +25,7 @@ public class Demo5MemoryLayout {
 
         System.out.println("POINT_2D_LAYOUT = " + POINT_2D_LAYOUT);
         System.out.println("POINT_2D_LAYOUT.byteSize() = " + POINT_2D_LAYOUT.byteSize());
+        System.out.println();
 
         try (Arena arena = Arena.openConfined()) {
 
@@ -33,9 +33,9 @@ public class Demo5MemoryLayout {
             X_ACCESS.set(point, 3d);
             Y_ACCESS.set(point, 4d);
 
-            System.out.println(Arrays.toString(
-                    point.toArray(ValueLayout.JAVA_DOUBLE)
-            ));
+            SegmentInspection.inspect(point, POINT_2D_LAYOUT)
+                    .forEach(System.out::println);
+
         } // free
 
     }

@@ -132,7 +132,6 @@ public class Demo7HugeArrays {
                             index * SegmentPoint2D.POINT_2D_LAYOUT.byteSize(), // offset
                             SegmentPoint2D.POINT_2D_LAYOUT.byteSize()));             // byteSize
         }
-
         public static Point2DArray create(Arena arena, long length) {
             return new SegmentPoint2DArray(arena, length);
         }
@@ -152,6 +151,7 @@ public class Demo7HugeArrays {
             points.y(index, 4d);
 
             System.out.println(points.get(index));
+
         } // free
 
     }
