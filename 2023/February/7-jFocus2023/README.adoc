@@ -6,7 +6,11 @@ Per Minborg
 == Introduction
 In my talk at jFocus 2023 in Stockholm, I talked about project Panama and more specifically about the Foreign Function and Memory API (FFM).
 
+== Clone Me!
+All code and the entire presentation can be cloned via https://github.com/minborg/articles
+
 == Live Demos
+Here is a list of the live demos made at jFocus:
 
 === link:src/main/java/org/minborg/jfocus2023/Demo1MemorySegment.java[Demo 1: Memory Segment]
 
@@ -44,5 +48,13 @@ This class shows how large arrays of custom `MemoryLayout` can be constructed. T
 === link:src/main/java/org/minborg/jfocus2023/Demo8DownCalls.java[Demo 8: Downcalls]
 
 In this example, we explore how to call native methods using the built-in FFM linker.
+
+== Interesting Panama Projects and Resources
+https://github.com/carldea/panama4newbies/tree/main[Panama 4 Newbies]
+
+
+== Safe Harbor Statement
+The following is intended to outline our general product direction. It is intended
+for information purposes only, and may not be incorporated into any contract. It is not a commitment to deliver any material, code, or functionality, and should not be relied upon in making purchasing decisions. The development, release, timing, and pricing of any features or functionality described for Oracle’s products may change and remains at the sole discretion of Oracle Corporation.
 
 link:../../LICENSE[Copyright (c) 2023, Oracle and/or its affiliates.]

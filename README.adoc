@@ -12,7 +12,7 @@ Happy Reading! /Per Minborg | image:images/per-brighter.png[alt=Golden Gate,scal
 == Articles 2023
 
 === link:2023/February/7-jFocus2023/README.adoc[jFocus 2023 Presentation: Panama Foreign Function and Memory API] (2023-Feb-7)
-The Panama FFM API previewed for a second time in JDK 20. In this article, we will see how to make use of the new APIs and how to call native functions from a native library. This article summarized key points made at https://www.jfokus.se[jFocus 2023 in Stockholm].
+The Panama FFM API previewed for a second time in JDK 20. In this article, we will see how to make use of the new APIs and how to call native functions in a native library. This article summarized key points made at https://www.jfokus.se[jFocus 2023 in Stockholm].
 
 === link:2023/February/4-ImagePerformanceImprovements/README.adoc[JDK 21: Image Performance Improvements] (2023-Feb-4)
 
@@ -21,6 +21,10 @@ _In a link:2023/January/26-PerformanceImprovementsRevealed/[previous article], I
 === link:2023/January/26-PerformanceImprovementsRevealed/README.adoc[JDK 21: Performance Improvements Revealed] (2023-Jan-26)
 
 _In Java 21, old code might run significantly faster due to recent internal performance optimizations made in the Java Core Libraries. In this article, we will take a closer look at some of these changes and see how much faster your favorite programming language has become. Buckle up, for we are about to run at full speed!_
+
+== Safe Harbor Statement
+The following is intended to outline our general product direction. It is intended
+for information purposes only, and may not be incorporated into any contract. It is not a commitment to deliver any material, code, or functionality, and should not be relied upon in making purchasing decisions. The development, release, timing, and pricing of any features or functionality described for Oracle’s products may change and remains at the sole discretion of Oracle Corporation.
 
 == Copyright Notice
 link:LICENSE[Copyright (c) 2023, Oracle and/or its affiliates.]
