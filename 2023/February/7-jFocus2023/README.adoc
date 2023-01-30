@@ -6,7 +6,7 @@ Per Minborg
 == Introduction
 In my talk at jFocus 2023 in Stockholm, I talked about project Panama and more specifically the Foreign Function and Memory API.
 
-== Live Demo
+== Live Demos
 
 === link:src/main/java/org/minborg/jfocus2023/Demo1MemorySegment.java[Demo 1: Memory Segment]
 
@@ -29,7 +29,7 @@ This class exemplifies how `MemoryLayout` constructs can be encapsulated in norm
 
 === link:src/main/java/org/minborg/jfocus2023/Demo5HugeArrays.java[Demo 5: Huge Arrays]
 
-This class shows how large arrays of custom `MemoryLayout` can be constructed. These arrays do not suffer from the normal Java second level of indirection that normal arrays have. These arrays are furthermore not limited to having 2^31 element but are only limited by the amount of allocated memory.
+This class shows how large arrays of custom `MemoryLayout` can be constructed. These arrays do not suffer from the normal Java second level of indirection that normal arrays have. These arrays are furthermore not limited to having 2^31^ - ε elements but are instead only limited by the amount of allocated memory.
 
 === link:src/main/java/org/minborg/jfocus2023/Demo6DownCalls.java[Demo 6: Downcalls]
 
@@ -41,6 +41,6 @@ In this demo, we will see how large `MemorySegments` (up to 64 TiB) can be creat
 
 === link:src/main/java/org/minborg/jfocus2023/Demo8InfiniteArena.java[Demo 8: Infinite Area]
 
-This class outlines an implementation of an Arena that appears to be able to provide an almost unlimited amount of memory. The concept also allows post-mortem analysis of memory used.
+This class outlines an implementation of an `Arena` that appears to be able to provide an almost unlimited amount of memory. The concept also allows post-mortem analysis of memory segments used.
 
 link:../../LICENSE[Copyright (c) 2023, Oracle and/or its affiliates.]
