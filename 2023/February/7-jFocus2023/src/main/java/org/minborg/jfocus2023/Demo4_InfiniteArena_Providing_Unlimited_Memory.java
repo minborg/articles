@@ -77,7 +77,8 @@ public final class Demo4_InfiniteArena_Providing_Unlimited_Memory {
 
             // Write a String to the segment
             s2.setUtf8String(0, "Hello World");
-        }
+
+        } // memory unmapped here
     }
 }
 
