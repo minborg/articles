@@ -18,7 +18,7 @@ This demo shows basic use of a `MemorySegment` which is an abstraction of a cont
 === link:src/main/java/org/minborg/jfocus2023/Demo2_Memory_Mapped_MemorySegment.java[Demo 2: Memory Mapped `MemorySegment` instances]
 In this demo, we will see how large `MemorySegment` instances (backing up to 64 TiB) can be created by means of memory mapping and sparse files. Read more about memory mapping in http://minborgsjavapot.blogspot.com/2023/01/java-20-colossal-sparse-memory-segments.html[this separate article].
 
-=== link:src/main/java/org/minborg/jfocus2023/Demo3_Arena_Lifecycle.java[Demo 3: The 'Arena' Lifecycle]
+=== link:src/main/java/org/minborg/jfocus2023/Demo3_Arena_Lifecycle.java[Demo 3: The `Arena` Lifecycle]
 This example shows how an `Arena` can be used to provide safe and deterministic release of memory resources thereby providing an abstraction of a segment's lifecycle.
 
 === link:src/main/java/org/minborg/jfocus2023/Demo4_InfiniteArena_Providing_Unlimited_Memory.java[Demo 4: `InfiniteArena` Providing Unlimited Memory]
@@ -40,16 +40,21 @@ In this demo, we explore how to call native C methods using the built-in FFM lin
 In this final example, we will see how easy it is to integrate with an existing native library ("zstd") and call it directly from Java.
 
 == Interesting Panama Projects and Resources
+Here are some resources that could kickstart your Panama FFM voyage.
+
 === Panama
-https://github.com/openjdk/panama-foreign[Open-Source Panama FFM on GitHub]
+
+* https://github.com/openjdk/panama-foreign[Open-Source Panama FFM on GitHub]
 
 === jextract
-https://github.com/openjdk/jextract/tree/panama[jextract on GitHub]
-https://github.com/openjdk/jextract/tree/panama/samples/libzstd[Integrating with various native libraries using jextract]
-https://github.com/openjdk/jextract/tree/panama/samples/libzstd[Integrating with zlib using jextract]
+
+* https://github.com/openjdk/jextract/tree/panama[jextract on GitHub]
+* https://github.com/openjdk/jextract/tree/panama/samples/libzstd[Integrating with various native libraries using jextract]
+* https://github.com/openjdk/jextract/tree/panama/samples/libzstd[Integrating with zlib using jextract]
 
 === Examples
-https://github.com/carldea/panama4newbies/tree/main[Panama 4 Newbies]
+
+* https://github.com/carldea/panama4newbies/tree/main[Panama 4 Newbies]
 
 == Clone Me!
 All code and the entire presentation can be cloned via https://github.com/minborg/articles
