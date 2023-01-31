@@ -91,13 +91,14 @@ public class Demo8_Passing_Segments_to_C_Functions {
 
         // C code: extern double distance(struct Point2d p)
 
-        // You *must* have a library that implements the above available or else the code will not run
+        // You *must* have a library that implements the above or else the code will not run
         MemorySegment symbol = SymbolLookup.loaderLookup()
                 .find("distance")
                 .orElseThrow(() -> new IllegalStateException("Cannot find an implementation of 'distance'"));
 
         MethodHandle distanceHandle = Linker.nativeLinker().downcallHandle(
-                symbol, FunctionDescriptor.of(JAVA_DOUBLE, SegmentPoint2D.POINT_2D_LAYOUT));
+                symbol,
+                FunctionDescriptor.of(JAVA_DOUBLE, SegmentPoint2D.POINT_2D_LAYOUT));
 
         try (Arena arena = Arena.openConfined()) {
 

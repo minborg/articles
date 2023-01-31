@@ -37,6 +37,11 @@ public class Demo5_Structured_Access_with_MemoryLayout {
             SegmentInspection.inspect(point, POINT_2D_LAYOUT)
                     .forEach(System.out::println);
 
+            // CAS Operations and more
+            if (X_ACCESS.compareAndSet(point, 3d, 9d)) {
+                System.out.println("the value was updated from 3d to 9d");
+            }
+
         } // free
 
     }

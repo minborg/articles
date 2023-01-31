@@ -4,6 +4,7 @@ import java.lang.foreign.Arena;
 import java.lang.foreign.MemorySegment;
 import java.lang.foreign.ValueLayout;
 import java.util.Arrays;
+import java.util.stream.IntStream;
 
 public class Demo3_Arena_Lifecycle {
 
@@ -21,5 +22,20 @@ public class Demo3_Arena_Lifecycle {
         } // free
 
         // point is not accessible here
+
+        try (Arena arena = Arena.openShared()) {
+            MemorySegment shared = MemorySegment.allocateNative(8 * 2, arena.scope());
+            shared.set(ValueLayout.JAVA_DOUBLE, 0, 3d);
+            shared.set(ValueLayout.JAVA_DOUBLE, 0, 4d);
+            useInOtherThreads(shared);
+        } // free safely via "handshaking"
+
     }
+
+    static void useInOtherThreads(MemorySegment segment) {
+        IntStream.range(0, 10_000)
+                .parallel()
+                .forEach(i -> segment.get(ValueLayout.JAVA_DOUBLE, 0));
+    }
+
 }

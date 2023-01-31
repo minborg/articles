@@ -19,6 +19,7 @@ public class Demo2_Memory_Mapped_MemorySegment {
         try (var fc = FileChannel.open(Path.of("sparse"), sparse)) {
 
             // Create a 64 TiB mapped memory segment managed by the GC (SegmentScope.auto())
+            // The file can be shared across threads and/or processes
             MemorySegment mapped = fc.map(READ_WRITE, 0, 1L << 46, SegmentScope.auto());
 
             System.out.println(mapped);

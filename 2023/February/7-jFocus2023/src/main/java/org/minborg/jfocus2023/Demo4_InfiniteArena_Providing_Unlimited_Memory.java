@@ -14,6 +14,7 @@ import static java.nio.channels.FileChannel.MapMode.READ_WRITE;
 import static java.nio.file.StandardOpenOption.*;
 import static java.util.Objects.requireNonNull;
 
+// Memory mapping and Arena combined.
 public final class Demo4_InfiniteArena_Providing_Unlimited_Memory {
 
     private static final class InfiniteArea implements Arena {

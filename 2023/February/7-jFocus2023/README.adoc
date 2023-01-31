@@ -42,19 +42,27 @@ In this final example, we will see how easy it is to integrate with an existing 
 == Interesting Panama Projects and Resources
 Here are some resources that could kickstart your Panama FFM voyage.
 
-=== Panama
+=== Panama FFM
 
-* https://github.com/openjdk/panama-foreign[Open-Source Panama FFM on GitHub: https://github.com/openjdk/panama-foreign]
+* https://openjdk.org/jeps/434[JEP 434] Foreign Function & Memory API (Second Preview)
+* Open-Source Panama FFM on GitHub: https://github.com/openjdk/panama-foreign[github.com/openjdk/panama-foreign]
 
-=== jextract
 
-* https://github.com/openjdk/jextract/tree/panama[jextract on GitHub: https://github.com/openjdk/jextract/tree/panama]
+=== Jextract
+
+* jextract on GitHub: https://github.com/openjdk/jextract/tree/panama[github.com/openjdk/jextract/tree/panama]
 * https://github.com/openjdk/jextract/tree/panama/samples/libzstd[Integrating with various native libraries using jextract]
 * https://github.com/openjdk/jextract/tree/panama/samples/libzstd[Integrating with zlib using jextract]
 
-=== Examples
+=== Panama 4 Newbies
 
 * https://github.com/carldea/panama4newbies[Panama 4 Newbies: https://github.com/carldea/panama4newbies]
+
+=== Real-World Use of the Panama FFM API
+
+* Lucene  https://github.com/apache/lucene/pull/173[]
+* Netty   https://github.com/netty/netty-incubator-buffer-api[]
+* Tomcat  https://github.com/rmaucher/openssl-panama-foreign[]
 
 == Clone Me!
 All code and the entire presentation can be cloned via https://github.com/minborg/articles

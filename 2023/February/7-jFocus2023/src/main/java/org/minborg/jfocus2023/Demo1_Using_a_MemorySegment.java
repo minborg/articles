@@ -13,10 +13,13 @@ public class Demo1_Using_a_MemorySegment {
 
     public static void main(String[] args) {
 
+        // # Original C struct
+        //
         // struct Point2D {
         //     double x;
         //     double y;
         // } point = { 3.0, 4.0 }
+        //
 
         MemorySegment point = MemorySegment.allocateNative(8 * 2, SegmentScope.auto());
         point.set(ValueLayout.JAVA_DOUBLE, 0, 3d);
@@ -34,6 +37,7 @@ public class Demo1_Using_a_MemorySegment {
         // Interop legacy -> FFM
         MemorySegment arrayView = MemorySegment.ofArray(new byte[]{1, 2, 3, 4, 5});
         MemorySegment segmentView = MemorySegment.ofBuffer(ByteBuffer.allocateDirect(100));
+
     }
 
 }
