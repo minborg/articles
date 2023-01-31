@@ -7,7 +7,7 @@ import java.lang.foreign.MemorySegment;
 import java.lang.foreign.ValueLayout;
 import java.lang.invoke.VarHandle;
 
-public class Demo5MemoryLayout {
+public class Demo5_Structured_Access_with_MemoryLayout {
 
     // struct point2d {
     //     double x;
@@ -33,6 +33,7 @@ public class Demo5MemoryLayout {
             X_ACCESS.set(point, 3d);
             Y_ACCESS.set(point, 4d);
 
+            // SegmentInspection is considered a candidate for Panama
             SegmentInspection.inspect(point, POINT_2D_LAYOUT)
                     .forEach(System.out::println);
 

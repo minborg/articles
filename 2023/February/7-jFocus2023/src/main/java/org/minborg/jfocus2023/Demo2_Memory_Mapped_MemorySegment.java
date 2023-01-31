@@ -11,7 +11,7 @@ import java.util.Set;
 import static java.nio.channels.FileChannel.MapMode.READ_WRITE;
 import static java.nio.file.StandardOpenOption.*;
 
-public class Demo2MemoryMapping {
+public class Demo2_Memory_Mapped_MemorySegment {
     public static void main(String[] args) throws IOException {
 
         Set<OpenOption> sparse = Set.of(CREATE_NEW, SPARSE, READ, WRITE);

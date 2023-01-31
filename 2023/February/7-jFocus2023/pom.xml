@@ -40,7 +40,7 @@
                             <goal>java</goal>
                         </goals>
                         <configuration>
-                            <mainClass>org.minborg.jfocus2023.Demo1MemorySegment</mainClass>
+                            <mainClass>org.minborg.jfocus2023.Demo1_Using_MemorySegment</mainClass>
                         </configuration>
                     </execution>
 

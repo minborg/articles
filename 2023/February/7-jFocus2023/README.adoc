@@ -12,51 +12,40 @@ All code and the entire presentation can be cloned via https://github.com/minbor
 == Live Demos
 Here is a list of the live demos made at jFocus:
 
-=== link:src/main/java/org/minborg/jfocus2023/Demo1MemorySegment.java[Demo 1: Memory Segment]
-
-This class shows basic use of a `MemorySegment` which is an abstraction of a contiguous 64-bit memory region providing:
+=== link:src/main/java/org/minborg/jfocus2023/Demo1_Using_MemorySegment.java[Demo 1: Using `MemorySegment`]
+This demo shows basic use of a `MemorySegment` which is an abstraction of a contiguous 64-bit memory region providing:
 
 * _Spatial_, _temporal_ and _thread-confinement_ safety
 * Bidirectional interoperability with arrays and various `ByteBuffer` types.
 
-=== link:src/main/java/org/minborg/jfocus2023/Demo3MemoryMapping.java[Demo 2: Memory Mapping]
+=== link:src/main/java/org/minborg/jfocus2023/Demo2_Memory_Mapped_MemorySegment.java[Demo 2: Memory Mapped `MemorySegment` instances]
+In this demo, we will see how large `MemorySegment` instances (backing up to 64 TiB) can be created by means of memory mapping and sparse files. Read more about memory mapping in http://minborgsjavapot.blogspot.com/2023/01/java-20-colossal-sparse-memory-segments.html[this separate article].
 
-In this demo, we will see how large `MemorySegments` (up to 64 TiB) can be created by means of memory mapping. Read more about memory mapping in http://minborgsjavapot.blogspot.com/2023/01/java-20-colossal-sparse-memory-segments.html[this separate article].
+=== link:src/main/java/org/minborg/jfocus2023/Demo3_Arena_Lifecycle.java[Demo 3: Arena Lifecycle]
+This example shows how an `Arena` can be used to provide safe and deterministic release of memory resources thereby providing an abstraction of a segment's lifecycle.
 
+=== link:src/main/java/org/minborg/jfocus2023/Demo4_InfiniteArena_Providing_Unlimited_Memory.java[Demo 4: `InfiniteArena` Providing Unlimited Memory]
+This part outlines an implementation of an `Arena` that appears to be able to provide an almost unlimited amount of memory. The concept also allows post-mortem analysis of memory segments used. Read more about the `InfiniteArena` in a separate article http://minborgsjavapot.blogspot.com/2023/01/java-20-almost-infinite-memory-segment.html[here].
 
-=== link:src/main/java/org/minborg/jfocus2023/Demo2Arena.java[Demo 3: Arena]
+=== link:src/main/java/org/minborg/jfocus2023/Demo5_Structured_Access_with_MemoryLayout.java[Demo 5: Structured Access with MemoryLayout]
+This sample shows how the concept of `MemoryLayout` provides a structured way of describing the layout of linear memory. It also shows how memory segments can be dereferenced using `VarHandle` objects that, in turn, can be derived directly from a `MemoryLayout` instance.
 
-This class shows how an `Arena` can be used to provide safe and deterministic release of memory resources.
+=== link:src/main/java/org/minborg/jfocus2023/Demo6_Modelling_C_Structs.java[Demo 6: Modelling C Structs]
+This class exemplifies how `MemoryLayout` constructs can be encapsulated in normal Java classes providing a model for simplified use with retained performance.
 
-=== link:src/main/java/org/minborg/jfocus2023/Demo4InfiniteArena.java[Demo 4: Infinite Arena]
+=== link:src/main/java/org/minborg/jfocus2023/Demo7_Modelling_C_Arrays.java[Demo 7: Modelling C Arrays]
+This example shows how large arrays of custom `MemoryLayout` can be constructed. These arrays do not suffer from the normal Java second-level-of-indirection penalties that normal arrays suffer from. These arrays are furthermore not limited to having 2^31^ - ε elements but are instead only limited by the amount of allocated memory.
 
-This class outlines an implementation of an `Arena` that appears to be able to provide an almost unlimited amount of memory. The concept also allows post-mortem analysis of memory segments used. Read more about the `InfiniteArena` in a separate article http://minborgsjavapot.blogspot.com/2023/01/java-20-almost-infinite-memory-segment.html[here].
+=== link:src/main/java/org/minborg/jfocus2023/Demo8_Passing_Segments_to_C_Functions.java[Demo 8: Passing Segments to C Functions]
+In this demo, we explore how to call native C methods using the built-in FFM linker passing a `MemoryLayout` to the native function.
 
-
-=== link:src/main/java/org/minborg/jfocus2023/Demo5MemoryLayout.java[Demo 5: MemoryLayout]
-
-This class shows how the concept of `MemoryLayout` provides a structured way of describing the layout of linear memory. It also shows how memory segments can be dereferenced using `VarHandle` objects that, in turn, can be derived directly from a `MemoryLayout` instance.
-
-=== link:src/main/java/org/minborg/jfocus2023/Demo6Encapsulation.java[Demo 6: Encapsulation]
-
-This class exemplifies how `MemoryLayout` constructs can be encapsulated in normal classes providing "Java-like use" for simplified use with retained performance.
-
-=== link:src/main/java/org/minborg/jfocus2023/Demo7HugeArrays.java[Demo 7: Huge Arrays]
-
-This class shows how large arrays of custom `MemoryLayout` can be constructed. These arrays do not suffer from the normal Java second level of indirection that normal arrays have. These arrays are furthermore not limited to having 2^31^ - ε elements but are instead only limited by the amount of allocated memory.
-
-=== link:src/main/java/org/minborg/jfocus2023/Demo8DownCalls.java[Demo 8: Downcalls]
-
-In this example, we explore how to call native methods using the built-in FFM linker.
-
-=== link:https://github.com/openjdk/jextract/tree/panama/samples/libzstd[Demo 9: Integrating with zstd]
-
-In this demo, we will see how easy it is to integrate with an existing native library and call it directly from Java.
-
+=== link:https://github.com/openjdk/jextract/tree/panama/samples/libzstd[Demo 9: Integrating Java with the Native Library 'zstd']
+In this final example, we will see how easy it is to integrate with an existing native library and call it directly from Java.
 
 == Interesting Panama Projects and Resources
 https://github.com/carldea/panama4newbies/tree/main[Panama 4 Newbies]
-
+https://github.com/openjdk/jextract/tree/panama[jextract on GitHub]
+https://github.com/openjdk/jextract/tree/panama/samples/libzstd[Integrating with zlib using jextract]
 
 == Safe Harbor Statement
 The following is intended to outline our general product direction. It is intended

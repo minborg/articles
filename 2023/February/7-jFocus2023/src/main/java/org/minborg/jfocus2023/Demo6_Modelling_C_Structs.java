@@ -3,6 +3,7 @@ package org.minborg.jfocus2023;
 import java.lang.foreign.Arena;
 import java.lang.foreign.MemoryLayout;
 import java.lang.foreign.MemorySegment;
+import java.lang.foreign.SegmentScope;
 import java.lang.invoke.VarHandle;
 
 import static java.lang.foreign.MemoryLayout.*;
@@ -10,7 +11,7 @@ import static java.lang.foreign.MemoryLayout.PathElement.*;
 import static java.lang.foreign.ValueLayout.*;
 import static java.util.Objects.requireNonNull;
 
-public class Demo6Encapsulation {
+public class Demo6_Modelling_C_Structs {
 
     interface Point2D {
         double x();
@@ -104,9 +105,9 @@ public class Demo6Encapsulation {
             return "[" + x() + ", " + y() + "]";
         }
 
-        static Point2D create(Arena arena) {
+        static Point2D create(SegmentScope scope) {
             return new SegmentPoint2D(
-                    MemorySegment.allocateNative(POINT_2D_LAYOUT, arena.scope())
+                    MemorySegment.allocateNative(POINT_2D_LAYOUT, scope)
             );
         }
 
@@ -116,7 +117,7 @@ public class Demo6Encapsulation {
 
         try (Arena arena = Arena.openConfined()) {
 
-            Point2D point = SegmentPoint2D.create(arena);
+            Point2D point = SegmentPoint2D.create(arena.scope());
             point.x(3d);
             point.y(4d);
 

@@ -15,7 +15,7 @@ import static java.lang.foreign.MemorySegment.*;
 import static java.lang.foreign.ValueLayout.*;
 import static java.util.Objects.requireNonNull;
 
-public class Demo8DownCalls {
+public class Demo8_Passing_Segments_to_C_Functions {
 
     interface Point2D {
         double x();

@@ -9,7 +9,7 @@ import java.util.Arrays;
 // Make sure you set your JAVA_HOME to a JDK 20 build and provide "--enable-preview" when run
 // In IntelliJ: Add the --enable-preview flag in the "compiler settings"
 // For Maven add: export MAVEN_OPTS="--enable-preview"
-public class Demo1MemorySegment {
+public class Demo1_Using_MemorySegment {
 
     public static void main(String[] args) {
 

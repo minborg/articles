@@ -3,6 +3,7 @@ package org.minborg.jfocus2023;
 import java.lang.foreign.Arena;
 import java.lang.foreign.MemoryLayout;
 import java.lang.foreign.MemorySegment;
+import java.lang.foreign.SegmentScope;
 import java.lang.invoke.VarHandle;
 
 import static java.lang.foreign.MemoryLayout.*;
@@ -10,7 +11,7 @@ import static java.lang.foreign.MemoryLayout.PathElement.*;
 import static java.lang.foreign.ValueLayout.*;
 import static java.util.Objects.requireNonNull;
 
-public class Demo7HugeArrays {
+public class Demo7_Modelling_C_Arrays {
 
     interface Point2D {
         double x();
@@ -100,9 +101,9 @@ public class Demo7HugeArrays {
         private static final VarHandle Y_ARRAY_ACCESS = POINT_2D_ARRAY_LAYOUT.varHandle(sequenceElement(), groupElement("y"));
         private final MemorySegment segment;
 
-        private SegmentPoint2DArray(Arena arena, long length) {
+        private SegmentPoint2DArray(SegmentScope scope, long length) {
             long byteSize = SegmentPoint2D.POINT_2D_LAYOUT.byteSize() * length;
-            this.segment = MemorySegment.allocateNative(byteSize, arena.scope());
+            this.segment = MemorySegment.allocateNative(byteSize, scope);
         }
 
         @Override
@@ -132,8 +133,8 @@ public class Demo7HugeArrays {
                             index * SegmentPoint2D.POINT_2D_LAYOUT.byteSize(), // offset
                             SegmentPoint2D.POINT_2D_LAYOUT.byteSize()));             // byteSize
         }
-        public static Point2DArray create(Arena arena, long length) {
-            return new SegmentPoint2DArray(arena, length);
+        public static Point2DArray create(SegmentScope scope, long length) {
+            return new SegmentPoint2DArray(scope, length);
         }
 
     }
@@ -143,7 +144,7 @@ public class Demo7HugeArrays {
 
         try (Arena arena = Arena.openConfined()) {
 
-            Point2DArray points = SegmentPoint2DArray.create(arena, 100_000);
+            Point2DArray points = SegmentPoint2DArray.create(arena.scope(), 100_000);
 
             long index = 42;
 
