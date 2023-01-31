@@ -97,6 +97,7 @@ public class Demo7_Modelling_C_Arrays {
                 SegmentPoint2D.POINT_2D_LAYOUT
         ).withName("point2dArray");
 
+        // X_ARRAY_ACCESS.set(MemorySegment s, long i, double v)
         private static final VarHandle X_ARRAY_ACCESS = POINT_2D_ARRAY_LAYOUT.varHandle(sequenceElement(), groupElement("x"));
         private static final VarHandle Y_ARRAY_ACCESS = POINT_2D_ARRAY_LAYOUT.varHandle(sequenceElement(), groupElement("y"));
         private final MemorySegment segment;
@@ -128,10 +129,9 @@ public class Demo7_Modelling_C_Arrays {
 
         @Override
         public Point2D get(long index) {
+            long byteSize = SegmentPoint2D.POINT_2D_LAYOUT.byteSize();
             return SegmentPoint2D.create(
-                    segment.asSlice(
-                            index * SegmentPoint2D.POINT_2D_LAYOUT.byteSize(), // offset
-                            SegmentPoint2D.POINT_2D_LAYOUT.byteSize()));             // byteSize
+                    segment.asSlice(index * byteSize, byteSize));
         }
         public static Point2DArray create(SegmentScope scope, long length) {
             return new SegmentPoint2DArray(scope, length);
@@ -144,10 +144,10 @@ public class Demo7_Modelling_C_Arrays {
 
         try (Arena arena = Arena.openConfined()) {
 
+            // A linear layout of POINT_2D_LAYOUT (no second level of indirection)
             Point2DArray points = SegmentPoint2DArray.create(arena.scope(), 100_000);
 
             long index = 42;
-
             points.x(index, 3d);
             points.y(index, 4d);
 

@@ -7,7 +7,7 @@ Per Minborg
 In my talk at jFocus 2023 in Stockholm, I talked about project Panama and more specifically about the Foreign Function and Memory API (FFM).
 
 == Live Demos
-Here is a list of the live demos made at jFocus:
+Below is a list of the live demos made at jFocus 2023. In order to be able to run the demos below, you need to have a JDK 20 build and pass `--enable-preview` as a JVM parameter when building and running the code.
 
 === link:src/main/java/org/minborg/jfocus2023/Demo1_Using_a_MemorySegment.java[Demo 1: Using a `MemorySegment`]
 This demo shows basic use of a `MemorySegment` which is an abstraction of a contiguous 64-bit memory region providing:
@@ -39,14 +39,17 @@ In this demo, we explore how to call native C methods using the built-in FFM lin
 === link:https://github.com/openjdk/jextract/tree/panama/samples/libzstd[Demo 9: Integrating Java with the Native Library 'zstd']
 In this final example, we will see how easy it is to integrate with an existing native library ("zstd") and call it directly from Java.
 
-== Interesting Panama Projects and Resources
+== Interesting Panama FFM Projects and Resources
 Here are some resources that could kickstart your Panama FFM voyage.
+
+=== JDK 20 Early-Access Builds
+
+Run your own code on JDK 20 today by downloading a https://jdk.java.net[JDK 20 Early-Access Build].
 
 === Panama FFM
 
 * https://openjdk.org/jeps/434[JEP 434] Foreign Function & Memory API (Second Preview)
 * Open-Source Panama FFM on GitHub: https://github.com/openjdk/panama-foreign[github.com/openjdk/panama-foreign]
-
 
 === Jextract
 
@@ -68,7 +71,6 @@ Here are some resources that could kickstart your Panama FFM voyage.
 All code and the entire presentation can be cloned via https://github.com/minborg/articles
 
 == Safe Harbor Statement
-The following is intended to outline our general product direction. It is intended
-for information purposes only, and may not be incorporated into any contract. It is not a commitment to deliver any material, code, or functionality, and should not be relied upon in making purchasing decisions. The development, release, timing, and pricing of any features or functionality described for Oracle’s products may change and remains at the sole discretion of Oracle Corporation.
+The following is intended to outline our general product direction. It is intended for information purposes only, and may not be incorporated into any contract. It is not a commitment to deliver any material, code, or functionality, and should not be relied upon in making purchasing decisions. The development, release, timing, and pricing of any features or functionality described for Oracle’s products may change and remains at the sole discretion of Oracle Corporation.
 
 link:../../LICENSE[Copyright (c) 2023, Oracle and/or its affiliates.]

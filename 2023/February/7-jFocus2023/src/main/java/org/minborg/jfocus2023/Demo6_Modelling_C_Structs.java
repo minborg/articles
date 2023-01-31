@@ -59,7 +59,6 @@ public class Demo6_Modelling_C_Structs {
 
     }
 
-
     static final class SegmentPoint2D implements Point2D {
 
         // struct point2d {
@@ -109,6 +108,11 @@ public class Demo6_Modelling_C_Structs {
             return new SegmentPoint2D(
                     MemorySegment.allocateNative(POINT_2D_LAYOUT, scope)
             );
+        }
+
+        static Point2D create() {
+            // It is up to the GC...
+            return create(SegmentScope.auto());
         }
 
     }

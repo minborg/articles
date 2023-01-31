@@ -10,9 +10,11 @@ public class Demo3_Arena_Lifecycle {
 
     public static void main(String[] args) {
 
+        // MemorySegments are safe as opposed to memory from C's malloc/free/pointer
         try (Arena arena = Arena.openConfined()) {
 
-            MemorySegment point = MemorySegment.allocateNative(8 * 2, arena.scope());
+            MemorySegment point = arena.allocate(8 * 2);
+
             point.set(ValueLayout.JAVA_DOUBLE, 0, 3d);
             point.set(ValueLayout.JAVA_DOUBLE, 8, 4d);
 

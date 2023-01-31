@@ -29,17 +29,17 @@ public class Demo5_Structured_Access_with_MemoryLayout {
 
         try (Arena arena = Arena.openConfined()) {
 
-            MemorySegment point = MemorySegment.allocateNative(POINT_2D_LAYOUT, arena.scope());
+            MemorySegment point = arena.allocate(POINT_2D_LAYOUT);
             X_ACCESS.set(point, 3d);
             Y_ACCESS.set(point, 4d);
 
-            // SegmentInspection is considered a candidate for Panama
+            // SegmentInspection is considered a candidate for Panama in JDK 21
             SegmentInspection.inspect(point, POINT_2D_LAYOUT)
                     .forEach(System.out::println);
 
-            // CAS Operations and more
+            // CAS Operations and more...
             if (X_ACCESS.compareAndSet(point, 3d, 9d)) {
-                System.out.println("the value was updated from 3d to 9d");
+                System.out.println("The x value was updated from 3d to 9d");
             }
 
         } // free
