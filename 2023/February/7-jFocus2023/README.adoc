@@ -44,17 +44,17 @@ Here are some resources that could kickstart your Panama FFM voyage.
 
 === Panama
 
-* https://github.com/openjdk/panama-foreign[Open-Source Panama FFM on GitHub]
+* https://github.com/openjdk/panama-foreign[Open-Source Panama FFM on GitHub: https://github.com/openjdk/panama-foreign]
 
 === jextract
 
-* https://github.com/openjdk/jextract/tree/panama[jextract on GitHub]
+* https://github.com/openjdk/jextract/tree/panama[jextract on GitHub: https://github.com/openjdk/jextract/tree/panama]
 * https://github.com/openjdk/jextract/tree/panama/samples/libzstd[Integrating with various native libraries using jextract]
 * https://github.com/openjdk/jextract/tree/panama/samples/libzstd[Integrating with zlib using jextract]
 
 === Examples
 
-* https://github.com/carldea/panama4newbies/tree/main[Panama 4 Newbies]
+* https://github.com/carldea/panama4newbies[Panama 4 Newbies: https://github.com/carldea/panama4newbies]
 
 == Clone Me!
 All code and the entire presentation can be cloned via https://github.com/minborg/articles
