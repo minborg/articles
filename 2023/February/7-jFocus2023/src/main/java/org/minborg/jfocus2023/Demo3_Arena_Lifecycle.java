@@ -28,7 +28,7 @@ public class Demo3_Arena_Lifecycle {
         try (Arena arena = Arena.openShared()) {
             MemorySegment shared = MemorySegment.allocateNative(8 * 2, arena.scope());
             shared.set(ValueLayout.JAVA_DOUBLE, 0, 3d);
-            shared.set(ValueLayout.JAVA_DOUBLE, 0, 4d);
+            shared.set(ValueLayout.JAVA_DOUBLE, 8, 4d);
             useInOtherThreads(shared);
         } // free safely via "handshaking"
 

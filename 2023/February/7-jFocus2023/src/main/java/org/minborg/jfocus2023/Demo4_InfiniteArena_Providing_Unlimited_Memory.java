@@ -31,6 +31,7 @@ public final class Demo4_InfiniteArena_Providing_Unlimited_Memory {
             this.delegate = Arena.openShared();
         }
 
+        // Note: This is a toy example! For example, byteAlignment is ignored
         @Override
         public MemorySegment allocate(long byteSize, long byteAlignment) {
             try {
