@@ -84,6 +84,7 @@ public class Demo8_Passing_Segments_to_C_Functions {
             // Extract the resulting string
             String asctimeString = result.getUtf8String(0);
 
+            // This should print: "Tue Feb  7 15:45:30 2023"
             System.out.println(asctimeString);
         } // free
 
