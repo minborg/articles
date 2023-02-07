@@ -1,0 +1,76 @@
+= jFocus 2023 Stockholm
+Per Minborg
+:toc:
+:homepage: http://minborgsjavapot.blogspot.com/
+
+== Introduction
+In my talk at jFocus 2023 in Stockholm, I talked about project Panama and more specifically about the Foreign Function and Memory API (FFM).
+
+== Live Demos
+Below is a list of the live demos made at jFocus 2023. In order to be able to run the demos below, you need to have a JDK 20 build and pass `--enable-preview` as a JVM parameter when building and running the code.
+
+=== link:src/main/java/org/minborg/jfocus2023/Demo1_Using_a_MemorySegment.java[Demo 1: Using a `MemorySegment`]
+This demo shows basic use of a `MemorySegment` which is an abstraction of a contiguous 64-bit memory region providing:
+
+* _Spatial_, _temporal_ and _thread-confinement_ safety
+* Bidirectional interoperability with arrays and various `ByteBuffer` types.
+
+=== link:src/main/java/org/minborg/jfocus2023/Demo2_Memory_Mapped_MemorySegment.java[Demo 2: Memory Mapped `MemorySegment` instances]
+In this demo, we will see how large `MemorySegment` instances (backing up to 64 TiB) can be created by means of memory mapping and sparse files. Read more about memory mapping in http://minborgsjavapot.blogspot.com/2023/01/java-20-colossal-sparse-memory-segments.html[this separate article].
+
+=== link:src/main/java/org/minborg/jfocus2023/Demo3_Arena_Lifecycle.java[Demo 3: The `Arena` Lifecycle]
+This example shows how an `Arena` can be used to provide safe and deterministic release of memory resources thereby providing an abstraction of a segment's lifecycle.
+
+=== link:src/main/java/org/minborg/jfocus2023/Demo4_InfiniteArena_Providing_Unlimited_Memory.java[Demo 4: `InfiniteArena` Providing Unlimited Memory]
+This part outlines an implementation of an `Arena` that appears to be able to provide an almost unlimited amount of memory. The concept also allows post-mortem analysis of memory segments used. Read more about the `InfiniteArena` in a separate article http://minborgsjavapot.blogspot.com/2023/01/java-20-almost-infinite-memory-segment.html[here].
+
+=== link:src/main/java/org/minborg/jfocus2023/Demo5_Structured_Access_with_MemoryLayout.java[Demo 5: Structured Access with `MemoryLayout`]
+This sample shows how the concept of `MemoryLayout` provides a structured way of describing the layout of linear memory. It also shows how memory segments can be dereferenced using `VarHandle` objects that, in turn, can be derived directly from a `MemoryLayout` instance.
+
+=== link:src/main/java/org/minborg/jfocus2023/Demo6_Modelling_C_Structs.java[Demo 6: Modelling C Structs]
+This class exemplifies how `MemoryLayout` constructs can be encapsulated in normal Java classes providing a model for simplified use with retained performance.
+
+=== link:src/main/java/org/minborg/jfocus2023/Demo7_Modelling_C_Arrays.java[Demo 7: Modelling C Arrays]
+This example shows how large arrays of custom `MemoryLayout` can be constructed. These arrays do not suffer from the normal Java second-level-of-indirection penalties that normal arrays suffer from. These arrays are furthermore not limited to having 2^31^ - ε elements but are instead only limited by the amount of allocated memory.
+
+=== link:src/main/java/org/minborg/jfocus2023/Demo8_Passing_Segments_to_C_Functions.java[Demo 8: Passing Segments to C Functions]
+In this demo, we explore how to call native C methods using the built-in FFM linker passing a `MemoryLayout` to the native function.
+
+=== link:https://github.com/openjdk/jextract/tree/panama/samples/libzstd[Demo 9: Integrating Java with the Native Library 'zstd']
+In this final example, we will see how easy it is to integrate with an existing native library ("zstd") and call it directly from Java.
+
+== Interesting Panama FFM Projects and Resources
+Here are some resources that could kickstart your Panama FFM voyage.
+
+=== JDK 20 Early-Access Builds
+
+Run your own code on JDK 20 today by downloading a https://jdk.java.net[JDK 20 Early-Access Build].
+
+=== Panama FFM
+
+* https://openjdk.org/jeps/434[JEP 434] Foreign Function & Memory API (Second Preview)
+* Open-Source Panama FFM on GitHub: https://github.com/openjdk/panama-foreign[github.com/openjdk/panama-foreign]
+
+=== Jextract
+
+* jextract on GitHub: https://github.com/openjdk/jextract/tree/panama[github.com/openjdk/jextract/tree/panama]
+* https://github.com/openjdk/jextract/tree/panama/samples/libzstd[Integrating with various native libraries using jextract]
+* https://github.com/openjdk/jextract/tree/panama/samples/libzstd[Integrating with zlib using jextract]
+
+=== Panama 4 Newbies
+
+* https://github.com/carldea/panama4newbies[Panama 4 Newbies: https://github.com/carldea/panama4newbies]
+
+=== Real-World Use of the Panama FFM API
+
+* Lucene  https://github.com/apache/lucene/pull/173[]
+* Netty   https://github.com/netty/netty-incubator-buffer-api[]
+* Tomcat  https://github.com/rmaucher/openssl-panama-foreign[]
+
+== Clone Me!
+All code and the entire presentation can be cloned via https://github.com/minborg/articles
+
+== Safe Harbor Statement
+The following is intended to outline our general product direction. It is intended for information purposes only, and may not be incorporated into any contract. It is not a commitment to deliver any material, code, or functionality, and should not be relied upon in making purchasing decisions. The development, release, timing, and pricing of any features or functionality described for Oracle’s products may change and remains at the sole discretion of Oracle Corporation.
+
+link:../../LICENSE[Copyright (c) 2023, Oracle and/or its affiliates.]
