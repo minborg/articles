@@ -6,6 +6,7 @@ import java.lang.foreign.ValueLayout;
 import java.nio.ByteBuffer;
 import java.util.Arrays;
 
+// JDK 20 builds: https://jdk.java.net/
 // Make sure you set your JAVA_HOME to a JDK 20 build and provide
 // "--enable-preview" when run
 // In IntelliJ: Add the --enable-preview flag in the "compiler settings"
@@ -22,7 +23,7 @@ public class Demo1_Using_a_MemorySegment {
         // } point = { 3.0, 4.0 }
         //
 
-        // Provides spatial, temporal and thread-confinement safety
+        // Provides spatial, temporal and thread-confinement guarantees
         MemorySegment point = MemorySegment.allocateNative(8 * 2, SegmentScope.auto());
         point.set(ValueLayout.JAVA_DOUBLE, 0, 3d);
         point.set(ValueLayout.JAVA_DOUBLE, 8, 4d);
