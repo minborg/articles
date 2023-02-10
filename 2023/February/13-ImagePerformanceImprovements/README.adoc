@@ -34,7 +34,7 @@ public int readInt() throws IOException {
 The scheme used here is similar to what is described in my link:../../January/26-PerformanceImprovementsRevealed/[previous article] so, I will not dive into the details again. In short, this method is complex and challenging for Java to fully optimize. Also, it is hard to read for us humans.
 
 == Improvements in JDK 21
-In Java 21, conversions are instead made with `VarHandle` constructs via the new `jdk.internal.util.ByteArray class`. Here is what parts of the internal `ByteArray` class look like:
+In Java 21, conversions are instead made with `VarHandle` constructs via the new `jdk.internal.util.ByteArray` class. Here is what parts of the internal `ByteArray` class look like:
 
 [source,java]
 ----
@@ -46,6 +46,8 @@ static int getInt(byte[] b, int off) {
     return (int) INT.get(b, off);
 }
 ----
+
+NOTE:: Even though the class is internal, it is essentially just a wrapper around `VarHandle` instances to promote the reuse of these within the JDK. If you want to use the same concept in your code, you are free to use the `VarHandle` construct directly.
 
 Using VarHandles means Java is able to optimize methods better compared to explicit bit shifting. Again, you can read more about link:../../January/26-PerformanceImprovementsRevealed/[how VarHandles work in my previous article].
 
