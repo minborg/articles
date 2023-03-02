@@ -1,0 +1,447 @@
+<html>
+    <head>
+        <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <style>
+                        h3.ctxid {
+                        padding-top:10;
+                        margin: 0;
+                        font-size: 12;
+                        color: darkblue;
+                        }
+                        .diff-html-added {
+                        font-size: 120%;
+                        color: darkgreen;
+                        background-color: #ccffcc;
+                        cursor: pointer;
+                        }
+                        .diff-html-removed {
+                        font-size: 100%;
+                        text-decoration: line-through;
+                        background-color: #fdc6c6;
+                        cursor: pointer;
+                        }
+                        span.diff-html-added img{
+                        border: 2px solid #ccffcc;
+                        }
+                        span.diff-html-removed img{
+                        border: 2px solid #fdc6c6;
+                        }
+                    </style>
+    </head>
+    <body>
+        <table cellpadding="1" cellspacing="0" border="0" width="100%">
+            <tr>
+                <td><a href="package-summary.html" target="_parent">Package Summary</a>&nbsp;&nbsp;<a href="overview-summary.html" target="_parent">Overview Summary</a></td>
+            </tr>
+        </table>
+        <table border="0" cellpadding="1" cellspacing="0" width="100%">
+            <tr>
+                <td>
+                    <h3 class="ctxid">class:FunctionDescriptor [NONE]</h3>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+                        <tr valign="top">
+                            <td bgcolor="#FFFFFF" colspan="1"> <a name="class:FunctionDescriptor"></a> 
+                                <section class="class-description" id="class-description">
+                                     
+                                    <hr>
+                                    <div class="type-signature">
+                                         <span class="modifiers">public sealed interface    </span><span class="element-name type-name-label">FunctionDescriptor</span> 
+                                    </div>
+                                    <div class="preview-block" id="preview-java.lang.foreign.FunctionDescriptor">
+                                         <span class="preview-label"><code>FunctionDescriptor</code> is a preview API of the Java platform.        </span>
+                                        <div class="preview-comment">
+                                             Programs can only use <code>FunctionDescriptor</code> when preview features are enabled.          
+                                        </div>
+                                        <div class="preview-comment">Preview features may be removed in a future release, or upgraded to permanent features of the Java platform.                 </div>
+                                         
+                                    </div>
+                                    <div class="block">
+                                         A function descriptor models the signature of foreign functions. A function descriptor is made up of zero or more argument layouts and zero or one return layout. A function descriptor is typically used when creating <a href="Linker.html#downcallHandle(java.lang.foreign.MemorySegment,java.lang.foreign.FunctionDescriptor,java.lang.foreign.Linker.Option...)" target="_parent">downcall method handles  </a><sup><a href="Linker.html#preview-java.lang.foreign.Linker" target="_parent">PREVIEW</a></sup> or <a href="Linker.html#upcallStub(java.lang.invoke.MethodHandle,java.lang.foreign.FunctionDescriptor,java.lang.foreign.Arena,java.lang.foreign.Linker.Option...)" target="_parent">upcall stubs </a><sup><a href="Linker.html#preview-java.lang.foreign.Linker" target="_parent">PREVIEW</a></sup>.                                      
+                                    </div>
+                                    <dl class="notes">
+                                         
+                                        <dt>Implementation Requirements: </dt>
+                                        <dd>
+                                             Implementing classes are immutable, thread-safe and <a href="../../../../java.base/java/lang/doc-files/ValueBased.html" target="_parent">value-based</a>.       
+                                        </dd>
+                                         
+                                        <dt>Since:</dt>
+                                        <dd>19</dd>
+                                         
+                                        <dt>See Also: </dt>
+                                        <dd>
+                                            <ul class="tag-list">
+                                                <li>
+                                                     <a href="MemoryLayout.html" title="interface in java.lang.foreign" target="_parent"><code>MemoryLayout</code></a><sup><a href="MemoryLayout.html#preview-java.lang.foreign.MemoryLayout" target="_parent">PREVIEW</a></sup> 
+                                                </li>
+                                            </ul>
+                                        </dd>
+                                           
+                                    </dl>
+                                       
+                                </section>
+                                    </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        <table border="0" cellpadding="1" cellspacing="0" width="100%">
+            <tr>
+                <td>
+                    <h3 class="ctxid">method:returnLayout() [NONE]</h3>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+                        <tr valign="top">
+                            <td bgcolor="#FFFFFF" colspan="1">
+                                <li>
+                                     <a name="method:returnLayout()"></a> 
+                                    <section class="detail" id="returnLayout()">
+                                        <h3>returnLayout</h3>
+                                        <div class="member-signature">
+                                             <span class="return-type"><a href="../../util/Optional.html" title="class in java.util" target="_parent">Optional</a>&lt;<a href="MemoryLayout.html" title="interface in java.lang.foreign" target="_parent">MemoryLayout</a><sup><a href="MemoryLayout.html#preview-java.lang.foreign.MemoryLayout" target="_parent">PREVIEW</a></sup>&gt;</span>&nbsp;<span class="element-name">returnLayout</span>() 
+                                        </div>
+                                        <div class="block">Returns the return layout (if any) associated with this function descriptor.          </div>
+                                        <dl class="notes">
+                                             
+                                            <dt>Returns:</dt>
+                                            <dd>the return layout (if any) associated with this function descriptor         </dd>
+                                             
+                                        </dl>
+                                          
+                                    </section>
+                                      
+                                </li>
+                                  </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        <table border="0" cellpadding="1" cellspacing="0" width="100%">
+            <tr>
+                <td>
+                    <h3 class="ctxid">method:argumentLayouts() [NONE]</h3>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+                        <tr valign="top">
+                            <td bgcolor="#FFFFFF" colspan="1"> <a name="method:argumentLayouts()"></a> 
+                                <section class="detail" id="argumentLayouts()">
+                                    <h3>argumentLayouts</h3>
+                                    <div class="member-signature">
+                                         <span class="return-type"><a href="../../util/List.html" title="interface in java.util" target="_parent">List</a>&lt;<a href="MemoryLayout.html" title="interface in java.lang.foreign" target="_parent">MemoryLayout</a><sup><a href="MemoryLayout.html#preview-java.lang.foreign.MemoryLayout" target="_parent">PREVIEW</a></sup>&gt;</span>&nbsp;<span class="element-name">argumentLayouts</span>() 
+                                    </div>
+                                    <div class="block">Returns the argument layouts associated with this function descriptor (as an immutable list)..            </div>
+                                    <dl class="notes">
+                                         
+                                        <dt>Returns:</dt>
+                                        <dd>the argument layouts associated with this function descriptor (as an immutable list)           </dd>
+                                         
+                                    </dl>
+                                      
+                                </section>
+                                    </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        <table border="0" cellpadding="1" cellspacing="0" width="100%">
+            <tr>
+                <td>
+                    <h3 class="ctxid">method:appendArgumentLayouts(java.lang.foreign.MemoryLayout...) [NONE]</h3>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+                        <tr valign="top">
+                            <td bgcolor="#FFFFFF" colspan="1"> <a name="method:appendArgumentLayouts(java.lang.foreign.MemoryLayout...)"></a> 
+                                <section class="detail" id="appendArgumentLayouts(java.lang.foreign.MemoryLayout...)">
+                                    <h3>appendArgumentLayouts</h3>
+                                    <div class="member-signature">
+                                         <span class="return-type"><a href="FunctionDescriptor.html" title="interface in java.lang.foreign" target="_parent">FunctionDescriptor</a><sup><a href="#preview-java.lang.foreign.FunctionDescriptor">PREVIEW</a></sup></span>&nbsp;<span class="element-name">appendArgumentLayouts</span> 
+                                        <wbr></wbr>
+                                         <span class="parameters">(<a href="MemoryLayout.html" title="interface in java.lang.foreign" target="_parent">MemoryLayout</a><sup><a href="MemoryLayout.html#preview-java.lang.foreign.MemoryLayout" target="_parent">PREVIEW</a></sup>...&nbsp;addedLayouts)</span>   
+                                    </div>
+                                    <div class="block">Returns a function descriptor with the given argument layouts appended to the argument layout array of this function descriptor.                  </div>
+                                    <dl class="notes">
+                                         
+                                        <dt>Parameters:</dt>
+                                        <dd>
+                                             <code>addedLayouts</code> - the argument layouts to append.       
+                                        </dd>
+                                         
+                                        <dt>Returns:</dt>
+                                        <dd>the new function descriptor.   </dd>
+                                          
+                                    </dl>
+                                      
+                                </section>
+                                    </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        <table border="0" cellpadding="1" cellspacing="0" width="100%">
+            <tr>
+                <td>
+                    <h3 class="ctxid">method:insertArgumentLayouts(int,java.lang.foreign.MemoryLayout...) [NONE]</h3>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+                        <tr valign="top">
+                            <td bgcolor="#FFFFFF" colspan="1"> <a name="method:insertArgumentLayouts(int,java.lang.foreign.MemoryLayout...)"></a> 
+                                <section class="detail" id="insertArgumentLayouts(int,java.lang.foreign.MemoryLayout...)">
+                                    <h3>insertArgumentLayouts</h3>
+                                    <div class="member-signature">
+                                         <span class="return-type"><a href="FunctionDescriptor.html" title="interface in java.lang.foreign" target="_parent">FunctionDescriptor</a><sup><a href="#preview-java.lang.foreign.FunctionDescriptor">PREVIEW</a></sup></span>&nbsp;<span class="element-name">insertArgumentLayouts</span> 
+                                        <wbr></wbr>
+                                         <span class="parameters">(int&nbsp;index, <a href="MemoryLayout.html" title="interface in java.lang.foreign" target="_parent">MemoryLayout</a><sup><a href="MemoryLayout.html#preview-java.lang.foreign.MemoryLayout" target="_parent">PREVIEW</a></sup>...&nbsp;addedLayouts) </span>   
+                                    </div>
+                                    <div class="block">Returns a function descriptor with the given argument layouts inserted at the given index, into the argument layout array of this function descriptor.                      </div>
+                                    <dl class="notes">
+                                         
+                                        <dt>Parameters:</dt>
+                                        <dd>
+                                             <code>index</code> - the index at which to insert the arguments          
+                                        </dd>
+                                        <dd>
+                                             <code>addedLayouts</code> - the argument layouts to insert at given index.          
+                                        </dd>
+                                         
+                                        <dt>Returns:</dt>
+                                        <dd>the new function descriptor.   </dd>
+                                         
+                                        <dt>Throws:</dt>
+                                        <dd>
+                                             <code><a href="../IllegalArgumentException.html" title="class in java.lang" target="_parent">IllegalArgumentException</a></code> - if <code>index &lt; 0 || index &gt; argumentLayouts().size()      </code>.    
+                                        </dd>
+                                           
+                                    </dl>
+                                      
+                                </section>
+                                    </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        <table border="0" cellpadding="1" cellspacing="0" width="100%">
+            <tr>
+                <td>
+                    <h3 class="ctxid">method:changeReturnLayout(java.lang.foreign.MemoryLayout) [NONE]</h3>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+                        <tr valign="top">
+                            <td bgcolor="#FFFFFF" colspan="1"> <a name="method:changeReturnLayout(java.lang.foreign.MemoryLayout)"></a> 
+                                <section class="detail" id="changeReturnLayout(java.lang.foreign.MemoryLayout)">
+                                    <h3>changeReturnLayout</h3>
+                                    <div class="member-signature">
+                                         <span class="return-type"><a href="FunctionDescriptor.html" title="interface in java.lang.foreign" target="_parent">FunctionDescriptor</a><sup><a href="#preview-java.lang.foreign.FunctionDescriptor">PREVIEW</a></sup></span>&nbsp;<span class="element-name">changeReturnLayout</span> 
+                                        <wbr></wbr>
+                                         <span class="parameters">(<a href="MemoryLayout.html" title="interface in java.lang.foreign" target="_parent">MemoryLayout</a><sup><a href="MemoryLayout.html#preview-java.lang.foreign.MemoryLayout" target="_parent">PREVIEW</a></sup>&nbsp;newReturn)</span>   
+                                    </div>
+                                    <div class="block">Returns a function descriptor with the given memory layout as the new return layout.             </div>
+                                    <dl class="notes">
+                                         
+                                        <dt>Parameters:</dt>
+                                        <dd>
+                                             <code>newReturn</code> - the new return layout.      
+                                        </dd>
+                                         
+                                        <dt>Returns:</dt>
+                                        <dd>the new function descriptor.   </dd>
+                                          
+                                    </dl>
+                                      
+                                </section>
+                                    </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        <table border="0" cellpadding="1" cellspacing="0" width="100%">
+            <tr>
+                <td>
+                    <h3 class="ctxid">method:dropReturnLayout() [NONE]</h3>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+                        <tr valign="top">
+                            <td bgcolor="#FFFFFF" colspan="1"> <a name="method:dropReturnLayout()"></a> 
+                                <section class="detail" id="dropReturnLayout()">
+                                    <h3>dropReturnLayout</h3>
+                                    <div class="member-signature">
+                                         <span class="return-type"><a href="FunctionDescriptor.html" title="interface in java.lang.foreign" target="_parent">FunctionDescriptor</a><sup><a href="#preview-java.lang.foreign.FunctionDescriptor">PREVIEW</a></sup></span>&nbsp;<span class="element-name">dropReturnLayout</span>() 
+                                    </div>
+                                    <div class="block">Returns a function descriptor with the return layout dropped. This is useful to model functions which return no values.                  </div>
+                                    <dl class="notes">
+                                         
+                                        <dt>Returns:</dt>
+                                        <dd>the new function descriptor.   </dd>
+                                         
+                                    </dl>
+                                      
+                                </section>
+                                    </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        <table border="0" cellpadding="1" cellspacing="0" width="100%">
+            <tr>
+                <td>
+                    <h3 class="ctxid">method:toMethodType() [NONE]</h3>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+                        <tr valign="top">
+                            <td bgcolor="#FFFFFF" colspan="1"> <a name="method:toMethodType()"></a> 
+                                <section class="detail" id="toMethodType()">
+                                    <h3>toMethodType</h3>
+                                    <div class="member-signature">
+                                         <span class="return-type"><a href="../invoke/MethodType.html" title="class in java.lang.invoke" target="_parent">MethodType</a></span>&nbsp;<span class="element-name">toMethodType</span>() 
+                                    </div>
+                                    <div class="block">
+                                         Returns the method type consisting of the carrier types of the layouts in this function descriptor.
+                                        <p>
+                                             The carrier type of a layout is determined as follows:
+                                            <ul>
+                                                <li>
+                                                     If the layout is a <a href="ValueLayout.html" title="interface in java.lang.foreign" target="_parent"><code>ValueLayout</code></a><sup><a href="ValueLayout.html#preview-java.lang.foreign.ValueLayout" target="_parent">PREVIEW</a></sup> the carrier type is determined through <a href="ValueLayout.html#carrier()" target="_parent"><code>ValueLayout.carrier()</code></a><sup><a href="ValueLayout.html#preview-java.lang.foreign.ValueLayout" target="_parent">PREVIEW</a></sup>.             
+                                                </li>
+                                                <li>
+                                                     If the layout is a <a href="GroupLayout.html" title="interface in java.lang.foreign" target="_parent"><code>GroupLayout</code></a><sup><a href="GroupLayout.html#preview-java.lang.foreign.GroupLayout" target="_parent">PREVIEW</a></sup> the carrier type is <a href="MemorySegment.html" title="interface in java.lang.foreign" target="_parent"><code>MemorySegment</code></a><sup><a href="MemorySegment.html#preview-java.lang.foreign.MemorySegment" target="_parent">PREVIEW</a></sup>.           
+                                                </li>
+                                                <li>
+                                                     If the layout is a <a href="PaddingLayout.html" title="interface in java.lang.foreign" target="_parent"><code>PaddingLayout</code></a><sup><a href="PaddingLayout.html#preview-java.lang.foreign.PaddingLayout" target="_parent">PREVIEW</a></sup>, or <a href="SequenceLayout.html" title="interface in java.lang.foreign" target="_parent"><code>SequenceLayout</code></a><sup><a href="SequenceLayout.html#preview-java.lang.foreign.SequenceLayout" target="_parent">PREVIEW</a></sup> an <a href="../IllegalArgumentException.html" title="class in java.lang" target="_parent"><code>IllegalArgumentException</code></a> is thrown.            
+                                                </li>
+                                            </ul>
+                                                      
+                                        </p>
+                                                        
+                                    </div>
+                                    <dl class="notes">
+                                         
+                                        <dt>Returns:</dt>
+                                        <dd>the method type consisting of the carrier types of the layouts in this function descriptor              </dd>
+                                         
+                                        <dt>Throws:</dt>
+                                        <dd>
+                                             <code><a href="../IllegalArgumentException.html" title="class in java.lang" target="_parent">IllegalArgumentException</a></code> - if one or more layouts in the function descriptor can not be mapped to carrier types (e.g. if they are sequence layouts or padding layouts).                           
+                                        </dd>
+                                          
+                                    </dl>
+                                      
+                                </section>
+                                    </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        <table border="0" cellpadding="1" cellspacing="0" width="100%">
+            <tr>
+                <td>
+                    <h3 class="ctxid">method:of(java.lang.foreign.MemoryLayout,java.lang.foreign.MemoryLayout...) [NONE]</h3>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+                        <tr valign="top">
+                            <td bgcolor="#FFFFFF" colspan="1"> <a name="method:of(java.lang.foreign.MemoryLayout,java.lang.foreign.MemoryLayout...)"></a> 
+                                <section class="detail" id="of(java.lang.foreign.MemoryLayout,java.lang.foreign.MemoryLayout...)">
+                                    <h3>of</h3>
+                                    <div class="member-signature">
+                                         <span class="modifiers">static</span>&nbsp;<span class="return-type"><a href="FunctionDescriptor.html" title="interface in java.lang.foreign" target="_parent">FunctionDescriptor</a><sup><a href="#preview-java.lang.foreign.FunctionDescriptor">PREVIEW</a></sup></span>&nbsp;<span class="element-name">of</span> 
+                                        <wbr></wbr>
+                                         <span class="parameters">(<a href="MemoryLayout.html" title="interface in java.lang.foreign" target="_parent">MemoryLayout</a><sup><a href="MemoryLayout.html#preview-java.lang.foreign.MemoryLayout" target="_parent">PREVIEW</a></sup>&nbsp;resLayout, <a href="MemoryLayout.html" title="interface in java.lang.foreign" target="_parent">MemoryLayout</a><sup><a href="MemoryLayout.html#preview-java.lang.foreign.MemoryLayout" target="_parent">PREVIEW</a></sup>...&nbsp;argLayouts) </span>   
+                                    </div>
+                                    <div class="block">Creates a function descriptor with the given return and argument layouts.          </div>
+                                    <dl class="notes">
+                                         
+                                        <dt>Parameters:</dt>
+                                        <dd>
+                                             <code>resLayout</code> - the return layout.     
+                                        </dd>
+                                        <dd>
+                                             <code>argLayouts</code> - the argument layouts.     
+                                        </dd>
+                                         
+                                        <dt>Returns:</dt>
+                                        <dd>the new function descriptor.   </dd>
+                                          
+                                    </dl>
+                                      
+                                </section>
+                                    </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        <table border="0" cellpadding="1" cellspacing="0" width="100%">
+            <tr>
+                <td>
+                    <h3 class="ctxid">method:ofVoid(java.lang.foreign.MemoryLayout...) [NONE]</h3>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+                        <tr valign="top">
+                            <td bgcolor="#FFFFFF" colspan="1"> <a name="method:ofVoid(java.lang.foreign.MemoryLayout...)"></a> 
+                                <section class="detail" id="ofVoid(java.lang.foreign.MemoryLayout...)">
+                                    <h3>ofVoid</h3>
+                                    <div class="member-signature">
+                                         <span class="modifiers">static</span>&nbsp;<span class="return-type"><a href="FunctionDescriptor.html" title="interface in java.lang.foreign" target="_parent">FunctionDescriptor</a><sup><a href="#preview-java.lang.foreign.FunctionDescriptor">PREVIEW</a></sup></span>&nbsp;<span class="element-name">ofVoid</span> 
+                                        <wbr></wbr>
+                                         <span class="parameters">(<a href="MemoryLayout.html" title="interface in java.lang.foreign" target="_parent">MemoryLayout</a><sup><a href="MemoryLayout.html#preview-java.lang.foreign.MemoryLayout" target="_parent">PREVIEW</a></sup>...&nbsp;argLayouts)</span>   
+                                    </div>
+                                    <div class="block">Creates a function descriptor with the given argument layouts and no return layout.            </div>
+                                    <dl class="notes">
+                                         
+                                        <dt>Parameters:</dt>
+                                        <dd>
+                                             <code>argLayouts</code> - the argument layouts.     
+                                        </dd>
+                                         
+                                        <dt>Returns:</dt>
+                                        <dd>the new function descriptor.   </dd>
+                                          
+                                    </dl>
+                                      
+                                </section>
+                                        </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        <p style="text-align:center; font-size:10px;"></p>
+    </body>
+</html>

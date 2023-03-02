@@ -1,0 +1,463 @@
+<html>
+    <head>
+        <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <style>
+                        h3.ctxid {
+                        padding-top:10;
+                        margin: 0;
+                        font-size: 12;
+                        color: darkblue;
+                        }
+                        .diff-html-added {
+                        font-size: 120%;
+                        color: darkgreen;
+                        background-color: #ccffcc;
+                        cursor: pointer;
+                        }
+                        .diff-html-removed {
+                        font-size: 100%;
+                        text-decoration: line-through;
+                        background-color: #fdc6c6;
+                        cursor: pointer;
+                        }
+                        span.diff-html-added img{
+                        border: 2px solid #ccffcc;
+                        }
+                        span.diff-html-removed img{
+                        border: 2px solid #fdc6c6;
+                        }
+                    </style>
+    </head>
+    <body>
+        <table cellpadding="1" cellspacing="0" border="0" width="100%">
+            <tr>
+                <td><a href="package-summary.html" target="_parent">Package Summary</a>&nbsp;&nbsp;<a href="overview-summary.html" target="_parent">Overview Summary</a></td>
+            </tr>
+        </table>
+        <table border="0" cellpadding="1" cellspacing="0" width="100%">
+            <tr>
+                <td>
+                    <h3 class="ctxid">class:MemoryLayout.PathElement [NONE]</h3>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+                        <tr valign="top">
+                            <td bgcolor="#FFFFFF" colspan="1"> <a name="class:MemoryLayout.PathElement"></a> 
+                                <section class="class-description" id="class-description">
+                                    <dl class="notes">
+                                         
+                                        <dt>Enclosing interface: </dt>
+                                        <dd>
+                                             <code><a href="MemoryLayout.html" title="interface in java.lang.foreign" target="_parent">MemoryLayout</a><sup><a href="MemoryLayout.html#preview-java.lang.foreign.MemoryLayout" target="_parent">PREVIEW</a></sup></code> 
+                                        </dd>
+                                         
+                                    </dl>
+                                     
+                                    <hr>
+                                    <div class="type-signature">
+                                         <span class="modifiers">public static sealed interface     </span><span class="element-name type-name-label">MemoryLayout.PathElement</span> 
+                                    </div>
+                                    <div class="preview-block" id="preview-java.lang.foreign.MemoryLayout.PathElement">
+                                         <span class="preview-label"><code>PathElement</code> is a preview API of the Java platform.        </span>
+                                        <div class="preview-comment">
+                                             Programs can only use <code>PathElement</code> when preview features are enabled.          
+                                        </div>
+                                        <div class="preview-comment">Preview features may be removed in a future release, or upgraded to permanent features of the Java platform.                 </div>
+                                         
+                                    </div>
+                                    <div class="block">
+                                         An element in a <a href="MemoryLayout.html#layout-paths" target="_parent"><em>layout path </em></a>. There are two kinds of path elements: <em>group path elements  </em> and <em>sequence path elements  </em>. Group path elements are used to select a named member layout within a <a href="GroupLayout.html" title="interface in java.lang.foreign" target="_parent"><code>GroupLayout</code></a><sup><a href="GroupLayout.html#preview-java.lang.foreign.GroupLayout" target="_parent">PREVIEW</a></sup>. Sequence path elements are used to select a sequence element layout within a <a href="SequenceLayout.html" title="interface in java.lang.foreign" target="_parent"><code>SequenceLayout</code></a><sup><a href="SequenceLayout.html#preview-java.lang.foreign.SequenceLayout" target="_parent">PREVIEW</a></sup>; selection of sequence element layout can be <em>explicit</em> (see <a href="#sequenceElement(long)"><code>sequenceElement(long)</code></a>) or <em>implicit</em> (see <a href="#sequenceElement()"><code>sequenceElement()</code></a>). When a path uses one or more implicit sequence path elements, it acquires additional <em>free dimensions </em>.                                                                        
+                                    </div>
+                                    <dl class="notes">
+                                         
+                                        <dt>Implementation Requirements: </dt>
+                                        <dd>
+                                             Implementations of this interface are immutable, thread-safe and <a href="../../../../java.base/java/lang/doc-files/ValueBased.html" target="_parent">value-based</a>.         
+                                        </dd>
+                                         
+                                        <dt>Since:</dt>
+                                        <dd>19</dd>
+                                          
+                                    </dl>
+                                       
+                                </section>
+                                    </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        <table border="0" cellpadding="1" cellspacing="0" width="100%">
+            <tr>
+                <td>
+                    <h3 class="ctxid">method:groupElement(java.lang.String) [CHANGED]</h3>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+                        <tr valign="top">
+                            <td bgcolor="#EEEEEE" colspan="2">
+                                <li>
+                                     <a name="method:groupElement(java.lang.String)"></a> 
+                                    <section class="detail" id="groupElement(java.lang.String)">
+                                        <h3>groupElement</h3>
+                                        <div class="member-signature">
+                                             <span class="modifiers">static</span>&nbsp;<span class="return-type"><a href="MemoryLayout.PathElement.html" title="interface in java.lang.foreign" target="_parent">MemoryLayout.PathElement</a><sup><a href="#preview-java.lang.foreign.MemoryLayout.PathElement">PREVIEW</a></sup></span>&nbsp;<span class="element-name">groupElement</span> 
+                                            <wbr></wbr>
+                                             <span class="parameters">(<a href="../String.html" title="class in java.lang" target="_parent">String</a>&nbsp;name)</span>   
+                                        </div>
+                                        <div class="block">Returns a path element which selects a member layout with the given name in a group layout. The path element returned by this method does not alter the number of free dimensions of any path that is combined with such element.                                        </div>
+                                        <dl class="notes">
+                                             
+                                            <dt>Implementation Requirements: </dt>
+                                            <dd>
+                                                 in case multiple group elements with a matching name exist, the path element returned by this method will select the first one; that is, the group element with the lowest offset from current path is selected. <span class="diff-html-added">In</span> <span class="diff-html-added">such</span> <span class="diff-html-added">cases,</span> <span class="diff-html-added">using</span> <a href="#groupElement(long)"><code><span class="diff-html-added">groupElement(long)</span></code></a> <span class="diff-html-added">might</span> <span class="diff-html-added">be</span> <span class="diff-html-added">preferable.</span>                                            
+                                            </dd>
+                                             
+                                            <dt>Parameters:</dt>
+                                            <dd>
+                                                 <code>name</code> - the name of the group element to be selected.           
+                                            </dd>
+                                             
+                                            <dt>Returns:</dt>
+                                            <dd>a path element which selects the group element with the given name.           </dd>
+                                               
+                                        </dl>
+                                          
+                                    </section>
+                                      
+                                </li>
+                                  </td>
+                        </tr>
+                        <tr valign="top">
+                            <td bgcolor="#CCCCCC" colspan="1">
+                                <li>
+                                     <a name="method:groupElement(java.lang.String)"></a> 
+                                    <section class="detail" id="groupElement(java.lang.String)">
+                                        <h3>groupElement</h3>
+                                        <div class="member-signature">
+                                             <span class="modifiers">static</span>&nbsp;<span class="return-type"><a href="MemoryLayout.PathElement.html" title="interface in java.lang.foreign" target="_parent">MemoryLayout.PathElement</a><sup><a href="#preview-java.lang.foreign.MemoryLayout.PathElement">PREVIEW</a></sup></span>&nbsp;<span class="element-name">groupElement</span> 
+                                            <wbr></wbr>
+                                             <span class="parameters">(<a href="../String.html" title="class in java.lang" target="_parent">String</a>&nbsp;name)</span>   
+                                        </div>
+                                        <div class="block">Returns a path element which selects a member layout with the given name in a group layout. The path element returned by this method does not alter the number of free dimensions of any path that is combined with such element.                                        </div>
+                                        <dl class="notes">
+                                             
+                                            <dt>Implementation Requirements: </dt>
+                                            <dd>in case multiple group elements with a matching name exist, the path element returned by this method will select the first one; that is, the group element with the lowest offset from current path is selected.                                   </dd>
+                                             
+                                            <dt>Parameters:</dt>
+                                            <dd>
+                                                 <code>name</code> - the name of the group element to be selected.           
+                                            </dd>
+                                             
+                                            <dt>Returns:</dt>
+                                            <dd>a path element which selects the group element with the given name.           </dd>
+                                               
+                                        </dl>
+                                          
+                                    </section>
+                                      
+                                </li>
+                                  </td><td bgcolor="#FFFFFF" colspan="1">
+                                <li>
+                                     <a name="method:groupElement(java.lang.String)"></a> 
+                                    <section class="detail" id="groupElement(java.lang.String)">
+                                        <h3>groupElement</h3>
+                                        <div class="member-signature">
+                                             <span class="modifiers">static</span>&nbsp;<span class="return-type"><a href="MemoryLayout.PathElement.html" title="interface in java.lang.foreign" target="_parent">MemoryLayout.PathElement</a><sup><a href="#preview-java.lang.foreign.MemoryLayout.PathElement">PREVIEW</a></sup></span>&nbsp;<span class="element-name">groupElement</span> 
+                                            <wbr></wbr>
+                                             <span class="parameters">(<a href="../String.html" title="class in java.lang" target="_parent">String</a>&nbsp;name)</span>   
+                                        </div>
+                                        <div class="block">Returns a path element which selects a member layout with the given name in a group layout. The path element returned by this method does not alter the number of free dimensions of any path that is combined with such element.                                        </div>
+                                        <dl class="notes">
+                                             
+                                            <dt>Implementation Requirements: </dt>
+                                            <dd>
+                                                 in case multiple group elements with a matching name exist, the path element returned by this method will select the first one; that is, the group element with the lowest offset from current path is selected. In such cases, using <a href="#groupElement(long)"><code>groupElement(long)</code></a> might be preferable.                                            
+                                            </dd>
+                                             
+                                            <dt>Parameters:</dt>
+                                            <dd>
+                                                 <code>name</code> - the name of the group element to be selected.           
+                                            </dd>
+                                             
+                                            <dt>Returns:</dt>
+                                            <dd>a path element which selects the group element with the given name.           </dd>
+                                               
+                                        </dl>
+                                          
+                                    </section>
+                                      
+                                </li>
+                                  </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        <table border="0" cellpadding="1" cellspacing="0" width="100%">
+            <tr>
+                <td>
+                    <h3 class="ctxid">method:groupElement(long) [ADDED]</h3>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+                        <tr valign="top">
+                            <td bgcolor="#FFFFFF" colspan="1"> <a name="method:groupElement(long)"></a> 
+                                <section class="detail" id="groupElement(long)">
+                                    <h3>
+                                        <span class="diff-html-added">groupElement</span>
+                                    </h3>
+                                    <div class="member-signature">
+                                         <span class="modifiers"><span class="diff-html-added">static</span></span>&nbsp;<span class="return-type"><a href="MemoryLayout.PathElement.html" title="interface in java.lang.foreign" target="_parent"><span class="diff-html-added">MemoryLayout.PathElement</span></a><sup><a href="#preview-java.lang.foreign.MemoryLayout.PathElement"><span class="diff-html-added">PREVIEW</span></a></sup></span>&nbsp;<span class="element-name"><span class="diff-html-added">groupElement</span></span> 
+                                        <wbr></wbr>
+                                         <span class="parameters"><span class="diff-html-added">(long&nbsp;index)</span></span>   
+                                    </div>
+                                    <div class="block">
+                                        <span class="diff-html-added">Returns</span> <span class="diff-html-added">a</span> <span class="diff-html-added">path</span> <span class="diff-html-added">element</span> <span class="diff-html-added">which</span> <span class="diff-html-added">selects</span> <span class="diff-html-added">a</span> <span class="diff-html-added">member</span> <span class="diff-html-added">layout</span> <span class="diff-html-added">with</span> <span class="diff-html-added">the</span> <span class="diff-html-added">given</span> <span class="diff-html-added">index</span> <span class="diff-html-added">in</span> <span class="diff-html-added">a</span> <span class="diff-html-added">group</span> <span class="diff-html-added">layout.</span> <span class="diff-html-added">The</span> <span class="diff-html-added">path</span> <span class="diff-html-added">element</span> <span class="diff-html-added">returned</span> <span class="diff-html-added">by</span> <span class="diff-html-added">this</span> <span class="diff-html-added">method</span> <span class="diff-html-added">does</span> <span class="diff-html-added">not</span> <span class="diff-html-added">alter</span> <span class="diff-html-added">the</span> <span class="diff-html-added">number</span> <span class="diff-html-added">of</span> <span class="diff-html-added">free</span> <span class="diff-html-added">dimensions</span> <span class="diff-html-added">of</span> <span class="diff-html-added">any</span> <span class="diff-html-added">path</span> <span class="diff-html-added">that</span> <span class="diff-html-added">is</span> <span class="diff-html-added">combined</span> <span class="diff-html-added">with</span> <span class="diff-html-added">such</span> <span class="diff-html-added">element.</span>                                        
+                                    </div>
+                                    <dl class="notes">
+                                         
+                                        <dt>
+                                            <span class="diff-html-added">Parameters:</span>
+                                        </dt>
+                                        <dd>
+                                             <code><span class="diff-html-added">index</span></code> <span class="diff-html-added">-</span> <span class="diff-html-added">the</span> <span class="diff-html-added">index</span> <span class="diff-html-added">of</span> <span class="diff-html-added">the</span> <span class="diff-html-added">group</span> <span class="diff-html-added">element</span> <span class="diff-html-added">to</span> <span class="diff-html-added">be</span> <span class="diff-html-added">selected.</span>           
+                                        </dd>
+                                         
+                                        <dt>
+                                            <span class="diff-html-added">Returns:</span>
+                                        </dt>
+                                        <dd>
+                                            <span class="diff-html-added">a</span> <span class="diff-html-added">path</span> <span class="diff-html-added">element</span> <span class="diff-html-added">which</span> <span class="diff-html-added">selects</span> <span class="diff-html-added">the</span> <span class="diff-html-added">group</span> <span class="diff-html-added">element</span> <span class="diff-html-added">with</span> <span class="diff-html-added">the</span> <span class="diff-html-added">given</span> <span class="diff-html-added">index.</span>           
+                                        </dd>
+                                         
+                                        <dt>
+                                            <span class="diff-html-added">Throws:</span>
+                                        </dt>
+                                        <dd>
+                                             <code><a href="../IllegalArgumentException.html" title="class in java.lang" target="_parent"><span class="diff-html-added">IllegalArgumentException</span></a></code> <span class="diff-html-added">-</span> <span class="diff-html-added">if</span> <code><span class="diff-html-added">index</span> <span class="diff-html-added">&lt;</span> <span class="diff-html-added">0</span>  </code><span class="diff-html-added">.</span>    
+                                        </dd>
+                                           
+                                    </dl>
+                                      
+                                </section>
+                                    </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        <table border="0" cellpadding="1" cellspacing="0" width="100%">
+            <tr>
+                <td>
+                    <h3 class="ctxid">method:sequenceElement(long) [NONE]</h3>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+                        <tr valign="top">
+                            <td bgcolor="#FFFFFF" colspan="1"> <a name="method:sequenceElement(long)"></a> 
+                                <section class="detail" id="sequenceElement(long)">
+                                    <h3>sequenceElement</h3>
+                                    <div class="member-signature">
+                                         <span class="modifiers">static</span>&nbsp;<span class="return-type"><a href="MemoryLayout.PathElement.html" title="interface in java.lang.foreign" target="_parent">MemoryLayout.PathElement</a><sup><a href="#preview-java.lang.foreign.MemoryLayout.PathElement">PREVIEW</a></sup></span>&nbsp;<span class="element-name">sequenceElement</span> 
+                                        <wbr></wbr>
+                                         <span class="parameters">(long&nbsp;index)</span>   
+                                    </div>
+                                    <div class="block">Returns a path element which selects the element layout at the specified position in a sequence layout. The path element returned by this method does not alter the number of free dimensions of any path that is combined with such element.                                        </div>
+                                    <dl class="notes">
+                                         
+                                        <dt>Parameters:</dt>
+                                        <dd>
+                                             <code>index</code> - the index of the sequence element to be selected.           
+                                        </dd>
+                                         
+                                        <dt>Returns:</dt>
+                                        <dd>a path element which selects the sequence element layout with the given index.            </dd>
+                                         
+                                        <dt>Throws:</dt>
+                                        <dd>
+                                             <code><a href="../IllegalArgumentException.html" title="class in java.lang" target="_parent">IllegalArgumentException</a></code> - if <code>index &lt; 0  </code>.    
+                                        </dd>
+                                           
+                                    </dl>
+                                      
+                                </section>
+                                    </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        <table border="0" cellpadding="1" cellspacing="0" width="100%">
+            <tr>
+                <td>
+                    <h3 class="ctxid">method:sequenceElement(long,long) [NONE]</h3>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+                        <tr valign="top">
+                            <td bgcolor="#FFFFFF" colspan="1"> <a name="method:sequenceElement(long,long)"></a> 
+                                <section class="detail" id="sequenceElement(long,long)">
+                                    <h3>sequenceElement</h3>
+                                    <div class="member-signature">
+                                         <span class="modifiers">static</span>&nbsp;<span class="return-type"><a href="MemoryLayout.PathElement.html" title="interface in java.lang.foreign" target="_parent">MemoryLayout.PathElement</a><sup><a href="#preview-java.lang.foreign.MemoryLayout.PathElement">PREVIEW</a></sup></span>&nbsp;<span class="element-name">sequenceElement</span> 
+                                        <wbr></wbr>
+                                         <span class="parameters">(long&nbsp;start, long&nbsp;step) </span>   
+                                    </div>
+                                    <div class="block">
+                                         Returns a path element which selects the element layout in a <em>range</em> of positions in a sequence layout. The range is expressed as a pair of starting index (inclusive) <code>S</code> and step factor (which can also be negative) <code>F</code>.
+                                        <p>
+                                             If a path with free dimensions <code>n</code> is combined with the path element returned by this method, the number of free dimensions of the resulting path will be <code>1 + n  </code>. If the free dimension associated with this path is bound by an index <code>I</code>, the resulting accessed offset can be obtained with the following formula:                                                      
+                                        </p>
+                                        <blockquote>
+                                            <pre>
+                                                                                                            <code>
+ E * (S + I * F)
+ </code>
+                                                        
+                                            </pre>
+                                        </blockquote>
+                                         where <code>E</code> is the size (in bytes) of the sequence element layout.
+                                        <p>
+                                             Additionally, if <code>C</code> is the sequence element count, it follows that <code>0 &lt;= I &lt; B    </code>, where <code>B</code> is computed as follows:
+                                            <ul>
+                                                <li>
+                                                     if <code>F &gt; 0  </code>, then <code>B = ceilDiv(C - S, F)     </code>    
+                                                </li>
+                                                <li>
+                                                     if <code>F &lt; 0  </code>, then <code>B = ceilDiv(-(S + 1), -F)     </code>    
+                                                </li>
+                                            </ul>
+                                                              
+                                        </p>
+                                                                                           
+                                    </div>
+                                    <dl class="notes">
+                                         
+                                        <dt>Parameters:</dt>
+                                        <dd>
+                                             <code>start</code> - the index of the first sequence element to be selected.            
+                                        </dd>
+                                        <dd>
+                                             <code>step</code> - the step factor at which subsequence sequence elements are to be selected.              
+                                        </dd>
+                                         
+                                        <dt>Returns:</dt>
+                                        <dd>a path element which selects the sequence element layout with the given index.            </dd>
+                                         
+                                        <dt>Throws:</dt>
+                                        <dd>
+                                             <code><a href="../IllegalArgumentException.html" title="class in java.lang" target="_parent">IllegalArgumentException</a></code> - if <code>start &lt; 0  </code>, or <code>step == 0  </code>.      
+                                        </dd>
+                                           
+                                    </dl>
+                                      
+                                </section>
+                                    </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        <table border="0" cellpadding="1" cellspacing="0" width="100%">
+            <tr>
+                <td>
+                    <h3 class="ctxid">method:sequenceElement() [NONE]</h3>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+                        <tr valign="top">
+                            <td bgcolor="#FFFFFF" colspan="1"> <a name="method:sequenceElement()"></a> 
+                                <section class="detail" id="sequenceElement()">
+                                    <h3>sequenceElement</h3>
+                                    <div class="member-signature">
+                                         <span class="modifiers">static</span>&nbsp;<span class="return-type"><a href="MemoryLayout.PathElement.html" title="interface in java.lang.foreign" target="_parent">MemoryLayout.PathElement</a><sup><a href="#preview-java.lang.foreign.MemoryLayout.PathElement">PREVIEW</a></sup></span>&nbsp;<span class="element-name">sequenceElement</span>() 
+                                    </div>
+                                    <div class="block">
+                                         Returns a path element which selects an unspecified element layout in a sequence layout.
+                                        <p>
+                                             If a path with free dimensions <code>n</code> is combined with the path element returned by this method, the number of free dimensions of the resulting path will be <code>1 + n  </code>. If the free dimension associated with this path is bound by an index <code>I</code>, the resulting accessed offset can be obtained with the following formula:                                                      
+                                        </p>
+                                        <blockquote>
+                                            <pre>
+                                                                                                            <code>
+ E * I
+ </code>
+                                                        
+                                            </pre>
+                                        </blockquote>
+                                         where <code>E</code> is the size (in bytes) of the sequence element layout.
+                                        <p>
+                                             Additionally, if <code>C</code> is the sequence element count, it follows that <code>0 &lt;= I &lt; C    </code>.            
+                                        </p>
+                                                                  
+                                    </div>
+                                    <dl class="notes">
+                                         
+                                        <dt>Returns:</dt>
+                                        <dd>a path element which selects an unspecified sequence element layout.         </dd>
+                                         
+                                    </dl>
+                                      
+                                </section>
+                                    </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        <table border="0" cellpadding="1" cellspacing="0" width="100%">
+            <tr>
+                <td>
+                    <h3 class="ctxid">method:dereferenceElement() [ADDED]</h3>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+                        <tr valign="top">
+                            <td bgcolor="#FFFFFF" colspan="1"> <a name="method:dereferenceElement()"></a> 
+                                <section class="detail" id="dereferenceElement()">
+                                    <h3>
+                                        <span class="diff-html-added">dereferenceElement</span>
+                                    </h3>
+                                    <div class="member-signature">
+                                         <span class="modifiers"><span class="diff-html-added">static</span></span>&nbsp;<span class="return-type"><a href="MemoryLayout.PathElement.html" title="interface in java.lang.foreign" target="_parent"><span class="diff-html-added">MemoryLayout.PathElement</span></a><sup><a href="#preview-java.lang.foreign.MemoryLayout.PathElement"><span class="diff-html-added">PREVIEW</span></a></sup></span>&nbsp;<span class="element-name"><span class="diff-html-added">dereferenceElement</span></span><span class="diff-html-added">()</span> 
+                                    </div>
+                                    <div class="block">
+                                         <span class="diff-html-added">Returns</span> <span class="diff-html-added">a</span> <span class="diff-html-added">path</span> <span class="diff-html-added">element</span> <span class="diff-html-added">which</span> <span class="diff-html-added">dereferences</span> <span class="diff-html-added">an</span> <span class="diff-html-added">address</span> <span class="diff-html-added">layout</span> <span class="diff-html-added">as</span> <span class="diff-html-added">its</span> <a href="ValueLayout.OfAddress.html#targetLayout()" target="_parent"><span class="diff-html-added">target</span> <span class="diff-html-added">layout</span> </a><sup><a href="ValueLayout.OfAddress.html#preview-java.lang.foreign.ValueLayout.OfAddress" target="_parent"><span class="diff-html-added">PREVIEW</span></a></sup> <span class="diff-html-added">(where</span> <span class="diff-html-added">set).</span> <span class="diff-html-added">The</span> <span class="diff-html-added">path</span> <span class="diff-html-added">element</span> <span class="diff-html-added">returned</span> <span class="diff-html-added">by</span> <span class="diff-html-added">this</span> <span class="diff-html-added">method</span> <span class="diff-html-added">does</span> <span class="diff-html-added">not</span> <span class="diff-html-added">alter</span> <span class="diff-html-added">the</span> <span class="diff-html-added">number</span> <span class="diff-html-added">of</span> <span class="diff-html-added">free</span> <span class="diff-html-added">dimensions</span> <span class="diff-html-added">of</span> <span class="diff-html-added">any</span> <span class="diff-html-added">path</span> <span class="diff-html-added">that</span> <span class="diff-html-added">is</span> <span class="diff-html-added">combined</span> <span class="diff-html-added">with</span> <span class="diff-html-added">such</span> <span class="diff-html-added">element.</span> <span class="diff-html-added">Using</span> <span class="diff-html-added">this</span> <span class="diff-html-added">path</span> <span class="diff-html-added">layout</span> <span class="diff-html-added">to</span> <span class="diff-html-added">dereference</span> <span class="diff-html-added">an</span> <span class="diff-html-added">address</span> <span class="diff-html-added">layout</span> <span class="diff-html-added">that</span> <span class="diff-html-added">has</span> <span class="diff-html-added">no</span> <span class="diff-html-added">target</span> <span class="diff-html-added">layout</span> <span class="diff-html-added">results</span> <span class="diff-html-added">in</span> <span class="diff-html-added">an</span> <a href="../IllegalArgumentException.html" title="class in java.lang" target="_parent"><code><span class="diff-html-added">IllegalArgumentException</span></code></a> <span class="diff-html-added">(e.g.</span> <span class="diff-html-added">when</span> <span class="diff-html-added">a</span> <span class="diff-html-added">var</span> <span class="diff-html-added">handle</span> <span class="diff-html-added">is</span> <a href="MemoryLayout.html#varHandle(java.lang.foreign.MemoryLayout.PathElement...)" target="_parent"><span class="diff-html-added">obtained</span></a><sup><a href="MemoryLayout.html#preview-java.lang.foreign.MemoryLayout" target="_parent"><span class="diff-html-added">PREVIEW</span></a></sup><span class="diff-html-added">).</span>                                                               
+                                    </div>
+                                    <dl class="notes">
+                                         
+                                        <dt>
+                                            <span class="diff-html-added">Returns:</span>
+                                        </dt>
+                                        <dd>
+                                            <span class="diff-html-added">a</span> <span class="diff-html-added">path</span> <span class="diff-html-added">element</span> <span class="diff-html-added">which</span> <span class="diff-html-added">dereferences</span> <span class="diff-html-added">an</span> <span class="diff-html-added">address</span> <span class="diff-html-added">layout.</span>       
+                                        </dd>
+                                         
+                                    </dl>
+                                      
+                                </section>
+                                        </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        <p style="text-align:center; font-size:10px;"></p>
+    </body>
+</html>

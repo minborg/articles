@@ -1,0 +1,1405 @@
+<html>
+    <head>
+        <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <style>
+                        h3.ctxid {
+                        padding-top:10;
+                        margin: 0;
+                        font-size: 12;
+                        color: darkblue;
+                        }
+                        .diff-html-added {
+                        font-size: 120%;
+                        color: darkgreen;
+                        background-color: #ccffcc;
+                        cursor: pointer;
+                        }
+                        .diff-html-removed {
+                        font-size: 100%;
+                        text-decoration: line-through;
+                        background-color: #fdc6c6;
+                        cursor: pointer;
+                        }
+                        span.diff-html-added img{
+                        border: 2px solid #ccffcc;
+                        }
+                        span.diff-html-removed img{
+                        border: 2px solid #fdc6c6;
+                        }
+                    </style>
+    </head>
+    <body>
+        <table cellpadding="1" cellspacing="0" border="0" width="100%">
+            <tr>
+                <td><a href="package-summary.html" target="_parent">Package Summary</a>&nbsp;&nbsp;<a href="overview-summary.html" target="_parent">Overview Summary</a></td>
+            </tr>
+        </table>
+        <table border="0" cellpadding="1" cellspacing="0" width="100%">
+            <tr>
+                <td>
+                    <h3 class="ctxid">class:SegmentAllocator [CHANGED]</h3>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+                        <tr valign="top">
+                            <td bgcolor="#EEEEEE" colspan="2"> <a name="class:SegmentAllocator"></a> 
+                                <section class="class-description" id="class-description">
+                                    <dl class="notes">
+                                         
+                                        <dt>All Known Subinterfaces:  </dt>
+                                        <dd>
+                                             <code><a href="Arena.html" title="interface in java.lang.foreign" target="_parent">Arena</a><sup><a href="Arena.html#preview-java.lang.foreign.Arena" target="_parent">PREVIEW</a></sup></code> 
+                                        </dd>
+                                         
+                                    </dl>
+                                    <dl class="notes">
+                                         
+                                        <dt>Functional Interface: </dt>
+                                        <dd>This is a functional interface and can therefore be used as the assignment target for a lambda expression or method reference.                    </dd>
+                                         
+                                    </dl>
+                                     
+                                    <hr>
+                                    <div class="type-signature">
+                                         <span class="annotations"><a href="../FunctionalInterface.html" title="annotation interface in java.lang" target="_parent">@FunctionalInterface</a></span><span class="modifiers">public interface   </span><span class="element-name type-name-label">SegmentAllocator</span> 
+                                    </div>
+                                    <div class="preview-block" id="preview-java.lang.foreign.SegmentAllocator">
+                                         <span class="preview-label"><code>SegmentAllocator</code> is a preview API of the Java platform.        </span>
+                                        <div class="preview-comment">
+                                             Programs can only use <code>SegmentAllocator</code> when preview features are enabled.          
+                                        </div>
+                                        <div class="preview-comment">Preview features may be removed in a future release, or upgraded to permanent features of the Java platform.                 </div>
+                                         
+                                    </div>
+                                    <div class="block">
+                                         An object that may be used to allocate <a href="MemorySegment.html" title="interface in java.lang.foreign" target="_parent">memory segments </a><sup><a href="MemorySegment.html#preview-java.lang.foreign.MemorySegment" target="_parent">PREVIEW</a></sup>. Clients implementing this interface must implement the <a href="#allocate(long,long)"><code>allocate(long, long) </code></a> method. This interface defines several default methods which can be useful to create segments from several kinds of Java values such as primitives and arrays. This interface is a <a href="../FunctionalInterface.html" title="annotation interface in java.lang" target="_parent">functional interface </a>: clients can easily obtain a new segment allocator by using either a lambda expression or a method reference.
+                                        <p>
+                                             This interface also defines factories for commonly used allocators:
+                                            <ul>
+                                                <li>
+                                                     <a href="#slicingAllocator(java.lang.foreign.MemorySegment)"><code>
+                                                            <li changetype="diff-removed-tag">
+                                                                 <a href="#nativeAllocator(java.lang.foreign.SegmentScope)"><code><span class="diff-html-removed">nativeAllocator(SegmentScope)</span></code><span class="diff-html-removed"></span></a> <span class="diff-html-removed">obtains</span> <span class="diff-html-removed">a</span> <span class="diff-html-removed">simple</span> <span class="diff-html-removed">allocator</span> <span class="diff-html-removed">which</span> <span class="diff-html-removed">can</span> <span class="diff-html-removed">be</span> <span class="diff-html-removed">used</span> <span class="diff-html-removed">to</span> <span class="diff-html-removed">allocate</span> <span class="diff-html-removed">native</span> <span class="diff-html-removed">segments;</span>             
+                                                            </li>
+                                                            slicingAllocator(MemorySegment)</code></a> obtains an efficient slicing allocator, where memory is allocated by repeatedly slicing the provided memory segment;                 
+                                                </li>
+                                                <li>
+                                                     <a href="#prefixAllocator(java.lang.foreign.MemorySegment)"><code>prefixAllocator(MemorySegment)</code></a> obtains an allocator which wraps a segment (either on-heap or off-heap) and recycles its content upon each new allocation request.                     
+                                                </li>
+                                            </ul>
+                                                     
+                                        </p>
+                                        <p>
+                                             Passing a segment allocator to an API can be especially useful in circumstances where a client wants to communicate <em>where</em> the results of a certain operation (performed by the API) should be stored, as a memory segment. For instance, <a href="Linker.html#downcallHandle(java.lang.foreign.FunctionDescriptor,java.lang.foreign.Linker.Option...)" target="_parent">downcall method handles  </a><sup><a href="Linker.html#preview-java.lang.foreign.Linker" target="_parent">PREVIEW</a></sup> can accept an additional <a href="SegmentAllocator.html" title="interface in java.lang.foreign" target="_parent"><code>SegmentAllocator</code></a><sup><a href="#preview-java.lang.foreign.SegmentAllocator">PREVIEW</a></sup> parameter if the underlying foreign function is known to return a struct by-value. Effectively, the allocator parameter tells the linker runtime where to store the return value of the foreign function.                                                                            
+                                        </p>
+                                                                                                         
+                                    </div>
+                                       
+                                </section>
+                                    </td>
+                        </tr>
+                        <tr valign="top">
+                            <td bgcolor="#CCCCCC" colspan="1"> <a name="class:SegmentAllocator"></a> 
+                                <section class="class-description" id="class-description">
+                                    <dl class="notes">
+                                         
+                                        <dt>All Known Subinterfaces:  </dt>
+                                        <dd>
+                                             <code><a href="Arena.html" title="interface in java.lang.foreign" target="_parent">Arena</a><sup><a href="Arena.html#preview-java.lang.foreign.Arena" target="_parent">PREVIEW</a></sup></code> 
+                                        </dd>
+                                         
+                                    </dl>
+                                    <dl class="notes">
+                                         
+                                        <dt>Functional Interface: </dt>
+                                        <dd>This is a functional interface and can therefore be used as the assignment target for a lambda expression or method reference.                    </dd>
+                                         
+                                    </dl>
+                                     
+                                    <hr>
+                                    <div class="type-signature">
+                                         <span class="annotations"><a href="../FunctionalInterface.html" title="annotation interface in java.lang" target="_parent">@FunctionalInterface</a></span><span class="modifiers">public interface   </span><span class="element-name type-name-label">SegmentAllocator</span> 
+                                    </div>
+                                    <div class="preview-block" id="preview-java.lang.foreign.SegmentAllocator">
+                                         <span class="preview-label"><code>SegmentAllocator</code> is a preview API of the Java platform.        </span>
+                                        <div class="preview-comment">
+                                             Programs can only use <code>SegmentAllocator</code> when preview features are enabled.          
+                                        </div>
+                                        <div class="preview-comment">Preview features may be removed in a future release, or upgraded to permanent features of the Java platform.                 </div>
+                                         
+                                    </div>
+                                    <div class="block">
+                                         An object that may be used to allocate <a href="MemorySegment.html" title="interface in java.lang.foreign" target="_parent">memory segments </a><sup><a href="MemorySegment.html#preview-java.lang.foreign.MemorySegment" target="_parent">PREVIEW</a></sup>. Clients implementing this interface must implement the <a href="#allocate(long,long)"><code>allocate(long, long) </code></a> method. This interface defines several default methods which can be useful to create segments from several kinds of Java values such as primitives and arrays. This interface is a <a href="../FunctionalInterface.html" title="annotation interface in java.lang" target="_parent">functional interface </a>: clients can easily obtain a new segment allocator by using either a lambda expression or a method reference.
+                                        <p>
+                                             This interface also defines factories for commonly used allocators:
+                                            <ul>
+                                                <li changetype="diff-removed-tag">
+                                                     <a href="#nativeAllocator(java.lang.foreign.SegmentScope)"><code>nativeAllocator(SegmentScope)</code></a> obtains a simple allocator which can be used to allocate native segments;             
+                                                </li>
+                                                <li>
+                                                     <a href="#slicingAllocator(java.lang.foreign.MemorySegment)"><code>slicingAllocator(MemorySegment)</code></a> obtains an efficient slicing allocator, where memory is allocated by repeatedly slicing the provided memory segment;                 
+                                                </li>
+                                                <li>
+                                                     <a href="#prefixAllocator(java.lang.foreign.MemorySegment)"><code>prefixAllocator(MemorySegment)</code></a> obtains an allocator which wraps a segment (either on-heap or off-heap) and recycles its content upon each new allocation request.                     
+                                                </li>
+                                            </ul>
+                                                     
+                                        </p>
+                                        <p>
+                                             Passing a segment allocator to an API can be especially useful in circumstances where a client wants to communicate <em>where</em> the results of a certain operation (performed by the API) should be stored, as a memory segment. For instance, <a href="Linker.html#downcallHandle(java.lang.foreign.FunctionDescriptor,java.lang.foreign.Linker.Option...)" target="_parent">downcall method handles  </a><sup><a href="Linker.html#preview-java.lang.foreign.Linker" target="_parent">PREVIEW</a></sup> can accept an additional <a href="SegmentAllocator.html" title="interface in java.lang.foreign" target="_parent"><code>SegmentAllocator</code></a><sup><a href="#preview-java.lang.foreign.SegmentAllocator">PREVIEW</a></sup> parameter if the underlying foreign function is known to return a struct by-value. Effectively, the allocator parameter tells the linker runtime where to store the return value of the foreign function.                                                                            
+                                        </p>
+                                                                                                         
+                                    </div>
+                                       
+                                </section>
+                                    </td><td bgcolor="#FFFFFF" colspan="1"> <a name="class:SegmentAllocator"></a> 
+                                <section class="class-description" id="class-description">
+                                    <dl class="notes">
+                                         
+                                        <dt>All Known Subinterfaces:  </dt>
+                                        <dd>
+                                             <code><a href="Arena.html" title="interface in java.lang.foreign" target="_parent">Arena</a><sup><a href="Arena.html#preview-java.lang.foreign.Arena" target="_parent">PREVIEW</a></sup></code> 
+                                        </dd>
+                                         
+                                    </dl>
+                                    <dl class="notes">
+                                         
+                                        <dt>Functional Interface: </dt>
+                                        <dd>This is a functional interface and can therefore be used as the assignment target for a lambda expression or method reference.                    </dd>
+                                         
+                                    </dl>
+                                     
+                                    <hr>
+                                    <div class="type-signature">
+                                         <span class="annotations"><a href="../FunctionalInterface.html" title="annotation interface in java.lang" target="_parent">@FunctionalInterface</a></span><span class="modifiers">public interface   </span><span class="element-name type-name-label">SegmentAllocator</span> 
+                                    </div>
+                                    <div class="preview-block" id="preview-java.lang.foreign.SegmentAllocator">
+                                         <span class="preview-label"><code>SegmentAllocator</code> is a preview API of the Java platform.        </span>
+                                        <div class="preview-comment">
+                                             Programs can only use <code>SegmentAllocator</code> when preview features are enabled.          
+                                        </div>
+                                        <div class="preview-comment">Preview features may be removed in a future release, or upgraded to permanent features of the Java platform.                 </div>
+                                         
+                                    </div>
+                                    <div class="block">
+                                         An object that may be used to allocate <a href="MemorySegment.html" title="interface in java.lang.foreign" target="_parent">memory segments </a><sup><a href="MemorySegment.html#preview-java.lang.foreign.MemorySegment" target="_parent">PREVIEW</a></sup>. Clients implementing this interface must implement the <a href="#allocate(long,long)"><code>allocate(long, long) </code></a> method. This interface defines several default methods which can be useful to create segments from several kinds of Java values such as primitives and arrays. This interface is a <a href="../FunctionalInterface.html" title="annotation interface in java.lang" target="_parent">functional interface </a>: clients can easily obtain a new segment allocator by using either a lambda expression or a method reference.
+                                        <p>
+                                             This interface also defines factories for commonly used allocators:
+                                            <ul>
+                                                <li>
+                                                     <a href="#slicingAllocator(java.lang.foreign.MemorySegment)"><code>slicingAllocator(MemorySegment)</code></a> obtains an efficient slicing allocator, where memory is allocated by repeatedly slicing the provided memory segment;                 
+                                                </li>
+                                                <li>
+                                                     <a href="#prefixAllocator(java.lang.foreign.MemorySegment)"><code>prefixAllocator(MemorySegment)</code></a> obtains an allocator which wraps a segment (either on-heap or off-heap) and recycles its content upon each new allocation request.                     
+                                                </li>
+                                            </ul>
+                                                     
+                                        </p>
+                                        <p>
+                                             Passing a segment allocator to an API can be especially useful in circumstances where a client wants to communicate <em>where</em> the results of a certain operation (performed by the API) should be stored, as a memory segment. For instance, <a href="Linker.html#downcallHandle(java.lang.foreign.FunctionDescriptor,java.lang.foreign.Linker.Option...)" target="_parent">downcall method handles  </a><sup><a href="Linker.html#preview-java.lang.foreign.Linker" target="_parent">PREVIEW</a></sup> can accept an additional <a href="SegmentAllocator.html" title="interface in java.lang.foreign" target="_parent"><code>SegmentAllocator</code></a><sup><a href="#preview-java.lang.foreign.SegmentAllocator">PREVIEW</a></sup> parameter if the underlying foreign function is known to return a struct by-value. Effectively, the allocator parameter tells the linker runtime where to store the return value of the foreign function.                                                                            
+                                        </p>
+                                                                                                         
+                                    </div>
+                                       
+                                </section>
+                                    </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        <table border="0" cellpadding="1" cellspacing="0" width="100%">
+            <tr>
+                <td>
+                    <h3 class="ctxid">method:allocateUtf8String(java.lang.String) [NONE]</h3>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+                        <tr valign="top">
+                            <td bgcolor="#FFFFFF" colspan="1">
+                                <li>
+                                     <a name="method:allocateUtf8String(java.lang.String)"></a> 
+                                    <section class="detail" id="allocateUtf8String(java.lang.String)">
+                                        <h3>allocateUtf8String</h3>
+                                        <div class="member-signature">
+                                             <span class="modifiers">default</span>&nbsp;<span class="return-type"><a href="MemorySegment.html" title="interface in java.lang.foreign" target="_parent">MemorySegment</a><sup><a href="MemorySegment.html#preview-java.lang.foreign.MemorySegment" target="_parent">PREVIEW</a></sup></span>&nbsp;<span class="element-name">allocateUtf8String</span> 
+                                            <wbr></wbr>
+                                             <span class="parameters">(<a href="../String.html" title="class in java.lang" target="_parent">String</a>&nbsp;str)</span>   
+                                        </div>
+                                        <div class="block">
+                                             Converts a Java string into a UTF-8 encoded, null-terminated C string, storing the result into a memory segment.
+                                            <p>
+                                                 This method always replaces malformed-input and unmappable-character sequences with this charset's default replacement byte array. The <a href="../../nio/charset/CharsetEncoder.html" title="class in java.nio.charset" target="_parent"><code>CharsetEncoder</code></a> class should be used when more control over the encoding process is required.                              
+                                            </p>
+                                            <p>
+                                                 If the given string contains any <code>'\0'</code> characters, they will be copied as well. This means that, depending on the method used to read the string, such as <a href="MemorySegment.html#getUtf8String(long)" target="_parent"><code>MemorySegment.getUtf8String(long)</code></a><sup><a href="MemorySegment.html#preview-java.lang.foreign.MemorySegment" target="_parent">PREVIEW</a></sup>, the string will appear truncated when read again.                                     
+                                            </p>
+                                                              
+                                        </div>
+                                        <dl class="notes">
+                                             
+                                            <dt>Implementation Requirements: </dt>
+                                            <dd>
+                                                 the default implementation for this method copies the contents of the provided Java string into a new memory segment obtained by calling <code>this.allocate(str.length() + 1)  </code>.                       
+                                            </dd>
+                                             
+                                            <dt>Parameters:</dt>
+                                            <dd>
+                                                 <code>str</code> - the Java string to be converted into a C string.            
+                                            </dd>
+                                             
+                                            <dt>Returns:</dt>
+                                            <dd>a new native segment containing the converted C string.        </dd>
+                                               
+                                        </dl>
+                                          
+                                    </section>
+                                      
+                                </li>
+                                  </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        <table border="0" cellpadding="1" cellspacing="0" width="100%">
+            <tr>
+                <td>
+                    <h3 class="ctxid">method:allocate(java.lang.foreign.ValueLayout.OfByte,byte) [NONE]</h3>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+                        <tr valign="top">
+                            <td bgcolor="#FFFFFF" colspan="1"> <a name="method:allocate(java.lang.foreign.ValueLayout.OfByte,byte)"></a> 
+                                <section class="detail" id="allocate(java.lang.foreign.ValueLayout.OfByte,byte)">
+                                    <h3>allocate</h3>
+                                    <div class="member-signature">
+                                         <span class="modifiers">default</span>&nbsp;<span class="return-type"><a href="MemorySegment.html" title="interface in java.lang.foreign" target="_parent">MemorySegment</a><sup><a href="MemorySegment.html#preview-java.lang.foreign.MemorySegment" target="_parent">PREVIEW</a></sup></span>&nbsp;<span class="element-name">allocate</span> 
+                                        <wbr></wbr>
+                                         <span class="parameters">(<a href="ValueLayout.OfByte.html" title="interface in java.lang.foreign" target="_parent">ValueLayout.OfByte</a><sup><a href="ValueLayout.OfByte.html#preview-java.lang.foreign.ValueLayout.OfByte" target="_parent">PREVIEW</a></sup>&nbsp;layout, byte&nbsp;value) </span>   
+                                    </div>
+                                    <div class="block">Allocates a memory segment with the given layout and initializes it with the given byte value.               </div>
+                                    <dl class="notes">
+                                         
+                                        <dt>Implementation Requirements: </dt>
+                                        <dd>
+                                             the default implementation for this method calls <code>this.allocate(layout)</code>.        
+                                        </dd>
+                                         
+                                        <dt>Parameters:</dt>
+                                        <dd>
+                                             <code>layout</code> - the layout of the block of memory to be allocated.            
+                                        </dd>
+                                        <dd>
+                                             <code>value</code> - the value to be set on the newly allocated memory block.             
+                                        </dd>
+                                         
+                                        <dt>Returns:</dt>
+                                        <dd>a segment for the newly allocated memory block.       </dd>
+                                           
+                                    </dl>
+                                      
+                                </section>
+                                    </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        <table border="0" cellpadding="1" cellspacing="0" width="100%">
+            <tr>
+                <td>
+                    <h3 class="ctxid">method:allocate(java.lang.foreign.ValueLayout.OfChar,char) [NONE]</h3>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+                        <tr valign="top">
+                            <td bgcolor="#FFFFFF" colspan="1"> <a name="method:allocate(java.lang.foreign.ValueLayout.OfChar,char)"></a> 
+                                <section class="detail" id="allocate(java.lang.foreign.ValueLayout.OfChar,char)">
+                                    <h3>allocate</h3>
+                                    <div class="member-signature">
+                                         <span class="modifiers">default</span>&nbsp;<span class="return-type"><a href="MemorySegment.html" title="interface in java.lang.foreign" target="_parent">MemorySegment</a><sup><a href="MemorySegment.html#preview-java.lang.foreign.MemorySegment" target="_parent">PREVIEW</a></sup></span>&nbsp;<span class="element-name">allocate</span> 
+                                        <wbr></wbr>
+                                         <span class="parameters">(<a href="ValueLayout.OfChar.html" title="interface in java.lang.foreign" target="_parent">ValueLayout.OfChar</a><sup><a href="ValueLayout.OfChar.html#preview-java.lang.foreign.ValueLayout.OfChar" target="_parent">PREVIEW</a></sup>&nbsp;layout, char&nbsp;value) </span>   
+                                    </div>
+                                    <div class="block">Allocates a memory segment with the given layout and initializes it with the given char value.               </div>
+                                    <dl class="notes">
+                                         
+                                        <dt>Implementation Requirements: </dt>
+                                        <dd>
+                                             the default implementation for this method calls <code>this.allocate(layout)</code>.        
+                                        </dd>
+                                         
+                                        <dt>Parameters:</dt>
+                                        <dd>
+                                             <code>layout</code> - the layout of the block of memory to be allocated.            
+                                        </dd>
+                                        <dd>
+                                             <code>value</code> - the value to be set on the newly allocated memory block.             
+                                        </dd>
+                                         
+                                        <dt>Returns:</dt>
+                                        <dd>a segment for the newly allocated memory block.       </dd>
+                                           
+                                    </dl>
+                                      
+                                </section>
+                                    </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        <table border="0" cellpadding="1" cellspacing="0" width="100%">
+            <tr>
+                <td>
+                    <h3 class="ctxid">method:allocate(java.lang.foreign.ValueLayout.OfShort,short) [NONE]</h3>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+                        <tr valign="top">
+                            <td bgcolor="#FFFFFF" colspan="1"> <a name="method:allocate(java.lang.foreign.ValueLayout.OfShort,short)"></a> 
+                                <section class="detail" id="allocate(java.lang.foreign.ValueLayout.OfShort,short)">
+                                    <h3>allocate</h3>
+                                    <div class="member-signature">
+                                         <span class="modifiers">default</span>&nbsp;<span class="return-type"><a href="MemorySegment.html" title="interface in java.lang.foreign" target="_parent">MemorySegment</a><sup><a href="MemorySegment.html#preview-java.lang.foreign.MemorySegment" target="_parent">PREVIEW</a></sup></span>&nbsp;<span class="element-name">allocate</span> 
+                                        <wbr></wbr>
+                                         <span class="parameters">(<a href="ValueLayout.OfShort.html" title="interface in java.lang.foreign" target="_parent">ValueLayout.OfShort</a><sup><a href="ValueLayout.OfShort.html#preview-java.lang.foreign.ValueLayout.OfShort" target="_parent">PREVIEW</a></sup>&nbsp;layout, short&nbsp;value) </span>   
+                                    </div>
+                                    <div class="block">Allocates a memory segment with the given layout and initializes it with the given short value.               </div>
+                                    <dl class="notes">
+                                         
+                                        <dt>Implementation Requirements: </dt>
+                                        <dd>
+                                             the default implementation for this method calls <code>this.allocate(layout)</code>.        
+                                        </dd>
+                                         
+                                        <dt>Parameters:</dt>
+                                        <dd>
+                                             <code>layout</code> - the layout of the block of memory to be allocated.            
+                                        </dd>
+                                        <dd>
+                                             <code>value</code> - the value to be set on the newly allocated memory block.             
+                                        </dd>
+                                         
+                                        <dt>Returns:</dt>
+                                        <dd>a segment for the newly allocated memory block.       </dd>
+                                           
+                                    </dl>
+                                      
+                                </section>
+                                    </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        <table border="0" cellpadding="1" cellspacing="0" width="100%">
+            <tr>
+                <td>
+                    <h3 class="ctxid">method:allocate(java.lang.foreign.ValueLayout.OfInt,int) [NONE]</h3>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+                        <tr valign="top">
+                            <td bgcolor="#FFFFFF" colspan="1"> <a name="method:allocate(java.lang.foreign.ValueLayout.OfInt,int)"></a> 
+                                <section class="detail" id="allocate(java.lang.foreign.ValueLayout.OfInt,int)">
+                                    <h3>allocate</h3>
+                                    <div class="member-signature">
+                                         <span class="modifiers">default</span>&nbsp;<span class="return-type"><a href="MemorySegment.html" title="interface in java.lang.foreign" target="_parent">MemorySegment</a><sup><a href="MemorySegment.html#preview-java.lang.foreign.MemorySegment" target="_parent">PREVIEW</a></sup></span>&nbsp;<span class="element-name">allocate</span> 
+                                        <wbr></wbr>
+                                         <span class="parameters">(<a href="ValueLayout.OfInt.html" title="interface in java.lang.foreign" target="_parent">ValueLayout.OfInt</a><sup><a href="ValueLayout.OfInt.html#preview-java.lang.foreign.ValueLayout.OfInt" target="_parent">PREVIEW</a></sup>&nbsp;layout, int&nbsp;value) </span>   
+                                    </div>
+                                    <div class="block">Allocates a memory segment with the given layout and initializes it with the given int value.               </div>
+                                    <dl class="notes">
+                                         
+                                        <dt>Implementation Requirements: </dt>
+                                        <dd>
+                                             the default implementation for this method calls <code>this.allocate(layout)</code>.        
+                                        </dd>
+                                         
+                                        <dt>Parameters:</dt>
+                                        <dd>
+                                             <code>layout</code> - the layout of the block of memory to be allocated.            
+                                        </dd>
+                                        <dd>
+                                             <code>value</code> - the value to be set on the newly allocated memory block.             
+                                        </dd>
+                                         
+                                        <dt>Returns:</dt>
+                                        <dd>a segment for the newly allocated memory block.       </dd>
+                                           
+                                    </dl>
+                                      
+                                </section>
+                                    </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        <table border="0" cellpadding="1" cellspacing="0" width="100%">
+            <tr>
+                <td>
+                    <h3 class="ctxid">method:allocate(java.lang.foreign.ValueLayout.OfFloat,float) [NONE]</h3>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+                        <tr valign="top">
+                            <td bgcolor="#FFFFFF" colspan="1"> <a name="method:allocate(java.lang.foreign.ValueLayout.OfFloat,float)"></a> 
+                                <section class="detail" id="allocate(java.lang.foreign.ValueLayout.OfFloat,float)">
+                                    <h3>allocate</h3>
+                                    <div class="member-signature">
+                                         <span class="modifiers">default</span>&nbsp;<span class="return-type"><a href="MemorySegment.html" title="interface in java.lang.foreign" target="_parent">MemorySegment</a><sup><a href="MemorySegment.html#preview-java.lang.foreign.MemorySegment" target="_parent">PREVIEW</a></sup></span>&nbsp;<span class="element-name">allocate</span> 
+                                        <wbr></wbr>
+                                         <span class="parameters">(<a href="ValueLayout.OfFloat.html" title="interface in java.lang.foreign" target="_parent">ValueLayout.OfFloat</a><sup><a href="ValueLayout.OfFloat.html#preview-java.lang.foreign.ValueLayout.OfFloat" target="_parent">PREVIEW</a></sup>&nbsp;layout, float&nbsp;value) </span>   
+                                    </div>
+                                    <div class="block">Allocates a memory segment with the given layout and initializes it with the given float value.               </div>
+                                    <dl class="notes">
+                                         
+                                        <dt>Implementation Requirements: </dt>
+                                        <dd>
+                                             the default implementation for this method calls <code>this.allocate(layout)</code>.        
+                                        </dd>
+                                         
+                                        <dt>Parameters:</dt>
+                                        <dd>
+                                             <code>layout</code> - the layout of the block of memory to be allocated.            
+                                        </dd>
+                                        <dd>
+                                             <code>value</code> - the value to be set on the newly allocated memory block.             
+                                        </dd>
+                                         
+                                        <dt>Returns:</dt>
+                                        <dd>a segment for the newly allocated memory block.       </dd>
+                                           
+                                    </dl>
+                                      
+                                </section>
+                                    </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        <table border="0" cellpadding="1" cellspacing="0" width="100%">
+            <tr>
+                <td>
+                    <h3 class="ctxid">method:allocate(java.lang.foreign.ValueLayout.OfLong,long) [NONE]</h3>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+                        <tr valign="top">
+                            <td bgcolor="#FFFFFF" colspan="1"> <a name="method:allocate(java.lang.foreign.ValueLayout.OfLong,long)"></a> 
+                                <section class="detail" id="allocate(java.lang.foreign.ValueLayout.OfLong,long)">
+                                    <h3>allocate</h3>
+                                    <div class="member-signature">
+                                         <span class="modifiers">default</span>&nbsp;<span class="return-type"><a href="MemorySegment.html" title="interface in java.lang.foreign" target="_parent">MemorySegment</a><sup><a href="MemorySegment.html#preview-java.lang.foreign.MemorySegment" target="_parent">PREVIEW</a></sup></span>&nbsp;<span class="element-name">allocate</span> 
+                                        <wbr></wbr>
+                                         <span class="parameters">(<a href="ValueLayout.OfLong.html" title="interface in java.lang.foreign" target="_parent">ValueLayout.OfLong</a><sup><a href="ValueLayout.OfLong.html#preview-java.lang.foreign.ValueLayout.OfLong" target="_parent">PREVIEW</a></sup>&nbsp;layout, long&nbsp;value) </span>   
+                                    </div>
+                                    <div class="block">Allocates a memory segment with the given layout and initializes it with the given long value.               </div>
+                                    <dl class="notes">
+                                         
+                                        <dt>Implementation Requirements: </dt>
+                                        <dd>
+                                             the default implementation for this method calls <code>this.allocate(layout)</code>.        
+                                        </dd>
+                                         
+                                        <dt>Parameters:</dt>
+                                        <dd>
+                                             <code>layout</code> - the layout of the block of memory to be allocated.            
+                                        </dd>
+                                        <dd>
+                                             <code>value</code> - the value to be set on the newly allocated memory block.             
+                                        </dd>
+                                         
+                                        <dt>Returns:</dt>
+                                        <dd>a segment for the newly allocated memory block.       </dd>
+                                           
+                                    </dl>
+                                      
+                                </section>
+                                    </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        <table border="0" cellpadding="1" cellspacing="0" width="100%">
+            <tr>
+                <td>
+                    <h3 class="ctxid">method:allocate(java.lang.foreign.ValueLayout.OfDouble,double) [NONE]</h3>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+                        <tr valign="top">
+                            <td bgcolor="#FFFFFF" colspan="1"> <a name="method:allocate(java.lang.foreign.ValueLayout.OfDouble,double)"></a> 
+                                <section class="detail" id="allocate(java.lang.foreign.ValueLayout.OfDouble,double)">
+                                    <h3>allocate</h3>
+                                    <div class="member-signature">
+                                         <span class="modifiers">default</span>&nbsp;<span class="return-type"><a href="MemorySegment.html" title="interface in java.lang.foreign" target="_parent">MemorySegment</a><sup><a href="MemorySegment.html#preview-java.lang.foreign.MemorySegment" target="_parent">PREVIEW</a></sup></span>&nbsp;<span class="element-name">allocate</span> 
+                                        <wbr></wbr>
+                                         <span class="parameters">(<a href="ValueLayout.OfDouble.html" title="interface in java.lang.foreign" target="_parent">ValueLayout.OfDouble</a><sup><a href="ValueLayout.OfDouble.html#preview-java.lang.foreign.ValueLayout.OfDouble" target="_parent">PREVIEW</a></sup>&nbsp;layout, double&nbsp;value) </span>   
+                                    </div>
+                                    <div class="block">Allocates a memory segment with the given layout and initializes it with the given double value.               </div>
+                                    <dl class="notes">
+                                         
+                                        <dt>Implementation Requirements: </dt>
+                                        <dd>
+                                             the default implementation for this method calls <code>this.allocate(layout)</code>.        
+                                        </dd>
+                                         
+                                        <dt>Parameters:</dt>
+                                        <dd>
+                                             <code>layout</code> - the layout of the block of memory to be allocated.            
+                                        </dd>
+                                        <dd>
+                                             <code>value</code> - the value to be set on the newly allocated memory block.             
+                                        </dd>
+                                         
+                                        <dt>Returns:</dt>
+                                        <dd>a segment for the newly allocated memory block.       </dd>
+                                           
+                                    </dl>
+                                      
+                                </section>
+                                    </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        <table border="0" cellpadding="1" cellspacing="0" width="100%">
+            <tr>
+                <td>
+                    <h3 class="ctxid">method:allocate(java.lang.foreign.ValueLayout.OfAddress,java.lang.foreign.MemorySegment) [NONE]</h3>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+                        <tr valign="top">
+                            <td bgcolor="#FFFFFF" colspan="1"> <a name="method:allocate(java.lang.foreign.ValueLayout.OfAddress,java.lang.foreign.MemorySegment)"></a> 
+                                <section class="detail" id="allocate(java.lang.foreign.ValueLayout.OfAddress,java.lang.foreign.MemorySegment)">
+                                    <h3>allocate</h3>
+                                    <div class="member-signature">
+                                         <span class="modifiers">default</span>&nbsp;<span class="return-type"><a href="MemorySegment.html" title="interface in java.lang.foreign" target="_parent">MemorySegment</a><sup><a href="MemorySegment.html#preview-java.lang.foreign.MemorySegment" target="_parent">PREVIEW</a></sup></span>&nbsp;<span class="element-name">allocate</span> 
+                                        <wbr></wbr>
+                                         <span class="parameters">(<a href="ValueLayout.OfAddress.html" title="interface in java.lang.foreign" target="_parent">ValueLayout.OfAddress</a><sup><a href="ValueLayout.OfAddress.html#preview-java.lang.foreign.ValueLayout.OfAddress" target="_parent">PREVIEW</a></sup>&nbsp;layout, <a href="MemorySegment.html" title="interface in java.lang.foreign" target="_parent">MemorySegment</a><sup><a href="MemorySegment.html#preview-java.lang.foreign.MemorySegment" target="_parent">PREVIEW</a></sup>&nbsp;value) </span>   
+                                    </div>
+                                    <div class="block">
+                                         Allocates a memory segment with the given layout and initializes it with the given address value. The address value might be narrowed according to the platform address size (see <a href="ValueLayout.html#ADDRESS" target="_parent"><code>ValueLayout.ADDRESS</code></a><sup><a href="ValueLayout.html#preview-java.lang.foreign.ValueLayout" target="_parent">PREVIEW</a></sup>).                              
+                                    </div>
+                                    <dl class="notes">
+                                         
+                                        <dt>Implementation Requirements: </dt>
+                                        <dd>
+                                             the default implementation for this method calls <code>this.allocate(layout)</code>.        
+                                        </dd>
+                                         
+                                        <dt>Parameters:</dt>
+                                        <dd>
+                                             <code>layout</code> - the layout of the block of memory to be allocated.            
+                                        </dd>
+                                        <dd>
+                                             <code>value</code> - the value to be set on the newly allocated memory block.             
+                                        </dd>
+                                         
+                                        <dt>Returns:</dt>
+                                        <dd>a segment for the newly allocated memory block.       </dd>
+                                           
+                                    </dl>
+                                      
+                                </section>
+                                    </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        <table border="0" cellpadding="1" cellspacing="0" width="100%">
+            <tr>
+                <td>
+                    <h3 class="ctxid">method:allocateArray(java.lang.foreign.ValueLayout.OfByte,byte...) [NONE]</h3>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+                        <tr valign="top">
+                            <td bgcolor="#FFFFFF" colspan="1"> <a name="method:allocateArray(java.lang.foreign.ValueLayout.OfByte,byte...)"></a> 
+                                <section class="detail" id="allocateArray(java.lang.foreign.ValueLayout.OfByte,byte...)">
+                                    <h3>allocateArray</h3>
+                                    <div class="member-signature">
+                                         <span class="modifiers">default</span>&nbsp;<span class="return-type"><a href="MemorySegment.html" title="interface in java.lang.foreign" target="_parent">MemorySegment</a><sup><a href="MemorySegment.html#preview-java.lang.foreign.MemorySegment" target="_parent">PREVIEW</a></sup></span>&nbsp;<span class="element-name">allocateArray</span> 
+                                        <wbr></wbr>
+                                         <span class="parameters">(<a href="ValueLayout.OfByte.html" title="interface in java.lang.foreign" target="_parent">ValueLayout.OfByte</a><sup><a href="ValueLayout.OfByte.html#preview-java.lang.foreign.ValueLayout.OfByte" target="_parent">PREVIEW</a></sup>&nbsp;elementLayout, byte...&nbsp;elements) </span>   
+                                    </div>
+                                    <div class="block">Allocates a memory segment with the given layout and initializes it with the given byte elements.               </div>
+                                    <dl class="notes">
+                                         
+                                        <dt>Implementation Requirements: </dt>
+                                        <dd>
+                                             the default implementation for this method calls <code>this.allocateArray(layout, array.length) </code>.        
+                                        </dd>
+                                         
+                                        <dt>Parameters:</dt>
+                                        <dd>
+                                             <code>elementLayout</code> - the element layout of the array to be allocated.           
+                                        </dd>
+                                        <dd>
+                                             <code>elements</code> - the byte elements to be copied to the newly allocated memory block.              
+                                        </dd>
+                                         
+                                        <dt>Returns:</dt>
+                                        <dd>a segment for the newly allocated memory block.       </dd>
+                                           
+                                    </dl>
+                                      
+                                </section>
+                                    </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        <table border="0" cellpadding="1" cellspacing="0" width="100%">
+            <tr>
+                <td>
+                    <h3 class="ctxid">method:allocateArray(java.lang.foreign.ValueLayout.OfShort,short...) [NONE]</h3>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+                        <tr valign="top">
+                            <td bgcolor="#FFFFFF" colspan="1"> <a name="method:allocateArray(java.lang.foreign.ValueLayout.OfShort,short...)"></a> 
+                                <section class="detail" id="allocateArray(java.lang.foreign.ValueLayout.OfShort,short...)">
+                                    <h3>allocateArray</h3>
+                                    <div class="member-signature">
+                                         <span class="modifiers">default</span>&nbsp;<span class="return-type"><a href="MemorySegment.html" title="interface in java.lang.foreign" target="_parent">MemorySegment</a><sup><a href="MemorySegment.html#preview-java.lang.foreign.MemorySegment" target="_parent">PREVIEW</a></sup></span>&nbsp;<span class="element-name">allocateArray</span> 
+                                        <wbr></wbr>
+                                         <span class="parameters">(<a href="ValueLayout.OfShort.html" title="interface in java.lang.foreign" target="_parent">ValueLayout.OfShort</a><sup><a href="ValueLayout.OfShort.html#preview-java.lang.foreign.ValueLayout.OfShort" target="_parent">PREVIEW</a></sup>&nbsp;elementLayout, short...&nbsp;elements) </span>   
+                                    </div>
+                                    <div class="block">Allocates a memory segment with the given layout and initializes it with the given short elements.               </div>
+                                    <dl class="notes">
+                                         
+                                        <dt>Implementation Requirements: </dt>
+                                        <dd>
+                                             the default implementation for this method calls <code>this.allocateArray(layout, array.length) </code>.        
+                                        </dd>
+                                         
+                                        <dt>Parameters:</dt>
+                                        <dd>
+                                             <code>elementLayout</code> - the element layout of the array to be allocated.           
+                                        </dd>
+                                        <dd>
+                                             <code>elements</code> - the short elements to be copied to the newly allocated memory block.              
+                                        </dd>
+                                         
+                                        <dt>Returns:</dt>
+                                        <dd>a segment for the newly allocated memory block.       </dd>
+                                           
+                                    </dl>
+                                      
+                                </section>
+                                    </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        <table border="0" cellpadding="1" cellspacing="0" width="100%">
+            <tr>
+                <td>
+                    <h3 class="ctxid">method:allocateArray(java.lang.foreign.ValueLayout.OfChar,char...) [NONE]</h3>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+                        <tr valign="top">
+                            <td bgcolor="#FFFFFF" colspan="1"> <a name="method:allocateArray(java.lang.foreign.ValueLayout.OfChar,char...)"></a> 
+                                <section class="detail" id="allocateArray(java.lang.foreign.ValueLayout.OfChar,char...)">
+                                    <h3>allocateArray</h3>
+                                    <div class="member-signature">
+                                         <span class="modifiers">default</span>&nbsp;<span class="return-type"><a href="MemorySegment.html" title="interface in java.lang.foreign" target="_parent">MemorySegment</a><sup><a href="MemorySegment.html#preview-java.lang.foreign.MemorySegment" target="_parent">PREVIEW</a></sup></span>&nbsp;<span class="element-name">allocateArray</span> 
+                                        <wbr></wbr>
+                                         <span class="parameters">(<a href="ValueLayout.OfChar.html" title="interface in java.lang.foreign" target="_parent">ValueLayout.OfChar</a><sup><a href="ValueLayout.OfChar.html#preview-java.lang.foreign.ValueLayout.OfChar" target="_parent">PREVIEW</a></sup>&nbsp;elementLayout, char...&nbsp;elements) </span>   
+                                    </div>
+                                    <div class="block">Allocates a memory segment with the given layout and initializes it with the given char elements.               </div>
+                                    <dl class="notes">
+                                         
+                                        <dt>Implementation Requirements: </dt>
+                                        <dd>
+                                             the default implementation for this method calls <code>this.allocateArray(layout, array.length) </code>.        
+                                        </dd>
+                                         
+                                        <dt>Parameters:</dt>
+                                        <dd>
+                                             <code>elementLayout</code> - the element layout of the array to be allocated.           
+                                        </dd>
+                                        <dd>
+                                             <code>elements</code> - the char elements to be copied to the newly allocated memory block.              
+                                        </dd>
+                                         
+                                        <dt>Returns:</dt>
+                                        <dd>a segment for the newly allocated memory block.       </dd>
+                                           
+                                    </dl>
+                                      
+                                </section>
+                                    </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        <table border="0" cellpadding="1" cellspacing="0" width="100%">
+            <tr>
+                <td>
+                    <h3 class="ctxid">method:allocateArray(java.lang.foreign.ValueLayout.OfInt,int...) [NONE]</h3>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+                        <tr valign="top">
+                            <td bgcolor="#FFFFFF" colspan="1"> <a name="method:allocateArray(java.lang.foreign.ValueLayout.OfInt,int...)"></a> 
+                                <section class="detail" id="allocateArray(java.lang.foreign.ValueLayout.OfInt,int...)">
+                                    <h3>allocateArray</h3>
+                                    <div class="member-signature">
+                                         <span class="modifiers">default</span>&nbsp;<span class="return-type"><a href="MemorySegment.html" title="interface in java.lang.foreign" target="_parent">MemorySegment</a><sup><a href="MemorySegment.html#preview-java.lang.foreign.MemorySegment" target="_parent">PREVIEW</a></sup></span>&nbsp;<span class="element-name">allocateArray</span> 
+                                        <wbr></wbr>
+                                         <span class="parameters">(<a href="ValueLayout.OfInt.html" title="interface in java.lang.foreign" target="_parent">ValueLayout.OfInt</a><sup><a href="ValueLayout.OfInt.html#preview-java.lang.foreign.ValueLayout.OfInt" target="_parent">PREVIEW</a></sup>&nbsp;elementLayout, int...&nbsp;elements) </span>   
+                                    </div>
+                                    <div class="block">Allocates a memory segment with the given layout and initializes it with the given int elements.               </div>
+                                    <dl class="notes">
+                                         
+                                        <dt>Implementation Requirements: </dt>
+                                        <dd>
+                                             the default implementation for this method calls <code>this.allocateArray(layout, array.length) </code>.        
+                                        </dd>
+                                         
+                                        <dt>Parameters:</dt>
+                                        <dd>
+                                             <code>elementLayout</code> - the element layout of the array to be allocated.           
+                                        </dd>
+                                        <dd>
+                                             <code>elements</code> - the int elements to be copied to the newly allocated memory block.              
+                                        </dd>
+                                         
+                                        <dt>Returns:</dt>
+                                        <dd>a segment for the newly allocated memory block.       </dd>
+                                           
+                                    </dl>
+                                      
+                                </section>
+                                    </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        <table border="0" cellpadding="1" cellspacing="0" width="100%">
+            <tr>
+                <td>
+                    <h3 class="ctxid">method:allocateArray(java.lang.foreign.ValueLayout.OfFloat,float...) [NONE]</h3>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+                        <tr valign="top">
+                            <td bgcolor="#FFFFFF" colspan="1"> <a name="method:allocateArray(java.lang.foreign.ValueLayout.OfFloat,float...)"></a> 
+                                <section class="detail" id="allocateArray(java.lang.foreign.ValueLayout.OfFloat,float...)">
+                                    <h3>allocateArray</h3>
+                                    <div class="member-signature">
+                                         <span class="modifiers">default</span>&nbsp;<span class="return-type"><a href="MemorySegment.html" title="interface in java.lang.foreign" target="_parent">MemorySegment</a><sup><a href="MemorySegment.html#preview-java.lang.foreign.MemorySegment" target="_parent">PREVIEW</a></sup></span>&nbsp;<span class="element-name">allocateArray</span> 
+                                        <wbr></wbr>
+                                         <span class="parameters">(<a href="ValueLayout.OfFloat.html" title="interface in java.lang.foreign" target="_parent">ValueLayout.OfFloat</a><sup><a href="ValueLayout.OfFloat.html#preview-java.lang.foreign.ValueLayout.OfFloat" target="_parent">PREVIEW</a></sup>&nbsp;elementLayout, float...&nbsp;elements) </span>   
+                                    </div>
+                                    <div class="block">Allocates a memory segment with the given layout and initializes it with the given float elements.               </div>
+                                    <dl class="notes">
+                                         
+                                        <dt>Implementation Requirements: </dt>
+                                        <dd>
+                                             the default implementation for this method calls <code>this.allocateArray(layout, array.length) </code>.        
+                                        </dd>
+                                         
+                                        <dt>Parameters:</dt>
+                                        <dd>
+                                             <code>elementLayout</code> - the element layout of the array to be allocated.           
+                                        </dd>
+                                        <dd>
+                                             <code>elements</code> - the float elements to be copied to the newly allocated memory block.              
+                                        </dd>
+                                         
+                                        <dt>Returns:</dt>
+                                        <dd>a segment for the newly allocated memory block.       </dd>
+                                           
+                                    </dl>
+                                      
+                                </section>
+                                    </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        <table border="0" cellpadding="1" cellspacing="0" width="100%">
+            <tr>
+                <td>
+                    <h3 class="ctxid">method:allocateArray(java.lang.foreign.ValueLayout.OfLong,long...) [NONE]</h3>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+                        <tr valign="top">
+                            <td bgcolor="#FFFFFF" colspan="1"> <a name="method:allocateArray(java.lang.foreign.ValueLayout.OfLong,long...)"></a> 
+                                <section class="detail" id="allocateArray(java.lang.foreign.ValueLayout.OfLong,long...)">
+                                    <h3>allocateArray</h3>
+                                    <div class="member-signature">
+                                         <span class="modifiers">default</span>&nbsp;<span class="return-type"><a href="MemorySegment.html" title="interface in java.lang.foreign" target="_parent">MemorySegment</a><sup><a href="MemorySegment.html#preview-java.lang.foreign.MemorySegment" target="_parent">PREVIEW</a></sup></span>&nbsp;<span class="element-name">allocateArray</span> 
+                                        <wbr></wbr>
+                                         <span class="parameters">(<a href="ValueLayout.OfLong.html" title="interface in java.lang.foreign" target="_parent">ValueLayout.OfLong</a><sup><a href="ValueLayout.OfLong.html#preview-java.lang.foreign.ValueLayout.OfLong" target="_parent">PREVIEW</a></sup>&nbsp;elementLayout, long...&nbsp;elements) </span>   
+                                    </div>
+                                    <div class="block">Allocates a memory segment with the given layout and initializes it with the given long elements.               </div>
+                                    <dl class="notes">
+                                         
+                                        <dt>Implementation Requirements: </dt>
+                                        <dd>
+                                             the default implementation for this method calls <code>this.allocateArray(layout, array.length) </code>.        
+                                        </dd>
+                                         
+                                        <dt>Parameters:</dt>
+                                        <dd>
+                                             <code>elementLayout</code> - the element layout of the array to be allocated.           
+                                        </dd>
+                                        <dd>
+                                             <code>elements</code> - the long elements to be copied to the newly allocated memory block.              
+                                        </dd>
+                                         
+                                        <dt>Returns:</dt>
+                                        <dd>a segment for the newly allocated memory block.       </dd>
+                                           
+                                    </dl>
+                                      
+                                </section>
+                                    </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        <table border="0" cellpadding="1" cellspacing="0" width="100%">
+            <tr>
+                <td>
+                    <h3 class="ctxid">method:allocateArray(java.lang.foreign.ValueLayout.OfDouble,double...) [NONE]</h3>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+                        <tr valign="top">
+                            <td bgcolor="#FFFFFF" colspan="1"> <a name="method:allocateArray(java.lang.foreign.ValueLayout.OfDouble,double...)"></a> 
+                                <section class="detail" id="allocateArray(java.lang.foreign.ValueLayout.OfDouble,double...)">
+                                    <h3>allocateArray</h3>
+                                    <div class="member-signature">
+                                         <span class="modifiers">default</span>&nbsp;<span class="return-type"><a href="MemorySegment.html" title="interface in java.lang.foreign" target="_parent">MemorySegment</a><sup><a href="MemorySegment.html#preview-java.lang.foreign.MemorySegment" target="_parent">PREVIEW</a></sup></span>&nbsp;<span class="element-name">allocateArray</span> 
+                                        <wbr></wbr>
+                                         <span class="parameters">(<a href="ValueLayout.OfDouble.html" title="interface in java.lang.foreign" target="_parent">ValueLayout.OfDouble</a><sup><a href="ValueLayout.OfDouble.html#preview-java.lang.foreign.ValueLayout.OfDouble" target="_parent">PREVIEW</a></sup>&nbsp;elementLayout, double...&nbsp;elements) </span>   
+                                    </div>
+                                    <div class="block">Allocates a memory segment with the given layout and initializes it with the given double elements.               </div>
+                                    <dl class="notes">
+                                         
+                                        <dt>Implementation Requirements: </dt>
+                                        <dd>
+                                             the default implementation for this method calls <code>this.allocateArray(layout, array.length) </code>.        
+                                        </dd>
+                                         
+                                        <dt>Parameters:</dt>
+                                        <dd>
+                                             <code>elementLayout</code> - the element layout of the array to be allocated.           
+                                        </dd>
+                                        <dd>
+                                             <code>elements</code> - the double elements to be copied to the newly allocated memory block.              
+                                        </dd>
+                                         
+                                        <dt>Returns:</dt>
+                                        <dd>a segment for the newly allocated memory block.       </dd>
+                                           
+                                    </dl>
+                                      
+                                </section>
+                                    </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        <table border="0" cellpadding="1" cellspacing="0" width="100%">
+            <tr>
+                <td>
+                    <h3 class="ctxid">method:allocate(java.lang.foreign.MemoryLayout) [NONE]</h3>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+                        <tr valign="top">
+                            <td bgcolor="#FFFFFF" colspan="1"> <a name="method:allocate(java.lang.foreign.MemoryLayout)"></a> 
+                                <section class="detail" id="allocate(java.lang.foreign.MemoryLayout)">
+                                    <h3>allocate</h3>
+                                    <div class="member-signature">
+                                         <span class="modifiers">default</span>&nbsp;<span class="return-type"><a href="MemorySegment.html" title="interface in java.lang.foreign" target="_parent">MemorySegment</a><sup><a href="MemorySegment.html#preview-java.lang.foreign.MemorySegment" target="_parent">PREVIEW</a></sup></span>&nbsp;<span class="element-name">allocate</span> 
+                                        <wbr></wbr>
+                                         <span class="parameters">(<a href="MemoryLayout.html" title="interface in java.lang.foreign" target="_parent">MemoryLayout</a><sup><a href="MemoryLayout.html#preview-java.lang.foreign.MemoryLayout" target="_parent">PREVIEW</a></sup>&nbsp;layout)</span>   
+                                    </div>
+                                    <div class="block">Allocates a memory segment with the given layout.       </div>
+                                    <dl class="notes">
+                                         
+                                        <dt>Implementation Requirements: </dt>
+                                        <dd>
+                                             the default implementation for this method calls <code>this.allocate(layout.byteSize(), layout.byteAlignment()) </code>.        
+                                        </dd>
+                                         
+                                        <dt>Parameters:</dt>
+                                        <dd>
+                                             <code>layout</code> - the layout of the block of memory to be allocated.            
+                                        </dd>
+                                         
+                                        <dt>Returns:</dt>
+                                        <dd>a segment for the newly allocated memory block.       </dd>
+                                           
+                                    </dl>
+                                      
+                                </section>
+                                    </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        <table border="0" cellpadding="1" cellspacing="0" width="100%">
+            <tr>
+                <td>
+                    <h3 class="ctxid">method:allocateArray(java.lang.foreign.MemoryLayout,long) [NONE]</h3>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+                        <tr valign="top">
+                            <td bgcolor="#FFFFFF" colspan="1"> <a name="method:allocateArray(java.lang.foreign.MemoryLayout,long)"></a> 
+                                <section class="detail" id="allocateArray(java.lang.foreign.MemoryLayout,long)">
+                                    <h3>allocateArray</h3>
+                                    <div class="member-signature">
+                                         <span class="modifiers">default</span>&nbsp;<span class="return-type"><a href="MemorySegment.html" title="interface in java.lang.foreign" target="_parent">MemorySegment</a><sup><a href="MemorySegment.html#preview-java.lang.foreign.MemorySegment" target="_parent">PREVIEW</a></sup></span>&nbsp;<span class="element-name">allocateArray</span> 
+                                        <wbr></wbr>
+                                         <span class="parameters">(<a href="MemoryLayout.html" title="interface in java.lang.foreign" target="_parent">MemoryLayout</a><sup><a href="MemoryLayout.html#preview-java.lang.foreign.MemoryLayout" target="_parent">PREVIEW</a></sup>&nbsp;elementLayout, long&nbsp;count) </span>   
+                                    </div>
+                                    <div class="block">Allocates a memory segment with the given element layout and size.          </div>
+                                    <dl class="notes">
+                                         
+                                        <dt>Implementation Requirements: </dt>
+                                        <dd>
+                                             the default implementation for this method calls <code>this.allocate(MemoryLayout.sequenceLayout(count, elementLayout)) </code>.        
+                                        </dd>
+                                         
+                                        <dt>Parameters:</dt>
+                                        <dd>
+                                             <code>elementLayout</code> - the array element layout.      
+                                        </dd>
+                                        <dd>
+                                             <code>count</code> - the array element count.      
+                                        </dd>
+                                         
+                                        <dt>Returns:</dt>
+                                        <dd>a segment for the newly allocated memory block.       </dd>
+                                         
+                                        <dt>Throws:</dt>
+                                        <dd>
+                                             <code><a href="../IllegalArgumentException.html" title="class in java.lang" target="_parent">IllegalArgumentException</a></code> - if <code>count &lt; 0  </code>.    
+                                        </dd>
+                                            
+                                    </dl>
+                                      
+                                </section>
+                                    </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        <table border="0" cellpadding="1" cellspacing="0" width="100%">
+            <tr>
+                <td>
+                    <h3 class="ctxid">method:allocate(long) [NONE]</h3>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+                        <tr valign="top">
+                            <td bgcolor="#FFFFFF" colspan="1"> <a name="method:allocate(long)"></a> 
+                                <section class="detail" id="allocate(long)">
+                                    <h3>allocate</h3>
+                                    <div class="member-signature">
+                                         <span class="modifiers">default</span>&nbsp;<span class="return-type"><a href="MemorySegment.html" title="interface in java.lang.foreign" target="_parent">MemorySegment</a><sup><a href="MemorySegment.html#preview-java.lang.foreign.MemorySegment" target="_parent">PREVIEW</a></sup></span>&nbsp;<span class="element-name">allocate</span> 
+                                        <wbr></wbr>
+                                         <span class="parameters">(long&nbsp;byteSize)</span>   
+                                    </div>
+                                    <div class="block">Allocates a memory segment with the given size.       </div>
+                                    <dl class="notes">
+                                         
+                                        <dt>Implementation Requirements: </dt>
+                                        <dd>
+                                             the default implementation for this method calls <code>this.allocate(byteSize, 1) </code>.        
+                                        </dd>
+                                         
+                                        <dt>Parameters:</dt>
+                                        <dd>
+                                             <code>byteSize</code> - the size (in bytes) of the block of memory to be allocated.              
+                                        </dd>
+                                         
+                                        <dt>Returns:</dt>
+                                        <dd>a segment for the newly allocated memory block.       </dd>
+                                         
+                                        <dt>Throws:</dt>
+                                        <dd>
+                                             <code><a href="../IllegalArgumentException.html" title="class in java.lang" target="_parent">IllegalArgumentException</a></code> - if <code>byteSize &lt; 0  </code>    
+                                        </dd>
+                                            
+                                    </dl>
+                                      
+                                </section>
+                                    </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        <table border="0" cellpadding="1" cellspacing="0" width="100%">
+            <tr>
+                <td>
+                    <h3 class="ctxid">method:allocate(long,long) [NONE]</h3>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+                        <tr valign="top">
+                            <td bgcolor="#FFFFFF" colspan="1"> <a name="method:allocate(long,long)"></a> 
+                                <section class="detail" id="allocate(long,long)">
+                                    <h3>allocate</h3>
+                                    <div class="member-signature">
+                                         <span class="return-type"><a href="MemorySegment.html" title="interface in java.lang.foreign" target="_parent">MemorySegment</a><sup><a href="MemorySegment.html#preview-java.lang.foreign.MemorySegment" target="_parent">PREVIEW</a></sup></span>&nbsp;<span class="element-name">allocate</span> 
+                                        <wbr></wbr>
+                                         <span class="parameters">(long&nbsp;byteSize, long&nbsp;byteAlignment) </span>   
+                                    </div>
+                                    <div class="block">Allocates a memory segment with the given size and alignment constraint.          </div>
+                                    <dl class="notes">
+                                         
+                                        <dt>Parameters:</dt>
+                                        <dd>
+                                             <code>byteSize</code> - the size (in bytes) of the block of memory to be allocated.              
+                                        </dd>
+                                        <dd>
+                                             <code>byteAlignment</code> - the alignment (in bytes) of the block of memory to be allocated.              
+                                        </dd>
+                                         
+                                        <dt>Returns:</dt>
+                                        <dd>a segment for the newly allocated memory block.       </dd>
+                                         
+                                        <dt>Throws:</dt>
+                                        <dd>
+                                             <code><a href="../IllegalArgumentException.html" title="class in java.lang" target="_parent">IllegalArgumentException</a></code> - if <code>byteSize &lt; 0  </code>, <code>byteAlignment &lt;= 0  </code>, or if <code>alignmentBytes</code> is not a power of 2.              
+                                        </dd>
+                                           
+                                    </dl>
+                                      
+                                </section>
+                                    </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        <table border="0" cellpadding="1" cellspacing="0" width="100%">
+            <tr>
+                <td>
+                    <h3 class="ctxid">method:slicingAllocator(java.lang.foreign.MemorySegment) [NONE]</h3>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+                        <tr valign="top">
+                            <td bgcolor="#FFFFFF" colspan="1"> <a name="method:slicingAllocator(java.lang.foreign.MemorySegment)"></a> 
+                                <section class="detail" id="slicingAllocator(java.lang.foreign.MemorySegment)">
+                                    <h3>slicingAllocator</h3>
+                                    <div class="member-signature">
+                                         <span class="modifiers">static</span>&nbsp;<span class="return-type"><a href="SegmentAllocator.html" title="interface in java.lang.foreign" target="_parent">SegmentAllocator</a><sup><a href="#preview-java.lang.foreign.SegmentAllocator">PREVIEW</a></sup></span>&nbsp;<span class="element-name">slicingAllocator</span> 
+                                        <wbr></wbr>
+                                         <span class="parameters">(<a href="MemorySegment.html" title="interface in java.lang.foreign" target="_parent">MemorySegment</a><sup><a href="MemorySegment.html#preview-java.lang.foreign.MemorySegment" target="_parent">PREVIEW</a></sup>&nbsp;segment)</span>   
+                                    </div>
+                                    <div class="block">
+                                         Returns a segment allocator which responds to allocation requests by returning consecutive slices obtained from the provided segment. Each new allocation request will return a new slice starting at the current offset (modulo additional padding to satisfy alignment constraint), with given size.
+                                        <p>
+                                             When the returned allocator cannot satisfy an allocation request, e.g. because a slice of the provided segment with the requested size cannot be found, an <a href="../IndexOutOfBoundsException.html" title="class in java.lang" target="_parent"><code>IndexOutOfBoundsException</code></a> is thrown.                            
+                                        </p>
+                                                                                  
+                                    </div>
+                                    <dl class="notes">
+                                         
+                                        <dt>Parameters:</dt>
+                                        <dd>
+                                             <code>segment</code> - the segment which the returned allocator should slice from.           
+                                        </dd>
+                                         
+                                        <dt>Returns:</dt>
+                                        <dd>a new slicing allocator   </dd>
+                                          
+                                    </dl>
+                                      
+                                </section>
+                                    </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        <table border="0" cellpadding="1" cellspacing="0" width="100%">
+            <tr>
+                <td>
+                    <h3 class="ctxid">method:prefixAllocator(java.lang.foreign.MemorySegment) [CHANGED]</h3>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+                        <tr valign="top">
+                            <td bgcolor="#EEEEEE" colspan="2"> <a name="method:prefixAllocator(java.lang.foreign.MemorySegment)"></a> 
+                                <section class="detail" id="prefixAllocator(java.lang.foreign.MemorySegment)">
+                                    <h3>prefixAllocator</h3>
+                                    <div class="member-signature">
+                                         <span class="modifiers">static</span>&nbsp;<span class="return-type"><a href="SegmentAllocator.html" title="interface in java.lang.foreign" target="_parent">SegmentAllocator</a><sup><a href="#preview-java.lang.foreign.SegmentAllocator">PREVIEW</a></sup></span>&nbsp;<span class="element-name">prefixAllocator</span> 
+                                        <wbr></wbr>
+                                         <span class="parameters">(<a href="MemorySegment.html" title="interface in java.lang.foreign" target="_parent">MemorySegment</a><sup><a href="MemorySegment.html#preview-java.lang.foreign.MemorySegment" target="_parent">PREVIEW</a></sup>&nbsp;segment)</span>   
+                                    </div>
+                                    <div class="block">
+                                         Returns a segment allocator which responds to allocation requests by recycling a single segment. Each new allocation request will return a new slice starting at the segment offset <code>0</code> <span class="diff-html-removed">(alignment</span> <span class="diff-html-removed">constraints</span> <span class="diff-html-removed">are</span> <span class="diff-html-removed">ignored</span> <span class="diff-html-removed">by</span> <span class="diff-html-removed">this</span> <span class="diff-html-removed">allocator)</span>, hence the name <em>prefix allocator </em>. Equivalent to (but likely more efficient than) the following code:
+                                        <div class="snippet-container">
+                                             <button class="copy snippet-copy"><span data-copied="Copied!">Copy</span><img src="../../../../copy.svg" alt="Copy"></button>
+                                            <pre class="snippet">
+                                                                                                            <code class="language-java">MemorySegment segment = ...
+SegmentAllocator prefixAllocator = (size, align) -&gt; segment.asSlice(0, size);
+</code>
+                                                        
+                                            </pre>
+                                             
+                                        </div>
+                                        <p> This allocator can be useful to limit allocation requests in case a client knows that they have fully processed the contents of the allocated segment before the subsequent allocation request takes place.                                </p>
+                                        <p>
+                                             While the allocator returned by this method is <em>thread-safe</em>, concurrent access on the same recycling allocator might cause a thread to overwrite contents written to the underlying segment by a different thread.                                
+                                        </p>
+                                                                                          
+                                    </div>
+                                    <dl class="notes">
+                                         
+                                        <dt>Parameters:</dt>
+                                        <dd>
+                                             <code>segment</code> - the memory segment to be recycled by the returned allocator.            
+                                        </dd>
+                                         
+                                        <dt>Returns:</dt>
+                                        <dd>an allocator which recycles an existing segment upon each new allocation request.           </dd>
+                                          
+                                    </dl>
+                                      
+                                </section>
+                                        </td>
+                        </tr>
+                        <tr valign="top">
+                            <td bgcolor="#CCCCCC" colspan="1"> <a name="method:prefixAllocator(java.lang.foreign.MemorySegment)"></a> 
+                                <section class="detail" id="prefixAllocator(java.lang.foreign.MemorySegment)">
+                                    <h3>prefixAllocator</h3>
+                                    <div class="member-signature">
+                                         <span class="modifiers">static</span>&nbsp;<span class="return-type"><a href="SegmentAllocator.html" title="interface in java.lang.foreign" target="_parent">SegmentAllocator</a><sup><a href="#preview-java.lang.foreign.SegmentAllocator">PREVIEW</a></sup></span>&nbsp;<span class="element-name">prefixAllocator</span> 
+                                        <wbr></wbr>
+                                         <span class="parameters">(<a href="MemorySegment.html" title="interface in java.lang.foreign" target="_parent">MemorySegment</a><sup><a href="MemorySegment.html#preview-java.lang.foreign.MemorySegment" target="_parent">PREVIEW</a></sup>&nbsp;segment)</span>   
+                                    </div>
+                                    <div class="block">
+                                         Returns a segment allocator which responds to allocation requests by recycling a single segment. Each new allocation request will return a new slice starting at the segment offset <code>0</code> (alignment constraints are ignored by this allocator), hence the name <em>prefix allocator </em>. Equivalent to (but likely more efficient than) the following code:
+                                        <div class="snippet-container">
+                                             <button class="copy snippet-copy"><span data-copied="Copied!">Copy</span><img src="../../../../copy.svg" alt="Copy"></button>
+                                            <pre class="snippet">
+                                                                                                            <code class="language-java">MemorySegment segment = ...
+SegmentAllocator prefixAllocator = (size, align) -&gt; segment.asSlice(0, size);
+</code>
+                                                        
+                                            </pre>
+                                             
+                                        </div>
+                                        <p> This allocator can be useful to limit allocation requests in case a client knows that they have fully processed the contents of the allocated segment before the subsequent allocation request takes place.                                </p>
+                                        <p>
+                                             While the allocator returned by this method is <em>thread-safe</em>, concurrent access on the same recycling allocator might cause a thread to overwrite contents written to the underlying segment by a different thread.                                
+                                        </p>
+                                                                                          
+                                    </div>
+                                    <dl class="notes">
+                                         
+                                        <dt>Parameters:</dt>
+                                        <dd>
+                                             <code>segment</code> - the memory segment to be recycled by the returned allocator.            
+                                        </dd>
+                                         
+                                        <dt>Returns:</dt>
+                                        <dd>an allocator which recycles an existing segment upon each new allocation request.           </dd>
+                                          
+                                    </dl>
+                                      
+                                </section>
+                                    </td><td bgcolor="#FFFFFF" colspan="1"> <a name="method:prefixAllocator(java.lang.foreign.MemorySegment)"></a> 
+                                <section class="detail" id="prefixAllocator(java.lang.foreign.MemorySegment)">
+                                    <h3>prefixAllocator</h3>
+                                    <div class="member-signature">
+                                         <span class="modifiers">static</span>&nbsp;<span class="return-type"><a href="SegmentAllocator.html" title="interface in java.lang.foreign" target="_parent">SegmentAllocator</a><sup><a href="#preview-java.lang.foreign.SegmentAllocator">PREVIEW</a></sup></span>&nbsp;<span class="element-name">prefixAllocator</span> 
+                                        <wbr></wbr>
+                                         <span class="parameters">(<a href="MemorySegment.html" title="interface in java.lang.foreign" target="_parent">MemorySegment</a><sup><a href="MemorySegment.html#preview-java.lang.foreign.MemorySegment" target="_parent">PREVIEW</a></sup>&nbsp;segment)</span>   
+                                    </div>
+                                    <div class="block">
+                                         Returns a segment allocator which responds to allocation requests by recycling a single segment. Each new allocation request will return a new slice starting at the segment offset <code>0</code>, hence the name <em>prefix allocator </em>. Equivalent to (but likely more efficient than) the following code:
+                                        <div class="snippet-container">
+                                             <button class="copy snippet-copy"><span data-copied="Copied!">Copy</span><img src="../../../../copy.svg" alt="Copy"></button>
+                                            <pre class="snippet">
+                                                                                                            <code class="language-java">MemorySegment segment = ...
+SegmentAllocator prefixAllocator = (size, align) -&gt; segment.asSlice(0, size);
+</code>
+                                                        
+                                            </pre>
+                                             
+                                        </div>
+                                        <p> This allocator can be useful to limit allocation requests in case a client knows that they have fully processed the contents of the allocated segment before the subsequent allocation request takes place.                                </p>
+                                        <p>
+                                             While the allocator returned by this method is <em>thread-safe</em>, concurrent access on the same recycling allocator might cause a thread to overwrite contents written to the underlying segment by a different thread.                                
+                                        </p>
+                                                                                   
+                                    </div>
+                                    <dl class="notes">
+                                         
+                                        <dt>Parameters:</dt>
+                                        <dd>
+                                             <code>segment</code> - the memory segment to be recycled by the returned allocator.            
+                                        </dd>
+                                         
+                                        <dt>Returns:</dt>
+                                        <dd>an allocator which recycles an existing segment upon each new allocation request.           </dd>
+                                          
+                                    </dl>
+                                      
+                                </section>
+                                        </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        <table border="0" cellpadding="1" cellspacing="0" width="100%">
+            <tr>
+                <td>
+                    <h3 class="ctxid">method:nativeAllocator(java.lang.foreign.SegmentScope) [REMOVED]</h3>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+                        <tr valign="top">
+                            <td bgcolor="#FFFFFF" colspan="1"> <a name="method:nativeAllocator(java.lang.foreign.SegmentScope)"></a> 
+                                <section class="detail" id="nativeAllocator(java.lang.foreign.SegmentScope)" changetype="diff-removed-tag">
+                                    <h3>
+                                        <span class="diff-html-removed">nativeAllocator</span>
+                                    </h3>
+                                    <div class="member-signature">
+                                         <span class="modifiers"><span class="diff-html-removed">static</span></span><span class="diff-html-removed">&nbsp;</span><span class="return-type"><a href="SegmentAllocator.html" title="interface in java.lang.foreign" target="_parent"><span class="diff-html-removed">SegmentAllocator</span></a><sup><a href="#preview-java.lang.foreign.SegmentAllocator"><span class="diff-html-removed">PREVIEW</span></a><span class="diff-html-removed"></span></sup><span class="diff-html-removed"></span></span><span class="diff-html-removed">&nbsp;</span><span class="element-name"><span class="diff-html-removed">nativeAllocator</span></span> 
+                                        <wbr>
+                                            <span class="diff-html-removed"></span>
+                                        </wbr>
+                                         <span class="parameters"><span class="diff-html-removed">(</span><a href="SegmentScope.html" title="interface in java.lang.foreign" target="_parent"><span class="diff-html-removed">SegmentScope</span></a><sup><a href="SegmentScope.html#preview-java.lang.foreign.SegmentScope" target="_parent"><span class="diff-html-removed">PREVIEW</span></a><span class="diff-html-removed"></span></sup><span class="diff-html-removed">&nbsp;scope)</span></span>   
+                                    </div>
+                                    <div class="block">
+                                         <span class="diff-html-removed">Simple</span> <span class="diff-html-removed">allocator</span> <span class="diff-html-removed">used</span> <span class="diff-html-removed">to</span> <span class="diff-html-removed">allocate</span> <span class="diff-html-removed">native</span> <span class="diff-html-removed">segments.</span> <span class="diff-html-removed">The</span> <span class="diff-html-removed">returned</span> <span class="diff-html-removed">allocator</span> <span class="diff-html-removed">responds</span> <span class="diff-html-removed">to</span> <span class="diff-html-removed">an</span> <span class="diff-html-removed">allocation</span> <span class="diff-html-removed">request</span> <span class="diff-html-removed">by</span> <span class="diff-html-removed">returning</span> <span class="diff-html-removed">a</span> <span class="diff-html-removed">native</span> <span class="diff-html-removed">segment</span> <span class="diff-html-removed">backed</span> <span class="diff-html-removed">by</span> <span class="diff-html-removed">a</span> <span class="diff-html-removed">fresh</span> <span class="diff-html-removed">off-heap</span> <span class="diff-html-removed">region</span> <span class="diff-html-removed">of</span> <span class="diff-html-removed">memory,</span> <span class="diff-html-removed">with</span> <span class="diff-html-removed">given</span> <span class="diff-html-removed">byte</span> <span class="diff-html-removed">size</span> <span class="diff-html-removed">and</span> <span class="diff-html-removed">alignment</span> <span class="diff-html-removed">constraint.</span>
+                                        <p>
+                                             <span class="diff-html-removed">Each</span> <span class="diff-html-removed">native</span> <span class="diff-html-removed">segment</span> <span class="diff-html-removed">obtained</span> <span class="diff-html-removed">by</span> <span class="diff-html-removed">the</span> <span class="diff-html-removed">returned</span> <span class="diff-html-removed">allocator</span> <span class="diff-html-removed">is</span> <span class="diff-html-removed">associated</span> <span class="diff-html-removed">with</span> <span class="diff-html-removed">the</span> <span class="diff-html-removed">provided</span> <span class="diff-html-removed">scope.</span> <span class="diff-html-removed">As</span> <span class="diff-html-removed">such,</span> <span class="diff-html-removed">the</span> <span class="diff-html-removed">off-heap</span> <span class="diff-html-removed">region</span> <span class="diff-html-removed">which</span> <span class="diff-html-removed">backs</span> <span class="diff-html-removed">the</span> <span class="diff-html-removed">returned</span> <span class="diff-html-removed">segment</span> <span class="diff-html-removed">is</span> <span class="diff-html-removed">freed</span> <span class="diff-html-removed">when</span> <span class="diff-html-removed">the</span> <span class="diff-html-removed">scope</span> <span class="diff-html-removed">becomes</span> <span class="diff-html-removed">not</span> <a href="SegmentScope.html#isAlive()" target="_parent"><span class="diff-html-removed">alive</span></a><sup><a href="SegmentScope.html#preview-java.lang.foreign.SegmentScope" target="_parent"><span class="diff-html-removed">PREVIEW</span></a><span class="diff-html-removed"></span></sup><span class="diff-html-removed">.</span>                                
+                                        </p>
+                                        <p>
+                                             <span class="diff-html-removed">The</span> <a href="MemorySegment.html#address()" target="_parent"><code><span class="diff-html-removed">MemorySegment.address()</span></code><span class="diff-html-removed"></span></a><sup><a href="MemorySegment.html#preview-java.lang.foreign.MemorySegment" target="_parent"><span class="diff-html-removed">PREVIEW</span></a><span class="diff-html-removed"></span></sup> <span class="diff-html-removed">of</span> <span class="diff-html-removed">the</span> <span class="diff-html-removed">native</span> <span class="diff-html-removed">segments</span> <span class="diff-html-removed">obtained</span> <span class="diff-html-removed">by</span> <span class="diff-html-removed">the</span> <span class="diff-html-removed">returned</span> <span class="diff-html-removed">allocator</span> <span class="diff-html-removed">is</span> <span class="diff-html-removed">the</span> <span class="diff-html-removed">starting</span> <span class="diff-html-removed">address</span> <span class="diff-html-removed">of</span> <span class="diff-html-removed">the</span> <span class="diff-html-removed">newly</span> <span class="diff-html-removed">allocated</span> <span class="diff-html-removed">off-heap</span> <span class="diff-html-removed">memory</span> <span class="diff-html-removed">region</span> <span class="diff-html-removed">backing</span> <span class="diff-html-removed">the</span> <span class="diff-html-removed">segment.</span> <span class="diff-html-removed">Moreover,</span> <span class="diff-html-removed">the</span> <a href="MemorySegment.html#address()" target="_parent"><span class="diff-html-removed">address</span></a><sup><a href="MemorySegment.html#preview-java.lang.foreign.MemorySegment" target="_parent"><span class="diff-html-removed">PREVIEW</span></a><span class="diff-html-removed"></span></sup> <span class="diff-html-removed">of</span> <span class="diff-html-removed">the</span> <span class="diff-html-removed">native</span> <span class="diff-html-removed">segment</span> <span class="diff-html-removed">will</span> <span class="diff-html-removed">be</span> <span class="diff-html-removed">aligned</span> <span class="diff-html-removed">according</span> <span class="diff-html-removed">the</span> <span class="diff-html-removed">provided</span> <span class="diff-html-removed">alignment</span> <span class="diff-html-removed">constraint.</span>                                        
+                                        </p>
+                                        <p>
+                                             <span class="diff-html-removed">The</span> <span class="diff-html-removed">off-heap</span> <span class="diff-html-removed">region</span> <span class="diff-html-removed">of</span> <span class="diff-html-removed">memory</span> <span class="diff-html-removed">backing</span> <span class="diff-html-removed">a</span> <span class="diff-html-removed">native</span> <span class="diff-html-removed">segment</span> <span class="diff-html-removed">obtained</span> <span class="diff-html-removed">by</span> <span class="diff-html-removed">the</span> <span class="diff-html-removed">returned</span> <span class="diff-html-removed">allocator</span> <span class="diff-html-removed">is</span> <span class="diff-html-removed">initialized</span> <span class="diff-html-removed">to</span> <span class="diff-html-removed">zero.</span>                  
+                                        </p>
+                                        <p>
+                                             <span class="diff-html-removed">This</span> <span class="diff-html-removed">is</span> <span class="diff-html-removed">equivalent</span> <span class="diff-html-removed">to</span> <span class="diff-html-removed">the</span> <span class="diff-html-removed">following</span> <span class="diff-html-removed">code:</span>       
+                                        </p>
+                                        <div class="snippet-container">
+                                             <button class="copy snippet-copy"><span data-copied="Copied!"><span class="diff-html-removed">Copy</span></span><span class="diff-html-removed"><img src="../../../../copy.svg" alt="Copy" changetype="diff-removed-image"></span><span class="diff-html-removed"></span></button>
+                                            <pre class="snippet">
+                                                <span class="diff-html-removed">
+                                                            </span><code class="language-java"><span class="diff-html-removed">SegmentAllocator nativeAllocator = (byteSize, byteAlignment) -&gt;
+    MemorySegment.allocateNative(byteSize, byteAlignment, scope);
+</span></code><span class="diff-html-removed">
+                                                        </span>
+                                            </pre>
+                                             
+                                        </div>
+                                                                           
+                                    </div>
+                                    <dl class="notes">
+                                         
+                                        <dt>
+                                            <span class="diff-html-removed">Parameters:</span>
+                                        </dt>
+                                        <dd>
+                                             <code><span class="diff-html-removed">scope</span></code> <span class="diff-html-removed">-</span> <span class="diff-html-removed">the</span> <span class="diff-html-removed">scope</span> <span class="diff-html-removed">associated</span> <span class="diff-html-removed">with</span> <span class="diff-html-removed">the</span> <span class="diff-html-removed">segments</span> <span class="diff-html-removed">returned</span> <span class="diff-html-removed">by</span> <span class="diff-html-removed">the</span> <span class="diff-html-removed">native</span> <span class="diff-html-removed">allocator.</span>             
+                                        </dd>
+                                         
+                                        <dt>
+                                            <span class="diff-html-removed">Returns:</span>
+                                        </dt>
+                                        <dd>
+                                            <span class="diff-html-removed">a</span> <span class="diff-html-removed">simple</span> <span class="diff-html-removed">allocator</span> <span class="diff-html-removed">used</span> <span class="diff-html-removed">to</span> <span class="diff-html-removed">allocate</span> <span class="diff-html-removed">native</span> <span class="diff-html-removed">segments.</span>       
+                                        </dd>
+                                          
+                                    </dl>
+                                     <span class="diff-html-removed"></span> 
+                                </section>
+                                 <span class="diff-html-removed"></span> <span class="diff-html-removed"></span>      </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        <p style="text-align:center; font-size:10px;"></p>
+    </body>
+</html>

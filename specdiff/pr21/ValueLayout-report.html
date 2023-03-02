@@ -1,0 +1,1192 @@
+<html>
+    <head>
+        <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <style>
+                        h3.ctxid {
+                        padding-top:10;
+                        margin: 0;
+                        font-size: 12;
+                        color: darkblue;
+                        }
+                        .diff-html-added {
+                        font-size: 120%;
+                        color: darkgreen;
+                        background-color: #ccffcc;
+                        cursor: pointer;
+                        }
+                        .diff-html-removed {
+                        font-size: 100%;
+                        text-decoration: line-through;
+                        background-color: #fdc6c6;
+                        cursor: pointer;
+                        }
+                        span.diff-html-added img{
+                        border: 2px solid #ccffcc;
+                        }
+                        span.diff-html-removed img{
+                        border: 2px solid #fdc6c6;
+                        }
+                    </style>
+    </head>
+    <body>
+        <table cellpadding="1" cellspacing="0" border="0" width="100%">
+            <tr>
+                <td><a href="package-summary.html" target="_parent">Package Summary</a>&nbsp;&nbsp;<a href="overview-summary.html" target="_parent">Overview Summary</a></td>
+            </tr>
+        </table>
+        <table border="0" cellpadding="1" cellspacing="0" width="100%">
+            <tr>
+                <td>
+                    <h3 class="ctxid">class:ValueLayout [CHANGED]</h3>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+                        <tr valign="top">
+                            <td bgcolor="#EEEEEE" colspan="2"> <a name="class:ValueLayout"></a> 
+                                <section class="class-description" id="class-description">
+                                    <dl class="notes">
+                                         
+                                        <dt>All Superinterfaces: </dt>
+                                        <dd>
+                                             <code><a href="MemoryLayout.html" title="interface in java.lang.foreign" target="_parent">MemoryLayout</a><sup><a href="MemoryLayout.html#preview-java.lang.foreign.MemoryLayout" target="_parent">PREVIEW</a></sup></code> 
+                                        </dd>
+                                         
+                                    </dl>
+                                    <dl class="notes">
+                                         
+                                        <dt>All Known Subinterfaces:  </dt>
+                                        <dd>
+                                             <code><a href="ValueLayout.OfAddress.html" title="interface in java.lang.foreign" target="_parent">ValueLayout.OfAddress</a><sup><a href="ValueLayout.OfAddress.html#preview-java.lang.foreign.ValueLayout.OfAddress" target="_parent">PREVIEW</a></sup></code>, <code><a href="ValueLayout.OfBoolean.html" title="interface in java.lang.foreign" target="_parent">ValueLayout.OfBoolean</a><sup><a href="ValueLayout.OfBoolean.html#preview-java.lang.foreign.ValueLayout.OfBoolean" target="_parent">PREVIEW</a></sup></code>, <code><a href="ValueLayout.OfByte.html" title="interface in java.lang.foreign" target="_parent">ValueLayout.OfByte</a><sup><a href="ValueLayout.OfByte.html#preview-java.lang.foreign.ValueLayout.OfByte" target="_parent">PREVIEW</a></sup></code>, <code><a href="ValueLayout.OfChar.html" title="interface in java.lang.foreign" target="_parent">ValueLayout.OfChar</a><sup><a href="ValueLayout.OfChar.html#preview-java.lang.foreign.ValueLayout.OfChar" target="_parent">PREVIEW</a></sup></code>, <code><a href="ValueLayout.OfDouble.html" title="interface in java.lang.foreign" target="_parent">ValueLayout.OfDouble</a><sup><a href="ValueLayout.OfDouble.html#preview-java.lang.foreign.ValueLayout.OfDouble" target="_parent">PREVIEW</a></sup></code>, <code><a href="ValueLayout.OfFloat.html" title="interface in java.lang.foreign" target="_parent">ValueLayout.OfFloat</a><sup><a href="ValueLayout.OfFloat.html#preview-java.lang.foreign.ValueLayout.OfFloat" target="_parent">PREVIEW</a></sup></code>, <code><a href="ValueLayout.OfInt.html" title="interface in java.lang.foreign" target="_parent">ValueLayout.OfInt</a><sup><a href="ValueLayout.OfInt.html#preview-java.lang.foreign.ValueLayout.OfInt" target="_parent">PREVIEW</a></sup></code>, <code><a href="ValueLayout.OfLong.html" title="interface in java.lang.foreign" target="_parent">ValueLayout.OfLong</a><sup><a href="ValueLayout.OfLong.html#preview-java.lang.foreign.ValueLayout.OfLong" target="_parent">PREVIEW</a></sup></code>, <code><a href="ValueLayout.OfShort.html" title="interface in java.lang.foreign" target="_parent">ValueLayout.OfShort</a><sup><a href="ValueLayout.OfShort.html#preview-java.lang.foreign.ValueLayout.OfShort" target="_parent">PREVIEW</a></sup></code>         
+                                        </dd>
+                                         
+                                    </dl>
+                                     
+                                    <hr>
+                                    <div class="type-signature">
+                                         <span class="modifiers">public sealed interface    </span><span class="element-name type-name-label">ValueLayout</span><span class="extends-implements"> extends <a href="MemoryLayout.html" title="interface in java.lang.foreign" target="_parent">MemoryLayout</a><sup><a href="MemoryLayout.html#preview-java.lang.foreign.MemoryLayout" target="_parent">PREVIEW</a></sup>  </span><span class="permits">permits <a href="ValueLayout.OfByte.html" title="interface in java.lang.foreign" target="_parent">ValueLayout.OfByte</a><sup><a href="ValueLayout.OfByte.html#preview-java.lang.foreign.ValueLayout.OfByte" target="_parent">PREVIEW</a></sup>, <a href="ValueLayout.OfShort.html" title="interface in java.lang.foreign" target="_parent">ValueLayout.OfShort</a><sup><a href="ValueLayout.OfShort.html#preview-java.lang.foreign.ValueLayout.OfShort" target="_parent">PREVIEW</a></sup>, <a href="ValueLayout.OfChar.html" title="interface in java.lang.foreign" target="_parent">ValueLayout.OfChar</a><sup><a href="ValueLayout.OfChar.html#preview-java.lang.foreign.ValueLayout.OfChar" target="_parent">PREVIEW</a></sup>, <a href="ValueLayout.OfInt.html" title="interface in java.lang.foreign" target="_parent">ValueLayout.OfInt</a><sup><a href="ValueLayout.OfInt.html#preview-java.lang.foreign.ValueLayout.OfInt" target="_parent">PREVIEW</a></sup>, <a href="ValueLayout.OfFloat.html" title="interface in java.lang.foreign" target="_parent">ValueLayout.OfFloat</a><sup><a href="ValueLayout.OfFloat.html#preview-java.lang.foreign.ValueLayout.OfFloat" target="_parent">PREVIEW</a></sup>, <a href="ValueLayout.OfLong.html" title="interface in java.lang.foreign" target="_parent">ValueLayout.OfLong</a><sup><a href="ValueLayout.OfLong.html#preview-java.lang.foreign.ValueLayout.OfLong" target="_parent">PREVIEW</a></sup>, <a href="ValueLayout.OfDouble.html" title="interface in java.lang.foreign" target="_parent">ValueLayout.OfDouble</a><sup><a href="ValueLayout.OfDouble.html#preview-java.lang.foreign.ValueLayout.OfDouble" target="_parent">PREVIEW</a></sup>, <a href="ValueLayout.OfBoolean.html" title="interface in java.lang.foreign" target="_parent">ValueLayout.OfBoolean</a><sup><a href="ValueLayout.OfBoolean.html#preview-java.lang.foreign.ValueLayout.OfBoolean" target="_parent">PREVIEW</a></sup>, <a href="ValueLayout.OfAddress.html" title="interface in java.lang.foreign" target="_parent">ValueLayout.OfAddress</a><sup><a href="ValueLayout.OfAddress.html#preview-java.lang.foreign.ValueLayout.OfAddress" target="_parent">PREVIEW</a></sup>         </span> 
+                                    </div>
+                                    <div class="preview-block" id="preview-java.lang.foreign.ValueLayout">
+                                         <span class="preview-label"><code>ValueLayout</code> is a preview API of the Java platform.        </span>
+                                        <div class="preview-comment">
+                                             Programs can only use <code>ValueLayout</code> when preview features are enabled.          
+                                        </div>
+                                        <div class="preview-comment">Preview features may be removed in a future release, or upgraded to permanent features of the Java platform.                 </div>
+                                         
+                                    </div>
+                                    <div class="block">
+                                         A layout that models values of basic data types. Examples of values modelled by a value layout are <em>integral</em> values (either signed or unsigned), <em>floating-point</em> values and <em>address</em> values.
+                                        <p>
+                                             Each value layout has a size, an alignment (in bits), a <a href="../../nio/ByteOrder.html" title="class in java.nio" target="_parent">byte order </a>, and a <em>carrier</em>, that is, the Java type that should be used when <a href="MemorySegment.html#get(java.lang.foreign.ValueLayout.OfInt,long)" target="_parent">accessing</a><sup><a href="MemorySegment.html#preview-java.lang.foreign.MemorySegment" target="_parent">PREVIEW</a></sup> a region of memory using the value layout.                                  
+                                        </p>
+                                        <p>
+                                             This class defines useful value layout constants for Java primitive types and addresses. The layout constants in this class make implicit alignment and byte-ordering assumption: all layout constants in this class are byte-aligned, and their byte order is set to the <a href="../../nio/ByteOrder.html#nativeOrder()" target="_parent">platform default </a>, thus making it easy to work with other APIs, such as arrays and <a href="../../nio/ByteBuffer.html" title="class in java.nio" target="_parent"><code>ByteBuffer</code></a>.                                                        
+                                        </p>
+                                                                     
+                                    </div>
+                                    <dl class="notes">
+                                         
+                                        <dt>Implementation Requirements: </dt>
+                                        <dd>
+                                             implementing classes and subclasses are immutable, thread-safe and <a href="../../../../java.base/java/lang/doc-files/ValueBased.html" target="_parent">value-based</a>.         
+                                        </dd>
+                                         
+                                        <dt>
+                                            <span class="diff-html-added">Sealed</span> <span class="diff-html-added">Class</span> <span class="diff-html-added">Hierarchy</span> <span class="diff-html-added">Graph:</span>   
+                                        </dt>
+                                        <dd>
+                                             <a class="sealed-graph" href="ValueLayout-sealed-graph.svg" target="_parent"><span class="diff-html-added"><img style="vertical-align:top" alt="Sealed class hierarchy graph for ValueLayout" src="ValueLayout-sealed-graph.svg" height="100" changetype="diff-added-image"></span><span><span class="diff-html-added"><img style="border: solid lightgray 1px; vertical-align:top" alt="Sealed class hierarchy graph for ValueLayout" src="ValueLayout-sealed-graph.svg" changetype="diff-added-image"></span></span></a> 
+                                        </dd>
+                                         
+                                        <dt>Since:</dt>
+                                        <dd>19</dd>
+                                           
+                                    </dl>
+                                       
+                                </section>
+                                    </td>
+                        </tr>
+                        <tr valign="top">
+                            <td bgcolor="#CCCCCC" colspan="1"> <a name="class:ValueLayout"></a> 
+                                <section class="class-description" id="class-description">
+                                    <dl class="notes">
+                                         
+                                        <dt>All Superinterfaces: </dt>
+                                        <dd>
+                                             <code><a href="MemoryLayout.html" title="interface in java.lang.foreign" target="_parent">MemoryLayout</a><sup><a href="MemoryLayout.html#preview-java.lang.foreign.MemoryLayout" target="_parent">PREVIEW</a></sup></code> 
+                                        </dd>
+                                         
+                                    </dl>
+                                    <dl class="notes">
+                                         
+                                        <dt>All Known Subinterfaces:  </dt>
+                                        <dd>
+                                             <code><a href="ValueLayout.OfAddress.html" title="interface in java.lang.foreign" target="_parent">ValueLayout.OfAddress</a><sup><a href="ValueLayout.OfAddress.html#preview-java.lang.foreign.ValueLayout.OfAddress" target="_parent">PREVIEW</a></sup></code>, <code><a href="ValueLayout.OfBoolean.html" title="interface in java.lang.foreign" target="_parent">ValueLayout.OfBoolean</a><sup><a href="ValueLayout.OfBoolean.html#preview-java.lang.foreign.ValueLayout.OfBoolean" target="_parent">PREVIEW</a></sup></code>, <code><a href="ValueLayout.OfByte.html" title="interface in java.lang.foreign" target="_parent">ValueLayout.OfByte</a><sup><a href="ValueLayout.OfByte.html#preview-java.lang.foreign.ValueLayout.OfByte" target="_parent">PREVIEW</a></sup></code>, <code><a href="ValueLayout.OfChar.html" title="interface in java.lang.foreign" target="_parent">ValueLayout.OfChar</a><sup><a href="ValueLayout.OfChar.html#preview-java.lang.foreign.ValueLayout.OfChar" target="_parent">PREVIEW</a></sup></code>, <code><a href="ValueLayout.OfDouble.html" title="interface in java.lang.foreign" target="_parent">ValueLayout.OfDouble</a><sup><a href="ValueLayout.OfDouble.html#preview-java.lang.foreign.ValueLayout.OfDouble" target="_parent">PREVIEW</a></sup></code>, <code><a href="ValueLayout.OfFloat.html" title="interface in java.lang.foreign" target="_parent">ValueLayout.OfFloat</a><sup><a href="ValueLayout.OfFloat.html#preview-java.lang.foreign.ValueLayout.OfFloat" target="_parent">PREVIEW</a></sup></code>, <code><a href="ValueLayout.OfInt.html" title="interface in java.lang.foreign" target="_parent">ValueLayout.OfInt</a><sup><a href="ValueLayout.OfInt.html#preview-java.lang.foreign.ValueLayout.OfInt" target="_parent">PREVIEW</a></sup></code>, <code><a href="ValueLayout.OfLong.html" title="interface in java.lang.foreign" target="_parent">ValueLayout.OfLong</a><sup><a href="ValueLayout.OfLong.html#preview-java.lang.foreign.ValueLayout.OfLong" target="_parent">PREVIEW</a></sup></code>, <code><a href="ValueLayout.OfShort.html" title="interface in java.lang.foreign" target="_parent">ValueLayout.OfShort</a><sup><a href="ValueLayout.OfShort.html#preview-java.lang.foreign.ValueLayout.OfShort" target="_parent">PREVIEW</a></sup></code>         
+                                        </dd>
+                                         
+                                    </dl>
+                                     
+                                    <hr>
+                                    <div class="type-signature">
+                                         <span class="modifiers">public sealed interface    </span><span class="element-name type-name-label">ValueLayout</span><span class="extends-implements"> extends <a href="MemoryLayout.html" title="interface in java.lang.foreign" target="_parent">MemoryLayout</a><sup><a href="MemoryLayout.html#preview-java.lang.foreign.MemoryLayout" target="_parent">PREVIEW</a></sup>  </span><span class="permits">permits <a href="ValueLayout.OfByte.html" title="interface in java.lang.foreign" target="_parent">ValueLayout.OfByte</a><sup><a href="ValueLayout.OfByte.html#preview-java.lang.foreign.ValueLayout.OfByte" target="_parent">PREVIEW</a></sup>, <a href="ValueLayout.OfShort.html" title="interface in java.lang.foreign" target="_parent">ValueLayout.OfShort</a><sup><a href="ValueLayout.OfShort.html#preview-java.lang.foreign.ValueLayout.OfShort" target="_parent">PREVIEW</a></sup>, <a href="ValueLayout.OfChar.html" title="interface in java.lang.foreign" target="_parent">ValueLayout.OfChar</a><sup><a href="ValueLayout.OfChar.html#preview-java.lang.foreign.ValueLayout.OfChar" target="_parent">PREVIEW</a></sup>, <a href="ValueLayout.OfInt.html" title="interface in java.lang.foreign" target="_parent">ValueLayout.OfInt</a><sup><a href="ValueLayout.OfInt.html#preview-java.lang.foreign.ValueLayout.OfInt" target="_parent">PREVIEW</a></sup>, <a href="ValueLayout.OfFloat.html" title="interface in java.lang.foreign" target="_parent">ValueLayout.OfFloat</a><sup><a href="ValueLayout.OfFloat.html#preview-java.lang.foreign.ValueLayout.OfFloat" target="_parent">PREVIEW</a></sup>, <a href="ValueLayout.OfLong.html" title="interface in java.lang.foreign" target="_parent">ValueLayout.OfLong</a><sup><a href="ValueLayout.OfLong.html#preview-java.lang.foreign.ValueLayout.OfLong" target="_parent">PREVIEW</a></sup>, <a href="ValueLayout.OfDouble.html" title="interface in java.lang.foreign" target="_parent">ValueLayout.OfDouble</a><sup><a href="ValueLayout.OfDouble.html#preview-java.lang.foreign.ValueLayout.OfDouble" target="_parent">PREVIEW</a></sup>, <a href="ValueLayout.OfBoolean.html" title="interface in java.lang.foreign" target="_parent">ValueLayout.OfBoolean</a><sup><a href="ValueLayout.OfBoolean.html#preview-java.lang.foreign.ValueLayout.OfBoolean" target="_parent">PREVIEW</a></sup>, <a href="ValueLayout.OfAddress.html" title="interface in java.lang.foreign" target="_parent">ValueLayout.OfAddress</a><sup><a href="ValueLayout.OfAddress.html#preview-java.lang.foreign.ValueLayout.OfAddress" target="_parent">PREVIEW</a></sup>         </span> 
+                                    </div>
+                                    <div class="preview-block" id="preview-java.lang.foreign.ValueLayout">
+                                         <span class="preview-label"><code>ValueLayout</code> is a preview API of the Java platform.        </span>
+                                        <div class="preview-comment">
+                                             Programs can only use <code>ValueLayout</code> when preview features are enabled.          
+                                        </div>
+                                        <div class="preview-comment">Preview features may be removed in a future release, or upgraded to permanent features of the Java platform.                 </div>
+                                         
+                                    </div>
+                                    <div class="block">
+                                         A layout that models values of basic data types. Examples of values modelled by a value layout are <em>integral</em> values (either signed or unsigned), <em>floating-point</em> values and <em>address</em> values.
+                                        <p>
+                                             Each value layout has a size, an alignment (in bits), a <a href="../../nio/ByteOrder.html" title="class in java.nio" target="_parent">byte order </a>, and a <em>carrier</em>, that is, the Java type that should be used when <a href="MemorySegment.html#get(java.lang.foreign.ValueLayout.OfInt,long)" target="_parent">accessing</a><sup><a href="MemorySegment.html#preview-java.lang.foreign.MemorySegment" target="_parent">PREVIEW</a></sup> a region of memory using the value layout.                                  
+                                        </p>
+                                        <p>
+                                             This class defines useful value layout constants for Java primitive types and addresses. The layout constants in this class make implicit alignment and byte-ordering assumption: all layout constants in this class are byte-aligned, and their byte order is set to the <a href="../../nio/ByteOrder.html#nativeOrder()" target="_parent">platform default </a>, thus making it easy to work with other APIs, such as arrays and <a href="../../nio/ByteBuffer.html" title="class in java.nio" target="_parent"><code>ByteBuffer</code></a>.                                                        
+                                        </p>
+                                                                     
+                                    </div>
+                                    <dl class="notes">
+                                         
+                                        <dt>Implementation Requirements: </dt>
+                                        <dd>
+                                             implementing classes and subclasses are immutable, thread-safe and <a href="../../../../java.base/java/lang/doc-files/ValueBased.html" target="_parent">value-based</a>.         
+                                        </dd>
+                                         
+                                        <dt>Since:</dt>
+                                        <dd>19</dd>
+                                          
+                                    </dl>
+                                       
+                                </section>
+                                    </td><td bgcolor="#FFFFFF" colspan="1"> <a name="class:ValueLayout"></a> 
+                                <section class="class-description" id="class-description">
+                                    <dl class="notes">
+                                         
+                                        <dt>All Superinterfaces: </dt>
+                                        <dd>
+                                             <code><a href="MemoryLayout.html" title="interface in java.lang.foreign" target="_parent">MemoryLayout</a><sup><a href="MemoryLayout.html#preview-java.lang.foreign.MemoryLayout" target="_parent">PREVIEW</a></sup></code> 
+                                        </dd>
+                                         
+                                    </dl>
+                                    <dl class="notes">
+                                         
+                                        <dt>All Known Subinterfaces:  </dt>
+                                        <dd>
+                                             <code><a href="ValueLayout.OfAddress.html" title="interface in java.lang.foreign" target="_parent">ValueLayout.OfAddress</a><sup><a href="ValueLayout.OfAddress.html#preview-java.lang.foreign.ValueLayout.OfAddress" target="_parent">PREVIEW</a></sup></code>, <code><a href="ValueLayout.OfBoolean.html" title="interface in java.lang.foreign" target="_parent">ValueLayout.OfBoolean</a><sup><a href="ValueLayout.OfBoolean.html#preview-java.lang.foreign.ValueLayout.OfBoolean" target="_parent">PREVIEW</a></sup></code>, <code><a href="ValueLayout.OfByte.html" title="interface in java.lang.foreign" target="_parent">ValueLayout.OfByte</a><sup><a href="ValueLayout.OfByte.html#preview-java.lang.foreign.ValueLayout.OfByte" target="_parent">PREVIEW</a></sup></code>, <code><a href="ValueLayout.OfChar.html" title="interface in java.lang.foreign" target="_parent">ValueLayout.OfChar</a><sup><a href="ValueLayout.OfChar.html#preview-java.lang.foreign.ValueLayout.OfChar" target="_parent">PREVIEW</a></sup></code>, <code><a href="ValueLayout.OfDouble.html" title="interface in java.lang.foreign" target="_parent">ValueLayout.OfDouble</a><sup><a href="ValueLayout.OfDouble.html#preview-java.lang.foreign.ValueLayout.OfDouble" target="_parent">PREVIEW</a></sup></code>, <code><a href="ValueLayout.OfFloat.html" title="interface in java.lang.foreign" target="_parent">ValueLayout.OfFloat</a><sup><a href="ValueLayout.OfFloat.html#preview-java.lang.foreign.ValueLayout.OfFloat" target="_parent">PREVIEW</a></sup></code>, <code><a href="ValueLayout.OfInt.html" title="interface in java.lang.foreign" target="_parent">ValueLayout.OfInt</a><sup><a href="ValueLayout.OfInt.html#preview-java.lang.foreign.ValueLayout.OfInt" target="_parent">PREVIEW</a></sup></code>, <code><a href="ValueLayout.OfLong.html" title="interface in java.lang.foreign" target="_parent">ValueLayout.OfLong</a><sup><a href="ValueLayout.OfLong.html#preview-java.lang.foreign.ValueLayout.OfLong" target="_parent">PREVIEW</a></sup></code>, <code><a href="ValueLayout.OfShort.html" title="interface in java.lang.foreign" target="_parent">ValueLayout.OfShort</a><sup><a href="ValueLayout.OfShort.html#preview-java.lang.foreign.ValueLayout.OfShort" target="_parent">PREVIEW</a></sup></code>         
+                                        </dd>
+                                         
+                                    </dl>
+                                     
+                                    <hr>
+                                    <div class="type-signature">
+                                         <span class="modifiers">public sealed interface    </span><span class="element-name type-name-label">ValueLayout</span><span class="extends-implements"> extends <a href="MemoryLayout.html" title="interface in java.lang.foreign" target="_parent">MemoryLayout</a><sup><a href="MemoryLayout.html#preview-java.lang.foreign.MemoryLayout" target="_parent">PREVIEW</a></sup>  </span><span class="permits">permits <a href="ValueLayout.OfByte.html" title="interface in java.lang.foreign" target="_parent">ValueLayout.OfByte</a><sup><a href="ValueLayout.OfByte.html#preview-java.lang.foreign.ValueLayout.OfByte" target="_parent">PREVIEW</a></sup>, <a href="ValueLayout.OfShort.html" title="interface in java.lang.foreign" target="_parent">ValueLayout.OfShort</a><sup><a href="ValueLayout.OfShort.html#preview-java.lang.foreign.ValueLayout.OfShort" target="_parent">PREVIEW</a></sup>, <a href="ValueLayout.OfChar.html" title="interface in java.lang.foreign" target="_parent">ValueLayout.OfChar</a><sup><a href="ValueLayout.OfChar.html#preview-java.lang.foreign.ValueLayout.OfChar" target="_parent">PREVIEW</a></sup>, <a href="ValueLayout.OfInt.html" title="interface in java.lang.foreign" target="_parent">ValueLayout.OfInt</a><sup><a href="ValueLayout.OfInt.html#preview-java.lang.foreign.ValueLayout.OfInt" target="_parent">PREVIEW</a></sup>, <a href="ValueLayout.OfFloat.html" title="interface in java.lang.foreign" target="_parent">ValueLayout.OfFloat</a><sup><a href="ValueLayout.OfFloat.html#preview-java.lang.foreign.ValueLayout.OfFloat" target="_parent">PREVIEW</a></sup>, <a href="ValueLayout.OfLong.html" title="interface in java.lang.foreign" target="_parent">ValueLayout.OfLong</a><sup><a href="ValueLayout.OfLong.html#preview-java.lang.foreign.ValueLayout.OfLong" target="_parent">PREVIEW</a></sup>, <a href="ValueLayout.OfDouble.html" title="interface in java.lang.foreign" target="_parent">ValueLayout.OfDouble</a><sup><a href="ValueLayout.OfDouble.html#preview-java.lang.foreign.ValueLayout.OfDouble" target="_parent">PREVIEW</a></sup>, <a href="ValueLayout.OfBoolean.html" title="interface in java.lang.foreign" target="_parent">ValueLayout.OfBoolean</a><sup><a href="ValueLayout.OfBoolean.html#preview-java.lang.foreign.ValueLayout.OfBoolean" target="_parent">PREVIEW</a></sup>, <a href="ValueLayout.OfAddress.html" title="interface in java.lang.foreign" target="_parent">ValueLayout.OfAddress</a><sup><a href="ValueLayout.OfAddress.html#preview-java.lang.foreign.ValueLayout.OfAddress" target="_parent">PREVIEW</a></sup>         </span> 
+                                    </div>
+                                    <div class="preview-block" id="preview-java.lang.foreign.ValueLayout">
+                                         <span class="preview-label"><code>ValueLayout</code> is a preview API of the Java platform.        </span>
+                                        <div class="preview-comment">
+                                             Programs can only use <code>ValueLayout</code> when preview features are enabled.          
+                                        </div>
+                                        <div class="preview-comment">Preview features may be removed in a future release, or upgraded to permanent features of the Java platform.                 </div>
+                                         
+                                    </div>
+                                    <div class="block">
+                                         A layout that models values of basic data types. Examples of values modelled by a value layout are <em>integral</em> values (either signed or unsigned), <em>floating-point</em> values and <em>address</em> values.
+                                        <p>
+                                             Each value layout has a size, an alignment (in bits), a <a href="../../nio/ByteOrder.html" title="class in java.nio" target="_parent">byte order </a>, and a <em>carrier</em>, that is, the Java type that should be used when <a href="MemorySegment.html#get(java.lang.foreign.ValueLayout.OfInt,long)" target="_parent">accessing</a><sup><a href="MemorySegment.html#preview-java.lang.foreign.MemorySegment" target="_parent">PREVIEW</a></sup> a region of memory using the value layout.                                  
+                                        </p>
+                                        <p>
+                                             This class defines useful value layout constants for Java primitive types and addresses. The layout constants in this class make implicit alignment and byte-ordering assumption: all layout constants in this class are byte-aligned, and their byte order is set to the <a href="../../nio/ByteOrder.html#nativeOrder()" target="_parent">platform default </a>, thus making it easy to work with other APIs, such as arrays and <a href="../../nio/ByteBuffer.html" title="class in java.nio" target="_parent"><code>ByteBuffer</code></a>.                                                        
+                                        </p>
+                                                                     
+                                    </div>
+                                    <dl class="notes">
+                                         
+                                        <dt>Implementation Requirements: </dt>
+                                        <dd>
+                                             implementing classes and subclasses are immutable, thread-safe and <a href="../../../../java.base/java/lang/doc-files/ValueBased.html" target="_parent">value-based</a>.         
+                                        </dd>
+                                         
+                                        <dt>Sealed Class Hierarchy Graph:   </dt>
+                                        <dd>
+                                             <a class="sealed-graph" href="ValueLayout-sealed-graph.svg" target="_parent"><img style="vertical-align:top" alt="Sealed class hierarchy graph for ValueLayout" src="ValueLayout-sealed-graph.svg" height="100"><span><img style="border: solid lightgray 1px; vertical-align:top" alt="Sealed class hierarchy graph for ValueLayout" src="ValueLayout-sealed-graph.svg"></span></a> 
+                                        </dd>
+                                         
+                                        <dt>Since:</dt>
+                                        <dd>19</dd>
+                                           
+                                    </dl>
+                                       
+                                </section>
+                                    </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        <table border="0" cellpadding="1" cellspacing="0" width="100%">
+            <tr>
+                <td>
+                    <h3 class="ctxid">field:ADDRESS [NONE]</h3>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+                        <tr valign="top">
+                            <td bgcolor="#FFFFFF" colspan="1">
+                                <li>
+                                     <a name="field:ADDRESS"></a> 
+                                    <section class="detail" id="ADDRESS">
+                                        <h3>ADDRESS</h3>
+                                        <div class="member-signature">
+                                             <span class="modifiers">static final </span>&nbsp;<span class="return-type"><a href="ValueLayout.OfAddress.html" title="interface in java.lang.foreign" target="_parent">ValueLayout.OfAddress</a><sup><a href="ValueLayout.OfAddress.html#preview-java.lang.foreign.ValueLayout.OfAddress" target="_parent">PREVIEW</a></sup></span>&nbsp;<span class="element-name">ADDRESS</span> 
+                                        </div>
+                                        <div class="block">
+                                             A value layout constant whose size is the same as that of a machine address (<code>size_t</code>), bit alignment set to <code>sizeof(size_t) * 8  </code>, byte order set to <a href="../../nio/ByteOrder.html#nativeOrder()" target="_parent"><code>ByteOrder.nativeOrder()</code></a>. Equivalent to the following code:
+                                            <div class="snippet-container">
+                                                 <button class="copy snippet-copy"><span data-copied="Copied!">Copy</span><img src="../../../../copy.svg" alt="Copy"></button>
+                                                <pre class="snippet">
+                                                                                                                <code class="language-java">MemoryLayout.valueLayout(MemorySegment.class, ByteOrder.nativeOrder());
+</code>
+                                                        
+                                                </pre>
+                                                 
+                                            </div>
+                                                                           
+                                        </div>
+                                          
+                                    </section>
+                                      
+                                </li>
+                                  </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        <table border="0" cellpadding="1" cellspacing="0" width="100%">
+            <tr>
+                <td>
+                    <h3 class="ctxid">field:JAVA_BYTE [NONE]</h3>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+                        <tr valign="top">
+                            <td bgcolor="#FFFFFF" colspan="1"> <a name="field:JAVA_BYTE"></a> 
+                                <section class="detail" id="JAVA_BYTE">
+                                    <h3>JAVA_BYTE</h3>
+                                    <div class="member-signature">
+                                         <span class="modifiers">static final </span>&nbsp;<span class="return-type"><a href="ValueLayout.OfByte.html" title="interface in java.lang.foreign" target="_parent">ValueLayout.OfByte</a><sup><a href="ValueLayout.OfByte.html#preview-java.lang.foreign.ValueLayout.OfByte" target="_parent">PREVIEW</a></sup></span>&nbsp;<span class="element-name">JAVA_BYTE</span> 
+                                    </div>
+                                    <div class="block">
+                                         A value layout constant whose size is the same as that of a Java <code>byte</code>, bit alignment set to 8, and byte order set to <a href="../../nio/ByteOrder.html#nativeOrder()" target="_parent"><code>ByteOrder.nativeOrder()</code></a>. Equivalent to the following code:
+                                        <div class="snippet-container">
+                                             <button class="copy snippet-copy"><span data-copied="Copied!">Copy</span><img src="../../../../copy.svg" alt="Copy"></button>
+                                            <pre class="snippet">
+                                                                                                            <code class="language-java">MemoryLayout.valueLayout(byte.class, ByteOrder.nativeOrder());
+</code>
+                                                        
+                                            </pre>
+                                             
+                                        </div>
+                                                                       
+                                    </div>
+                                      
+                                </section>
+                                    </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        <table border="0" cellpadding="1" cellspacing="0" width="100%">
+            <tr>
+                <td>
+                    <h3 class="ctxid">field:JAVA_BOOLEAN [NONE]</h3>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+                        <tr valign="top">
+                            <td bgcolor="#FFFFFF" colspan="1"> <a name="field:JAVA_BOOLEAN"></a> 
+                                <section class="detail" id="JAVA_BOOLEAN">
+                                    <h3>JAVA_BOOLEAN</h3>
+                                    <div class="member-signature">
+                                         <span class="modifiers">static final </span>&nbsp;<span class="return-type"><a href="ValueLayout.OfBoolean.html" title="interface in java.lang.foreign" target="_parent">ValueLayout.OfBoolean</a><sup><a href="ValueLayout.OfBoolean.html#preview-java.lang.foreign.ValueLayout.OfBoolean" target="_parent">PREVIEW</a></sup></span>&nbsp;<span class="element-name">JAVA_BOOLEAN</span> 
+                                    </div>
+                                    <div class="block">
+                                         A value layout constant whose size is the same as that of a Java <code>boolean</code>, bit alignment set to 8, and byte order set to <a href="../../nio/ByteOrder.html#nativeOrder()" target="_parent"><code>ByteOrder.nativeOrder()</code></a>. Equivalent to the following code:
+                                        <div class="snippet-container">
+                                             <button class="copy snippet-copy"><span data-copied="Copied!">Copy</span><img src="../../../../copy.svg" alt="Copy"></button>
+                                            <pre class="snippet">
+                                                                                                            <code class="language-java">MemoryLayout.valueLayout(boolean.class, ByteOrder.nativeOrder());
+</code>
+                                                        
+                                            </pre>
+                                             
+                                        </div>
+                                                                       
+                                    </div>
+                                      
+                                </section>
+                                    </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        <table border="0" cellpadding="1" cellspacing="0" width="100%">
+            <tr>
+                <td>
+                    <h3 class="ctxid">field:JAVA_CHAR [NONE]</h3>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+                        <tr valign="top">
+                            <td bgcolor="#FFFFFF" colspan="1"> <a name="field:JAVA_CHAR"></a> 
+                                <section class="detail" id="JAVA_CHAR">
+                                    <h3>JAVA_CHAR</h3>
+                                    <div class="member-signature">
+                                         <span class="modifiers">static final </span>&nbsp;<span class="return-type"><a href="ValueLayout.OfChar.html" title="interface in java.lang.foreign" target="_parent">ValueLayout.OfChar</a><sup><a href="ValueLayout.OfChar.html#preview-java.lang.foreign.ValueLayout.OfChar" target="_parent">PREVIEW</a></sup></span>&nbsp;<span class="element-name">JAVA_CHAR</span> 
+                                    </div>
+                                    <div class="block">
+                                         A value layout constant whose size is the same as that of a Java <code>char</code>, bit alignment set to 16, and byte order set to <a href="../../nio/ByteOrder.html#nativeOrder()" target="_parent"><code>ByteOrder.nativeOrder()</code></a>. Equivalent to the following code:
+                                        <div class="snippet-container">
+                                             <button class="copy snippet-copy"><span data-copied="Copied!">Copy</span><img src="../../../../copy.svg" alt="Copy"></button>
+                                            <pre class="snippet">
+                                                                                                            <code class="language-java">MemoryLayout.valueLayout(char.class, ByteOrder.nativeOrder());
+</code>
+                                                        
+                                            </pre>
+                                             
+                                        </div>
+                                                                       
+                                    </div>
+                                      
+                                </section>
+                                    </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        <table border="0" cellpadding="1" cellspacing="0" width="100%">
+            <tr>
+                <td>
+                    <h3 class="ctxid">field:JAVA_SHORT [NONE]</h3>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+                        <tr valign="top">
+                            <td bgcolor="#FFFFFF" colspan="1"> <a name="field:JAVA_SHORT"></a> 
+                                <section class="detail" id="JAVA_SHORT">
+                                    <h3>JAVA_SHORT</h3>
+                                    <div class="member-signature">
+                                         <span class="modifiers">static final </span>&nbsp;<span class="return-type"><a href="ValueLayout.OfShort.html" title="interface in java.lang.foreign" target="_parent">ValueLayout.OfShort</a><sup><a href="ValueLayout.OfShort.html#preview-java.lang.foreign.ValueLayout.OfShort" target="_parent">PREVIEW</a></sup></span>&nbsp;<span class="element-name">JAVA_SHORT</span> 
+                                    </div>
+                                    <div class="block">
+                                         A value layout constant whose size is the same as that of a Java <code>short</code>, bit alignment set to 16, and byte order set to <a href="../../nio/ByteOrder.html#nativeOrder()" target="_parent"><code>ByteOrder.nativeOrder()</code></a>. Equivalent to the following code:
+                                        <div class="snippet-container">
+                                             <button class="copy snippet-copy"><span data-copied="Copied!">Copy</span><img src="../../../../copy.svg" alt="Copy"></button>
+                                            <pre class="snippet">
+                                                                                                            <code class="language-java">MemoryLayout.valueLayout(short.class, ByteOrder.nativeOrder());
+</code>
+                                                        
+                                            </pre>
+                                             
+                                        </div>
+                                                                       
+                                    </div>
+                                      
+                                </section>
+                                    </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        <table border="0" cellpadding="1" cellspacing="0" width="100%">
+            <tr>
+                <td>
+                    <h3 class="ctxid">field:JAVA_INT [NONE]</h3>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+                        <tr valign="top">
+                            <td bgcolor="#FFFFFF" colspan="1"> <a name="field:JAVA_INT"></a> 
+                                <section class="detail" id="JAVA_INT">
+                                    <h3>JAVA_INT</h3>
+                                    <div class="member-signature">
+                                         <span class="modifiers">static final </span>&nbsp;<span class="return-type"><a href="ValueLayout.OfInt.html" title="interface in java.lang.foreign" target="_parent">ValueLayout.OfInt</a><sup><a href="ValueLayout.OfInt.html#preview-java.lang.foreign.ValueLayout.OfInt" target="_parent">PREVIEW</a></sup></span>&nbsp;<span class="element-name">JAVA_INT</span> 
+                                    </div>
+                                    <div class="block">
+                                         A value layout constant whose size is the same as that of a Java <code>int</code>, bit alignment set to 32, and byte order set to <a href="../../nio/ByteOrder.html#nativeOrder()" target="_parent"><code>ByteOrder.nativeOrder()</code></a>. Equivalent to the following code:
+                                        <div class="snippet-container">
+                                             <button class="copy snippet-copy"><span data-copied="Copied!">Copy</span><img src="../../../../copy.svg" alt="Copy"></button>
+                                            <pre class="snippet">
+                                                                                                            <code class="language-java">MemoryLayout.valueLayout(int.class, ByteOrder.nativeOrder());
+</code>
+                                                        
+                                            </pre>
+                                             
+                                        </div>
+                                                                       
+                                    </div>
+                                      
+                                </section>
+                                    </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        <table border="0" cellpadding="1" cellspacing="0" width="100%">
+            <tr>
+                <td>
+                    <h3 class="ctxid">field:JAVA_LONG [NONE]</h3>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+                        <tr valign="top">
+                            <td bgcolor="#FFFFFF" colspan="1"> <a name="field:JAVA_LONG"></a> 
+                                <section class="detail" id="JAVA_LONG">
+                                    <h3>JAVA_LONG</h3>
+                                    <div class="member-signature">
+                                         <span class="modifiers">static final </span>&nbsp;<span class="return-type"><a href="ValueLayout.OfLong.html" title="interface in java.lang.foreign" target="_parent">ValueLayout.OfLong</a><sup><a href="ValueLayout.OfLong.html#preview-java.lang.foreign.ValueLayout.OfLong" target="_parent">PREVIEW</a></sup></span>&nbsp;<span class="element-name">JAVA_LONG</span> 
+                                    </div>
+                                    <div class="block">
+                                         A value layout constant whose size is the same as that of a Java <code>long</code>, bit alignment set to 64, and byte order set to <a href="../../nio/ByteOrder.html#nativeOrder()" target="_parent"><code>ByteOrder.nativeOrder()</code></a>. Equivalent to the following code:
+                                        <div class="snippet-container">
+                                             <button class="copy snippet-copy"><span data-copied="Copied!">Copy</span><img src="../../../../copy.svg" alt="Copy"></button>
+                                            <pre class="snippet">
+                                                                                                            <code class="language-java">MemoryLayout.valueLayout(long.class, ByteOrder.nativeOrder());
+</code>
+                                                        
+                                            </pre>
+                                             
+                                        </div>
+                                                                       
+                                    </div>
+                                      
+                                </section>
+                                    </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        <table border="0" cellpadding="1" cellspacing="0" width="100%">
+            <tr>
+                <td>
+                    <h3 class="ctxid">field:JAVA_FLOAT [NONE]</h3>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+                        <tr valign="top">
+                            <td bgcolor="#FFFFFF" colspan="1"> <a name="field:JAVA_FLOAT"></a> 
+                                <section class="detail" id="JAVA_FLOAT">
+                                    <h3>JAVA_FLOAT</h3>
+                                    <div class="member-signature">
+                                         <span class="modifiers">static final </span>&nbsp;<span class="return-type"><a href="ValueLayout.OfFloat.html" title="interface in java.lang.foreign" target="_parent">ValueLayout.OfFloat</a><sup><a href="ValueLayout.OfFloat.html#preview-java.lang.foreign.ValueLayout.OfFloat" target="_parent">PREVIEW</a></sup></span>&nbsp;<span class="element-name">JAVA_FLOAT</span> 
+                                    </div>
+                                    <div class="block">
+                                         A value layout constant whose size is the same as that of a Java <code>float</code>, bit alignment set to 32, and byte order set to <a href="../../nio/ByteOrder.html#nativeOrder()" target="_parent"><code>ByteOrder.nativeOrder()</code></a>. Equivalent to the following code:
+                                        <div class="snippet-container">
+                                             <button class="copy snippet-copy"><span data-copied="Copied!">Copy</span><img src="../../../../copy.svg" alt="Copy"></button>
+                                            <pre class="snippet">
+                                                                                                            <code class="language-java">MemoryLayout.valueLayout(float.class, ByteOrder.nativeOrder()).withBitAlignment(32);
+</code>
+                                                        
+                                            </pre>
+                                             
+                                        </div>
+                                                                       
+                                    </div>
+                                      
+                                </section>
+                                    </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        <table border="0" cellpadding="1" cellspacing="0" width="100%">
+            <tr>
+                <td>
+                    <h3 class="ctxid">field:JAVA_DOUBLE [NONE]</h3>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+                        <tr valign="top">
+                            <td bgcolor="#FFFFFF" colspan="1"> <a name="field:JAVA_DOUBLE"></a> 
+                                <section class="detail" id="JAVA_DOUBLE">
+                                    <h3>JAVA_DOUBLE</h3>
+                                    <div class="member-signature">
+                                         <span class="modifiers">static final </span>&nbsp;<span class="return-type"><a href="ValueLayout.OfDouble.html" title="interface in java.lang.foreign" target="_parent">ValueLayout.OfDouble</a><sup><a href="ValueLayout.OfDouble.html#preview-java.lang.foreign.ValueLayout.OfDouble" target="_parent">PREVIEW</a></sup></span>&nbsp;<span class="element-name">JAVA_DOUBLE</span> 
+                                    </div>
+                                    <div class="block">
+                                         A value layout constant whose size is the same as that of a Java <code>double</code>, bit alignment set to 64, and byte order set to <a href="../../nio/ByteOrder.html#nativeOrder()" target="_parent"><code>ByteOrder.nativeOrder()</code></a>. Equivalent to the following code:
+                                        <div class="snippet-container">
+                                             <button class="copy snippet-copy"><span data-copied="Copied!">Copy</span><img src="../../../../copy.svg" alt="Copy"></button>
+                                            <pre class="snippet">
+                                                                                                            <code class="language-java">MemoryLayout.valueLayout(double.class, ByteOrder.nativeOrder());
+</code>
+                                                        
+                                            </pre>
+                                             
+                                        </div>
+                                                                       
+                                    </div>
+                                      
+                                </section>
+                                    </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        <table border="0" cellpadding="1" cellspacing="0" width="100%">
+            <tr>
+                <td>
+                    <h3 class="ctxid">field:ADDRESS_UNALIGNED [NONE]</h3>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+                        <tr valign="top">
+                            <td bgcolor="#FFFFFF" colspan="1"> <a name="field:ADDRESS_UNALIGNED"></a> 
+                                <section class="detail" id="ADDRESS_UNALIGNED">
+                                    <h3>ADDRESS_UNALIGNED</h3>
+                                    <div class="member-signature">
+                                         <span class="modifiers">static final </span>&nbsp;<span class="return-type"><a href="ValueLayout.OfAddress.html" title="interface in java.lang.foreign" target="_parent">ValueLayout.OfAddress</a><sup><a href="ValueLayout.OfAddress.html#preview-java.lang.foreign.ValueLayout.OfAddress" target="_parent">PREVIEW</a></sup></span>&nbsp;<span class="element-name">ADDRESS_UNALIGNED</span> 
+                                    </div>
+                                    <div class="block">
+                                         An unaligned value layout constant whose size is the same as that of a machine address (<code>size_t</code>), and byte order set to <a href="../../nio/ByteOrder.html#nativeOrder()" target="_parent"><code>ByteOrder.nativeOrder()</code></a>. Equivalent to the following code:
+                                        <div class="snippet-container">
+                                             <button class="copy snippet-copy"><span data-copied="Copied!">Copy</span><img src="../../../../copy.svg" alt="Copy"></button>
+                                            <pre class="snippet">
+                                                                                                            <code class="language-java">ADDRESS.withBitAlignment(8);
+</code>
+                                                        
+                                            </pre>
+                                             
+                                        </div>
+                                                                    
+                                    </div>
+                                    <dl class="notes">
+                                         
+                                        <dt>API Note: </dt>
+                                        <dd>Care should be taken when using unaligned value layouts as they may induce performance and portability issues.                </dd>
+                                         
+                                    </dl>
+                                      
+                                </section>
+                                    </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        <table border="0" cellpadding="1" cellspacing="0" width="100%">
+            <tr>
+                <td>
+                    <h3 class="ctxid">field:JAVA_CHAR_UNALIGNED [NONE]</h3>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+                        <tr valign="top">
+                            <td bgcolor="#FFFFFF" colspan="1"> <a name="field:JAVA_CHAR_UNALIGNED"></a> 
+                                <section class="detail" id="JAVA_CHAR_UNALIGNED">
+                                    <h3>JAVA_CHAR_UNALIGNED</h3>
+                                    <div class="member-signature">
+                                         <span class="modifiers">static final </span>&nbsp;<span class="return-type"><a href="ValueLayout.OfChar.html" title="interface in java.lang.foreign" target="_parent">ValueLayout.OfChar</a><sup><a href="ValueLayout.OfChar.html#preview-java.lang.foreign.ValueLayout.OfChar" target="_parent">PREVIEW</a></sup></span>&nbsp;<span class="element-name">JAVA_CHAR_UNALIGNED</span> 
+                                    </div>
+                                    <div class="block">
+                                         An unaligned value layout constant whose size is the same as that of a Java <code>char</code> and byte order set to <a href="../../nio/ByteOrder.html#nativeOrder()" target="_parent"><code>ByteOrder.nativeOrder()</code></a>. Equivalent to the following code:
+                                        <div class="snippet-container">
+                                             <button class="copy snippet-copy"><span data-copied="Copied!">Copy</span><img src="../../../../copy.svg" alt="Copy"></button>
+                                            <pre class="snippet">
+                                                                                                            <code class="language-java">JAVA_CHAR.withBitAlignment(8);
+</code>
+                                                        
+                                            </pre>
+                                             
+                                        </div>
+                                                                   
+                                    </div>
+                                    <dl class="notes">
+                                         
+                                        <dt>API Note: </dt>
+                                        <dd>Care should be taken when using unaligned value layouts as they may induce performance and portability issues.                </dd>
+                                         
+                                    </dl>
+                                      
+                                </section>
+                                    </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        <table border="0" cellpadding="1" cellspacing="0" width="100%">
+            <tr>
+                <td>
+                    <h3 class="ctxid">field:JAVA_SHORT_UNALIGNED [NONE]</h3>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+                        <tr valign="top">
+                            <td bgcolor="#FFFFFF" colspan="1"> <a name="field:JAVA_SHORT_UNALIGNED"></a> 
+                                <section class="detail" id="JAVA_SHORT_UNALIGNED">
+                                    <h3>JAVA_SHORT_UNALIGNED</h3>
+                                    <div class="member-signature">
+                                         <span class="modifiers">static final </span>&nbsp;<span class="return-type"><a href="ValueLayout.OfShort.html" title="interface in java.lang.foreign" target="_parent">ValueLayout.OfShort</a><sup><a href="ValueLayout.OfShort.html#preview-java.lang.foreign.ValueLayout.OfShort" target="_parent">PREVIEW</a></sup></span>&nbsp;<span class="element-name">JAVA_SHORT_UNALIGNED</span> 
+                                    </div>
+                                    <div class="block">
+                                         An unaligned value layout constant whose size is the same as that of a Java <code>short</code> and byte order set to <a href="../../nio/ByteOrder.html#nativeOrder()" target="_parent"><code>ByteOrder.nativeOrder()</code></a>. Equivalent to the following code:
+                                        <div class="snippet-container">
+                                             <button class="copy snippet-copy"><span data-copied="Copied!">Copy</span><img src="../../../../copy.svg" alt="Copy"></button>
+                                            <pre class="snippet">
+                                                                                                            <code class="language-java">JAVA_SHORT.withBitAlignment(8);
+</code>
+                                                        
+                                            </pre>
+                                             
+                                        </div>
+                                                                   
+                                    </div>
+                                    <dl class="notes">
+                                         
+                                        <dt>API Note: </dt>
+                                        <dd>Care should be taken when using unaligned value layouts as they may induce performance and portability issues.                </dd>
+                                         
+                                    </dl>
+                                      
+                                </section>
+                                    </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        <table border="0" cellpadding="1" cellspacing="0" width="100%">
+            <tr>
+                <td>
+                    <h3 class="ctxid">field:JAVA_INT_UNALIGNED [NONE]</h3>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+                        <tr valign="top">
+                            <td bgcolor="#FFFFFF" colspan="1"> <a name="field:JAVA_INT_UNALIGNED"></a> 
+                                <section class="detail" id="JAVA_INT_UNALIGNED">
+                                    <h3>JAVA_INT_UNALIGNED</h3>
+                                    <div class="member-signature">
+                                         <span class="modifiers">static final </span>&nbsp;<span class="return-type"><a href="ValueLayout.OfInt.html" title="interface in java.lang.foreign" target="_parent">ValueLayout.OfInt</a><sup><a href="ValueLayout.OfInt.html#preview-java.lang.foreign.ValueLayout.OfInt" target="_parent">PREVIEW</a></sup></span>&nbsp;<span class="element-name">JAVA_INT_UNALIGNED</span> 
+                                    </div>
+                                    <div class="block">
+                                         An unaligned value layout constant whose size is the same as that of a Java <code>int</code> and byte order set to <a href="../../nio/ByteOrder.html#nativeOrder()" target="_parent"><code>ByteOrder.nativeOrder()</code></a>. Equivalent to the following code:
+                                        <div class="snippet-container">
+                                             <button class="copy snippet-copy"><span data-copied="Copied!">Copy</span><img src="../../../../copy.svg" alt="Copy"></button>
+                                            <pre class="snippet">
+                                                                                                            <code class="language-java">JAVA_INT.withBitAlignment(8);
+</code>
+                                                        
+                                            </pre>
+                                             
+                                        </div>
+                                                                   
+                                    </div>
+                                    <dl class="notes">
+                                         
+                                        <dt>API Note: </dt>
+                                        <dd>Care should be taken when using unaligned value layouts as they may induce performance and portability issues.                </dd>
+                                         
+                                    </dl>
+                                      
+                                </section>
+                                    </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        <table border="0" cellpadding="1" cellspacing="0" width="100%">
+            <tr>
+                <td>
+                    <h3 class="ctxid">field:JAVA_LONG_UNALIGNED [NONE]</h3>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+                        <tr valign="top">
+                            <td bgcolor="#FFFFFF" colspan="1"> <a name="field:JAVA_LONG_UNALIGNED"></a> 
+                                <section class="detail" id="JAVA_LONG_UNALIGNED">
+                                    <h3>JAVA_LONG_UNALIGNED</h3>
+                                    <div class="member-signature">
+                                         <span class="modifiers">static final </span>&nbsp;<span class="return-type"><a href="ValueLayout.OfLong.html" title="interface in java.lang.foreign" target="_parent">ValueLayout.OfLong</a><sup><a href="ValueLayout.OfLong.html#preview-java.lang.foreign.ValueLayout.OfLong" target="_parent">PREVIEW</a></sup></span>&nbsp;<span class="element-name">JAVA_LONG_UNALIGNED</span> 
+                                    </div>
+                                    <div class="block">
+                                         An unaligned value layout constant whose size is the same as that of a Java <code>long</code> and byte order set to <a href="../../nio/ByteOrder.html#nativeOrder()" target="_parent"><code>ByteOrder.nativeOrder()</code></a>. Equivalent to the following code:
+                                        <div class="snippet-container">
+                                             <button class="copy snippet-copy"><span data-copied="Copied!">Copy</span><img src="../../../../copy.svg" alt="Copy"></button>
+                                            <pre class="snippet">
+                                                                                                            <code class="language-java">JAVA_LONG.withBitAlignment(8);
+</code>
+                                                        
+                                            </pre>
+                                             
+                                        </div>
+                                                                   
+                                    </div>
+                                    <dl class="notes">
+                                         
+                                        <dt>API Note: </dt>
+                                        <dd>Care should be taken when using unaligned value layouts as they may induce performance and portability issues.                </dd>
+                                         
+                                    </dl>
+                                      
+                                </section>
+                                    </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        <table border="0" cellpadding="1" cellspacing="0" width="100%">
+            <tr>
+                <td>
+                    <h3 class="ctxid">field:JAVA_FLOAT_UNALIGNED [NONE]</h3>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+                        <tr valign="top">
+                            <td bgcolor="#FFFFFF" colspan="1"> <a name="field:JAVA_FLOAT_UNALIGNED"></a> 
+                                <section class="detail" id="JAVA_FLOAT_UNALIGNED">
+                                    <h3>JAVA_FLOAT_UNALIGNED</h3>
+                                    <div class="member-signature">
+                                         <span class="modifiers">static final </span>&nbsp;<span class="return-type"><a href="ValueLayout.OfFloat.html" title="interface in java.lang.foreign" target="_parent">ValueLayout.OfFloat</a><sup><a href="ValueLayout.OfFloat.html#preview-java.lang.foreign.ValueLayout.OfFloat" target="_parent">PREVIEW</a></sup></span>&nbsp;<span class="element-name">JAVA_FLOAT_UNALIGNED</span> 
+                                    </div>
+                                    <div class="block">
+                                         An unaligned value layout constant whose size is the same as that of a Java <code>float</code> and byte order set to <a href="../../nio/ByteOrder.html#nativeOrder()" target="_parent"><code>ByteOrder.nativeOrder()</code></a>. Equivalent to the following code:
+                                        <div class="snippet-container">
+                                             <button class="copy snippet-copy"><span data-copied="Copied!">Copy</span><img src="../../../../copy.svg" alt="Copy"></button>
+                                            <pre class="snippet">
+                                                                                                            <code class="language-java">JAVA_FLOAT.withBitAlignment(8);
+</code>
+                                                        
+                                            </pre>
+                                             
+                                        </div>
+                                                                   
+                                    </div>
+                                    <dl class="notes">
+                                         
+                                        <dt>API Note: </dt>
+                                        <dd>Care should be taken when using unaligned value layouts as they may induce performance and portability issues.                </dd>
+                                         
+                                    </dl>
+                                      
+                                </section>
+                                    </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        <table border="0" cellpadding="1" cellspacing="0" width="100%">
+            <tr>
+                <td>
+                    <h3 class="ctxid">field:JAVA_DOUBLE_UNALIGNED [NONE]</h3>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+                        <tr valign="top">
+                            <td bgcolor="#FFFFFF" colspan="1"> <a name="field:JAVA_DOUBLE_UNALIGNED"></a> 
+                                <section class="detail" id="JAVA_DOUBLE_UNALIGNED">
+                                    <h3>JAVA_DOUBLE_UNALIGNED</h3>
+                                    <div class="member-signature">
+                                         <span class="modifiers">static final </span>&nbsp;<span class="return-type"><a href="ValueLayout.OfDouble.html" title="interface in java.lang.foreign" target="_parent">ValueLayout.OfDouble</a><sup><a href="ValueLayout.OfDouble.html#preview-java.lang.foreign.ValueLayout.OfDouble" target="_parent">PREVIEW</a></sup></span>&nbsp;<span class="element-name">JAVA_DOUBLE_UNALIGNED</span> 
+                                    </div>
+                                    <div class="block">
+                                         An unaligned value layout constant whose size is the same as that of a Java <code>double</code> and byte order set to <a href="../../nio/ByteOrder.html#nativeOrder()" target="_parent"><code>ByteOrder.nativeOrder()</code></a>. Equivalent to the following code:
+                                        <div class="snippet-container">
+                                             <button class="copy snippet-copy"><span data-copied="Copied!">Copy</span><img src="../../../../copy.svg" alt="Copy"></button>
+                                            <pre class="snippet">
+                                                                                                            <code class="language-java">JAVA_DOUBLE.withBitAlignment(8);
+</code>
+                                                        
+                                            </pre>
+                                             
+                                        </div>
+                                                                   
+                                    </div>
+                                    <dl class="notes">
+                                         
+                                        <dt>API Note: </dt>
+                                        <dd>Care should be taken when using unaligned value layouts as they may induce performance and portability issues.                </dd>
+                                         
+                                    </dl>
+                                      
+                                </section>
+                                      </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        <table border="0" cellpadding="1" cellspacing="0" width="100%">
+            <tr>
+                <td>
+                    <h3 class="ctxid">method:order() [NONE]</h3>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+                        <tr valign="top">
+                            <td bgcolor="#FFFFFF" colspan="1">
+                                <li>
+                                     <a name="method:order()"></a> 
+                                    <section class="detail" id="order()">
+                                        <h3>order</h3>
+                                        <div class="member-signature">
+                                             <span class="return-type"><a href="../../nio/ByteOrder.html" title="class in java.nio" target="_parent">ByteOrder</a></span>&nbsp;<span class="element-name">order</span>() 
+                                        </div>
+                                        <div class="block">Returns the value's byte order.    </div>
+                                        <dl class="notes">
+                                             
+                                            <dt>Returns:</dt>
+                                            <dd>the value's byte order   </dd>
+                                             
+                                        </dl>
+                                          
+                                    </section>
+                                      
+                                </li>
+                                  </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        <table border="0" cellpadding="1" cellspacing="0" width="100%">
+            <tr>
+                <td>
+                    <h3 class="ctxid">method:withOrder(java.nio.ByteOrder) [NONE]</h3>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+                        <tr valign="top">
+                            <td bgcolor="#FFFFFF" colspan="1"> <a name="method:withOrder(java.nio.ByteOrder)"></a> 
+                                <section class="detail" id="withOrder(java.nio.ByteOrder)">
+                                    <h3>withOrder</h3>
+                                    <div class="member-signature">
+                                         <span class="return-type"><a href="ValueLayout.html" title="interface in java.lang.foreign" target="_parent">ValueLayout</a><sup><a href="#preview-java.lang.foreign.ValueLayout">PREVIEW</a></sup></span>&nbsp;<span class="element-name">withOrder</span> 
+                                        <wbr></wbr>
+                                         <span class="parameters">(<a href="../../nio/ByteOrder.html" title="class in java.nio" target="_parent">ByteOrder</a>&nbsp;order)</span>   
+                                    </div>
+                                    <div class="block">Returns a value layout with the same carrier, alignment constraint and name as this value layout, but with the specified byte order.                     </div>
+                                    <dl class="notes">
+                                         
+                                        <dt>Parameters:</dt>
+                                        <dd>
+                                             <code>order</code> - the desired byte order.      
+                                        </dd>
+                                         
+                                        <dt>Returns:</dt>
+                                        <dd>a value layout with the given byte order.       </dd>
+                                          
+                                    </dl>
+                                      
+                                </section>
+                                    </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        <table border="0" cellpadding="1" cellspacing="0" width="100%">
+            <tr>
+                <td>
+                    <h3 class="ctxid">method:arrayElementVarHandle(int...) [NONE]</h3>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+                        <tr valign="top">
+                            <td bgcolor="#FFFFFF" colspan="1"> <a name="method:arrayElementVarHandle(int...)"></a> 
+                                <section class="detail" id="arrayElementVarHandle(int...)">
+                                    <h3>arrayElementVarHandle</h3>
+                                    <div class="member-signature">
+                                         <span class="return-type"><a href="../invoke/VarHandle.html" title="class in java.lang.invoke" target="_parent">VarHandle</a></span>&nbsp;<span class="element-name">arrayElementVarHandle</span> 
+                                        <wbr></wbr>
+                                         <span class="parameters">(int...&nbsp;shape)</span>   
+                                    </div>
+                                    <div class="block">
+                                         Creates a <em>strided</em> var handle that can be used to access a memory segment as multi-dimensional array. The layout of this array is a sequence layout with <code>shape.length</code> nested sequence layouts. The element layout of the sequence layout at depth <code>shape.length</code> is this value layout. As a result, if <code>shape.length == 0  </code>, the array layout will feature only one dimension.
+                                        <p>
+                                             The resulting var handle will feature <code>sizes.length + 1  </code> coordinates of type <code>long</code>, which are used as indices into a multi-dimensional array.                    
+                                        </p>
+                                        <p> For instance, the following method call:      </p>
+                                        <div class="snippet-container">
+                                             <button class="copy snippet-copy"><span data-copied="Copied!">Copy</span><img src="../../../../copy.svg" alt="Copy"></button>
+                                            <pre class="snippet">
+                                                                                                            <code class="language-java">VarHandle arrayHandle = ValueLayout.JAVA_INT.arrayElementVarHandle(10, 20);
+</code>
+                                                        
+                                            </pre>
+                                             
+                                        </div>
+                                         Can be used to access a multi-dimensional array whose layout is as follows:
+                                        <div class="snippet-container">
+                                             <button class="copy snippet-copy"><span data-copied="Copied!">Copy</span><img src="../../../../copy.svg" alt="Copy"></button>
+                                            <pre class="snippet">
+                                                                                                            <code class="language-java"> SequenceLayout arrayLayout = MemoryLayout.sequenceLayout(
+                                      MemoryLayout.sequenceLayout(10,
+                                                  MemoryLayout.sequenceLayout(20, ValueLayout.JAVA_INT)));
+</code>
+                                                        
+                                            </pre>
+                                             
+                                        </div>
+                                         The resulting var handle <code>arrayHandle</code> will feature 3 coordinates of type <code>long</code>; each coordinate is interpreted as an index into the corresponding sequence layout. If we refer to the var handle coordinates, from left to right, as <code>x</code>, <code>y</code> and <code>z</code> respectively, the final offset accessed by the var handle can be computed with the following formula:
+                                        <blockquote>
+                                            <pre>
+                                                                                                            <code>
+ offset = (10 * 20 * 4 * x) + (20 * 4 * y) + (4 * z)
+ </code>
+                                                        
+                                            </pre>
+                                        </blockquote>
+                                         Additionally, the values of <code>x</code>, <code>y</code> and <code>z</code> are constrained as follows:
+                                        <ul>
+                                            <li>
+                                                 <code>0 &lt;= x &lt; arrayLayout.elementCount()      </code> 
+                                            </li>
+                                            <li>
+                                                 <code>0 &lt;= y &lt; 10      </code> 
+                                            </li>
+                                            <li>
+                                                 <code>0 &lt;= z &lt; 20      </code> 
+                                            </li>
+                                        </ul>
+                                        <p> Consider the following access expressions:     </p>
+                                        <div class="snippet-container">
+                                             <button class="copy snippet-copy"><span data-copied="Copied!">Copy</span><img src="../../../../copy.svg" alt="Copy"></button>
+                                            <pre class="snippet">
+                                                                                                            <code class="language-java">int value1 = arrayHandle.get(10, 2, 4); // ok, accessed offset = 8176
+int value2 = arrayHandle.get(0, 0, 30); // out of bounds value for z
+</code>
+                                                        
+                                            </pre>
+                                             
+                                        </div>
+                                         In the first case, access is well-formed, as the values for <code>x</code>, <code>y</code> and <code>z</code> conform to the bounds specified above. In the second case, access fails with <a href="../IndexOutOfBoundsException.html" title="class in java.lang" target="_parent"><code>IndexOutOfBoundsException</code></a>, as the value for <code>z</code> is outside its specified bounds.                                                                                                                                                                                   
+                                    </div>
+                                    <dl class="notes">
+                                         
+                                        <dt>Parameters:</dt>
+                                        <dd>
+                                             <code>shape</code> - the size of each nested array dimension.         
+                                        </dd>
+                                         
+                                        <dt>Returns:</dt>
+                                        <dd>
+                                             a var handle which can be used to access a memory segment as a multi-dimensional array, featuring <code>shape.length + 1  </code><code>long</code> coordinates.                   
+                                        </dd>
+                                         
+                                        <dt>Throws:</dt>
+                                        <dd>
+                                             <code><a href="../IllegalArgumentException.html" title="class in java.lang" target="_parent">IllegalArgumentException</a></code> - if <code>shape[i] &lt; 0  </code>, for at least one index <code>i</code>.          
+                                        </dd>
+                                        <dd>
+                                             <code><a href="../UnsupportedOperationException.html" title="class in java.lang" target="_parent">UnsupportedOperationException</a></code> - if <code>bitAlignment() &gt; bitSize()  </code>.    
+                                        </dd>
+                                         
+                                        <dt>See Also: </dt>
+                                        <dd>
+                                            <ul class="tag-list-long">
+                                                <li>
+                                                     <a href="../invoke/MethodHandles.html#memorySegmentViewVarHandle(java.lang.foreign.ValueLayout)" target="_parent"><code>MethodHandles.memorySegmentViewVarHandle(java.lang.foreign.ValueLayout)</code></a><sup><a href="../invoke/MethodHandles.html#preview-memorySegmentViewVarHandle(java.lang.foreign.ValueLayout)" target="_parent">PREVIEW</a></sup> 
+                                                </li>
+                                                <li>
+                                                     <a href="MemoryLayout.html#varHandle(java.lang.foreign.MemoryLayout.PathElement...)" target="_parent"><code>MemoryLayout.varHandle(PathElement...)</code></a><sup><a href="MemoryLayout.html#preview-java.lang.foreign.MemoryLayout" target="_parent">PREVIEW</a></sup> 
+                                                </li>
+                                                <li>
+                                                     <a href="SequenceLayout.html" title="interface in java.lang.foreign" target="_parent"><code>SequenceLayout</code></a><sup><a href="SequenceLayout.html#preview-java.lang.foreign.SequenceLayout" target="_parent">PREVIEW</a></sup> 
+                                                </li>
+                                            </ul>
+                                        </dd>
+                                            
+                                    </dl>
+                                      
+                                </section>
+                                    </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        <table border="0" cellpadding="1" cellspacing="0" width="100%">
+            <tr>
+                <td>
+                    <h3 class="ctxid">method:carrier() [NONE]</h3>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+                        <tr valign="top">
+                            <td bgcolor="#FFFFFF" colspan="1"> <a name="method:carrier()"></a> 
+                                <section class="detail" id="carrier()">
+                                    <h3>carrier</h3>
+                                    <div class="member-signature">
+                                         <span class="return-type"><a href="../Class.html" title="class in java.lang" target="_parent">Class</a>&lt;?&gt;</span>&nbsp;<span class="element-name">carrier</span>() 
+                                    </div>
+                                    <div class="block">Returns the carrier associated with this value layout.       </div>
+                                    <dl class="notes">
+                                         
+                                        <dt>Returns:</dt>
+                                        <dd>the carrier associated with this value layout      </dd>
+                                         
+                                    </dl>
+                                      
+                                </section>
+                                    </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        <table border="0" cellpadding="1" cellspacing="0" width="100%">
+            <tr>
+                <td>
+                    <h3 class="ctxid">method:withName(java.lang.String) [NONE]</h3>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+                        <tr valign="top">
+                            <td bgcolor="#FFFFFF" colspan="1"> <a name="method:withName(java.lang.String)"></a> 
+                                <section class="detail" id="withName(java.lang.String)">
+                                    <h3>withName</h3>
+                                    <div class="member-signature">
+                                         <span class="return-type"><a href="ValueLayout.html" title="interface in java.lang.foreign" target="_parent">ValueLayout</a><sup><a href="#preview-java.lang.foreign.ValueLayout">PREVIEW</a></sup></span>&nbsp;<span class="element-name">withName</span> 
+                                        <wbr></wbr>
+                                         <span class="parameters">(<a href="../String.html" title="class in java.lang" target="_parent">String</a>&nbsp;name)</span>   
+                                    </div>
+                                    <div class="block">Returns a memory layout of the same type with the same size and alignment constraint as this layout, but with the specified name.                      </div>
+                                    <dl class="notes">
+                                         
+                                        <dt>Specified by: </dt>
+                                        <dd>
+                                             <code><a href="MemoryLayout.html#withName(java.lang.String)" target="_parent">withName</a></code>&nbsp;in interface&nbsp;<code><a href="MemoryLayout.html" title="interface in java.lang.foreign" target="_parent">MemoryLayout</a><sup><a href="MemoryLayout.html#preview-java.lang.foreign.MemoryLayout" target="_parent">PREVIEW</a></sup></code>  
+                                        </dd>
+                                         
+                                        <dt>Parameters:</dt>
+                                        <dd>
+                                             <code>name</code> - the layout name.     
+                                        </dd>
+                                         
+                                        <dt>Returns:</dt>
+                                        <dd>a memory layout with the given name.      </dd>
+                                         
+                                        <dt>See Also: </dt>
+                                        <dd>
+                                            <ul class="tag-list">
+                                                <li>
+                                                     <a href="MemoryLayout.html#name()" target="_parent"><code>MemoryLayout.name()</code></a><sup><a href="MemoryLayout.html#preview-java.lang.foreign.MemoryLayout" target="_parent">PREVIEW</a></sup> 
+                                                </li>
+                                            </ul>
+                                        </dd>
+                                            
+                                    </dl>
+                                      
+                                </section>
+                                    </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        <table border="0" cellpadding="1" cellspacing="0" width="100%">
+            <tr>
+                <td>
+                    <h3 class="ctxid">method:withBitAlignment(long) [NONE]</h3>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+                        <tr valign="top">
+                            <td bgcolor="#FFFFFF" colspan="1"> <a name="method:withBitAlignment(long)"></a> 
+                                <section class="detail" id="withBitAlignment(long)">
+                                    <h3>withBitAlignment</h3>
+                                    <div class="member-signature">
+                                         <span class="return-type"><a href="ValueLayout.html" title="interface in java.lang.foreign" target="_parent">ValueLayout</a><sup><a href="#preview-java.lang.foreign.ValueLayout">PREVIEW</a></sup></span>&nbsp;<span class="element-name">withBitAlignment</span> 
+                                        <wbr></wbr>
+                                         <span class="parameters">(long&nbsp;bitAlignment)</span>   
+                                    </div>
+                                    <div class="block">Returns a memory layout of the same type with the same size and name as this layout, but with the specified alignment constraint (in bits).                        </div>
+                                    <dl class="notes">
+                                         
+                                        <dt>Specified by: </dt>
+                                        <dd>
+                                             <code><a href="MemoryLayout.html#withBitAlignment(long)" target="_parent">withBitAlignment</a></code>&nbsp;in interface&nbsp;<code><a href="MemoryLayout.html" title="interface in java.lang.foreign" target="_parent">MemoryLayout</a><sup><a href="MemoryLayout.html#preview-java.lang.foreign.MemoryLayout" target="_parent">PREVIEW</a></sup></code>  
+                                        </dd>
+                                         
+                                        <dt>Parameters:</dt>
+                                        <dd>
+                                             <code>bitAlignment</code> - the layout alignment constraint, expressed in bits.         
+                                        </dd>
+                                         
+                                        <dt>Returns:</dt>
+                                        <dd>a memory layout with the given alignment constraint.       </dd>
+                                           
+                                    </dl>
+                                      
+                                </section>
+                                        </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        <p style="text-align:center; font-size:10px;"></p>
+    </body>
+</html>

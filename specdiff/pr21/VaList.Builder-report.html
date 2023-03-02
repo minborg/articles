@@ -1,0 +1,358 @@
+<html>
+    <head>
+        <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <style>
+                        h3.ctxid {
+                        padding-top:10;
+                        margin: 0;
+                        font-size: 12;
+                        color: darkblue;
+                        }
+                        .diff-html-added {
+                        font-size: 120%;
+                        color: darkgreen;
+                        background-color: #ccffcc;
+                        cursor: pointer;
+                        }
+                        .diff-html-removed {
+                        font-size: 100%;
+                        text-decoration: line-through;
+                        background-color: #fdc6c6;
+                        cursor: pointer;
+                        }
+                        span.diff-html-added img{
+                        border: 2px solid #ccffcc;
+                        }
+                        span.diff-html-removed img{
+                        border: 2px solid #fdc6c6;
+                        }
+                    </style>
+    </head>
+    <body>
+        <table cellpadding="1" cellspacing="0" border="0" width="100%">
+            <tr>
+                <td><a href="package-summary.html" target="_parent">Package Summary</a>&nbsp;&nbsp;<a href="overview-summary.html" target="_parent">Overview Summary</a></td>
+            </tr>
+        </table>
+        <div class="flex-box">
+            <div class="flex-content">
+                 
+                <main role="main">
+                    <div class="header">
+                        <div class="sub-title">
+                             <span class="module-label-in-type">Module</span>&nbsp;<a href="../../../module-summary.html" target="_parent">java.base</a> 
+                        </div>
+                        <div class="sub-title">
+                             <span class="package-label-in-type">Package</span>&nbsp;<a href="package-summary.html" target="_parent">java.lang.foreign</a> 
+                        </div>
+                        <h1 title="Interface VaList.Builder" class="title">Interface VaList.Builder </h1>
+                    </div>
+                     <a name="class:VaList.Builder"></a> 
+                    <section class="class-description" id="class-description">
+                        <dl class="notes">
+                             
+                            <dt>Enclosing interface: </dt>
+                            <dd>
+                                 <code><a href="VaList.html" title="interface in java.lang.foreign" target="_parent">VaList</a><sup><a href="VaList.html#preview-java.lang.foreign.VaList" target="_parent">PREVIEW</a></sup></code> 
+                            </dd>
+                             
+                        </dl>
+                         
+                        <hr>
+                        <div class="type-signature">
+                             <span class="modifiers">public static sealed interface     </span><span class="element-name type-name-label">VaList.Builder</span> 
+                        </div>
+                        <div class="preview-block" id="preview-java.lang.foreign.VaList.Builder">
+                             <span class="preview-label"><code>Builder</code> is a preview API of the Java platform.        </span>
+                            <div class="preview-comment">
+                                 Programs can only use <code>Builder</code> when preview features are enabled.          
+                            </div>
+                            <div class="preview-comment">Preview features may be removed in a future release, or upgraded to permanent features of the Java platform.                 </div>
+                             
+                        </div>
+                        <div class="block">
+                             A builder used to construct a <a href="VaList.html" title="interface in java.lang.foreign" target="_parent">variable argument list  </a><sup><a href="VaList.html#preview-java.lang.foreign.VaList" target="_parent">PREVIEW</a></sup>.       
+                        </div>
+                        <dl class="notes">
+                             
+                            <dt>Since:</dt>
+                            <dd>19</dd>
+                             
+                        </dl>
+                           
+                    </section>
+                      
+                    <section class="summary">
+                        <ul class="summary-list">
+                            <li>
+                                 
+                                <section class="method-summary" id="method-summary">
+                                    <h2>Method Summary </h2>
+                                    <div id="method-summary-table">
+                                        <div class="table-tabs" role="tablist" aria-orientation="horizontal">
+                                             <button id="method-summary-table-tab0" role="tab" aria-selected="true" aria-controls="method-summary-table.tabpanel" tabindex="0" class="active-table-tab">All Methods </button><button id="method-summary-table-tab2" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" class="table-tab">Instance Methods </button><button id="method-summary-table-tab3" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" class="table-tab">Abstract Methods </button> 
+                                        </div>
+                                        <div id="method-summary-table.tabpanel" role="tabpanel">
+                                            <div class="summary-table three-column-summary" aria-labelledby="method-summary-table-tab0">
+                                                <div class="table-header col-first">Modifier and Type  </div>
+                                                <div class="table-header col-second">Method</div>
+                                                <div class="table-header col-last">Description</div>
+                                                <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+                                                     <code><a href="VaList.Builder.html" title="interface in java.lang.foreign" target="_parent">VaList.Builder</a><sup><a href="#preview-java.lang.foreign.VaList.Builder">PREVIEW</a></sup></code> 
+                                                </div>
+                                                <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+                                                     <code><a href="#addVarg(java.lang.foreign.GroupLayout,java.lang.foreign.MemorySegment)" class="member-name-link">addVarg</a> 
+                                                        <wbr></wbr>
+                                                         (<a href="GroupLayout.html" title="interface in java.lang.foreign" target="_parent">GroupLayout</a><sup><a href="GroupLayout.html#preview-java.lang.foreign.GroupLayout" target="_parent">PREVIEW</a></sup>&nbsp;layout, <a href="MemorySegment.html" title="interface in java.lang.foreign" target="_parent">MemorySegment</a><sup><a href="MemorySegment.html#preview-java.lang.foreign.MemorySegment" target="_parent">PREVIEW</a></sup>&nbsp;value)   </code> 
+                                                </div>
+                                                <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+                                                    <div class="block">
+                                                         Writes a <code>MemorySegment</code>, with the given layout, to the variable argument list being constructed.              
+                                                    </div>
+                                                </div>
+                                                <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+                                                     <code><a href="VaList.Builder.html" title="interface in java.lang.foreign" target="_parent">VaList.Builder</a><sup><a href="#preview-java.lang.foreign.VaList.Builder">PREVIEW</a></sup></code> 
+                                                </div>
+                                                <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+                                                     <code><a href="#addVarg(java.lang.foreign.ValueLayout.OfAddress,java.lang.foreign.MemorySegment)" class="member-name-link">addVarg</a> 
+                                                        <wbr></wbr>
+                                                         (<a href="ValueLayout.OfAddress.html" title="interface in java.lang.foreign" target="_parent">ValueLayout.OfAddress</a><sup><a href="ValueLayout.OfAddress.html#preview-java.lang.foreign.ValueLayout.OfAddress" target="_parent">PREVIEW</a></sup>&nbsp;layout, <a href="MemorySegment.html" title="interface in java.lang.foreign" target="_parent">MemorySegment</a><sup><a href="MemorySegment.html#preview-java.lang.foreign.MemorySegment" target="_parent">PREVIEW</a></sup>&nbsp;segment)   </code> 
+                                                </div>
+                                                <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+                                                    <div class="block">
+                                                         Writes the <a href="MemorySegment.html#address()" target="_parent">address</a><sup><a href="MemorySegment.html#preview-java.lang.foreign.MemorySegment" target="_parent">PREVIEW</a></sup> of the provided native segment to the variable argument list being constructed.               
+                                                    </div>
+                                                </div>
+                                                <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+                                                     <code><a href="VaList.Builder.html" title="interface in java.lang.foreign" target="_parent">VaList.Builder</a><sup><a href="#preview-java.lang.foreign.VaList.Builder">PREVIEW</a></sup></code> 
+                                                </div>
+                                                <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+                                                     <code><a href="#addVarg(java.lang.foreign.ValueLayout.OfDouble,double)" class="member-name-link">addVarg</a> 
+                                                        <wbr></wbr>
+                                                         (<a href="ValueLayout.OfDouble.html" title="interface in java.lang.foreign" target="_parent">ValueLayout.OfDouble</a><sup><a href="ValueLayout.OfDouble.html#preview-java.lang.foreign.ValueLayout.OfDouble" target="_parent">PREVIEW</a></sup>&nbsp;layout, double&nbsp;value)   </code> 
+                                                </div>
+                                                <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+                                                    <div class="block">
+                                                         Writes a <code>double</code> value to the variable argument list being constructed.           
+                                                    </div>
+                                                </div>
+                                                <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+                                                     <code><a href="VaList.Builder.html" title="interface in java.lang.foreign" target="_parent">VaList.Builder</a><sup><a href="#preview-java.lang.foreign.VaList.Builder">PREVIEW</a></sup></code> 
+                                                </div>
+                                                <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+                                                     <code><a href="#addVarg(java.lang.foreign.ValueLayout.OfInt,int)" class="member-name-link">addVarg</a> 
+                                                        <wbr></wbr>
+                                                         (<a href="ValueLayout.OfInt.html" title="interface in java.lang.foreign" target="_parent">ValueLayout.OfInt</a><sup><a href="ValueLayout.OfInt.html#preview-java.lang.foreign.ValueLayout.OfInt" target="_parent">PREVIEW</a></sup>&nbsp;layout, int&nbsp;value)   </code> 
+                                                </div>
+                                                <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+                                                    <div class="block">
+                                                         Writes an <code>int</code> value to the variable argument list being constructed.           
+                                                    </div>
+                                                </div>
+                                                <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+                                                     <code><a href="VaList.Builder.html" title="interface in java.lang.foreign" target="_parent">VaList.Builder</a><sup><a href="#preview-java.lang.foreign.VaList.Builder">PREVIEW</a></sup></code> 
+                                                </div>
+                                                <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+                                                     <code><a href="#addVarg(java.lang.foreign.ValueLayout.OfLong,long)" class="member-name-link">addVarg</a> 
+                                                        <wbr></wbr>
+                                                         (<a href="ValueLayout.OfLong.html" title="interface in java.lang.foreign" target="_parent">ValueLayout.OfLong</a><sup><a href="ValueLayout.OfLong.html#preview-java.lang.foreign.ValueLayout.OfLong" target="_parent">PREVIEW</a></sup>&nbsp;layout, long&nbsp;value)   </code> 
+                                                </div>
+                                                <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+                                                    <div class="block">
+                                                         Writes a <code>long</code> value to the variable argument list being constructed.           
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                      
+                                </section>
+                                 
+                            </li>
+                        </ul>
+                          
+                    </section>
+                     
+                    <section class="details">
+                        <ul class="details-list">
+                            <li>
+                                 
+                                <section class="method-details" id="method-detail">
+                                    <h2>Method Details </h2>
+                                    <ul class="member-list">
+                                        <li>
+                                             <a name="method:addVarg(java.lang.foreign.ValueLayout.OfInt,int)"></a> 
+                                            <section class="detail" id="addVarg(java.lang.foreign.ValueLayout.OfInt,int)">
+                                                <h3>addVarg</h3>
+                                                <div class="member-signature">
+                                                     <span class="return-type"><a href="VaList.Builder.html" title="interface in java.lang.foreign" target="_parent">VaList.Builder</a><sup><a href="#preview-java.lang.foreign.VaList.Builder">PREVIEW</a></sup></span>&nbsp;<span class="element-name">addVarg</span> 
+                                                    <wbr></wbr>
+                                                     <span class="parameters">(<a href="ValueLayout.OfInt.html" title="interface in java.lang.foreign" target="_parent">ValueLayout.OfInt</a><sup><a href="ValueLayout.OfInt.html#preview-java.lang.foreign.ValueLayout.OfInt" target="_parent">PREVIEW</a></sup>&nbsp;layout, int&nbsp;value) </span>   
+                                                </div>
+                                                <div class="block">
+                                                     Writes an <code>int</code> value to the variable argument list being constructed.           
+                                                </div>
+                                                <dl class="notes">
+                                                     
+                                                    <dt>Parameters:</dt>
+                                                    <dd>
+                                                         <code>layout</code> - the layout of the value to be written.          
+                                                    </dd>
+                                                    <dd>
+                                                         <code>value</code> - the <code>int</code> value to be written.        
+                                                    </dd>
+                                                     
+                                                    <dt>Returns:</dt>
+                                                    <dd>this builder. </dd>
+                                                      
+                                                </dl>
+                                                  
+                                            </section>
+                                              
+                                        </li>
+                                        <li>
+                                              
+                                            <hr>
+                                             <a name="method:addVarg(java.lang.foreign.ValueLayout.OfLong,long)"></a> 
+                                            <section class="detail" id="addVarg(java.lang.foreign.ValueLayout.OfLong,long)">
+                                                <h3>addVarg</h3>
+                                                <div class="member-signature">
+                                                     <span class="return-type"><a href="VaList.Builder.html" title="interface in java.lang.foreign" target="_parent">VaList.Builder</a><sup><a href="#preview-java.lang.foreign.VaList.Builder">PREVIEW</a></sup></span>&nbsp;<span class="element-name">addVarg</span> 
+                                                    <wbr></wbr>
+                                                     <span class="parameters">(<a href="ValueLayout.OfLong.html" title="interface in java.lang.foreign" target="_parent">ValueLayout.OfLong</a><sup><a href="ValueLayout.OfLong.html#preview-java.lang.foreign.ValueLayout.OfLong" target="_parent">PREVIEW</a></sup>&nbsp;layout, long&nbsp;value) </span>   
+                                                </div>
+                                                <div class="block">
+                                                     Writes a <code>long</code> value to the variable argument list being constructed.           
+                                                </div>
+                                                <dl class="notes">
+                                                     
+                                                    <dt>Parameters:</dt>
+                                                    <dd>
+                                                         <code>layout</code> - the layout of the value to be written.          
+                                                    </dd>
+                                                    <dd>
+                                                         <code>value</code> - the <code>long</code> value to be written.        
+                                                    </dd>
+                                                     
+                                                    <dt>Returns:</dt>
+                                                    <dd>this builder. </dd>
+                                                      
+                                                </dl>
+                                                  
+                                            </section>
+                                                
+                                        </li>
+                                        <li>
+                                              
+                                            <hr>
+                                             <a name="method:addVarg(java.lang.foreign.ValueLayout.OfDouble,double)"></a> 
+                                            <section class="detail" id="addVarg(java.lang.foreign.ValueLayout.OfDouble,double)">
+                                                <h3>addVarg</h3>
+                                                <div class="member-signature">
+                                                     <span class="return-type"><a href="VaList.Builder.html" title="interface in java.lang.foreign" target="_parent">VaList.Builder</a><sup><a href="#preview-java.lang.foreign.VaList.Builder">PREVIEW</a></sup></span>&nbsp;<span class="element-name">addVarg</span> 
+                                                    <wbr></wbr>
+                                                     <span class="parameters">(<a href="ValueLayout.OfDouble.html" title="interface in java.lang.foreign" target="_parent">ValueLayout.OfDouble</a><sup><a href="ValueLayout.OfDouble.html#preview-java.lang.foreign.ValueLayout.OfDouble" target="_parent">PREVIEW</a></sup>&nbsp;layout, double&nbsp;value) </span>   
+                                                </div>
+                                                <div class="block">
+                                                     Writes a <code>double</code> value to the variable argument list being constructed.           
+                                                </div>
+                                                <dl class="notes">
+                                                     
+                                                    <dt>Parameters:</dt>
+                                                    <dd>
+                                                         <code>layout</code> - the layout of the value to be written.          
+                                                    </dd>
+                                                    <dd>
+                                                         <code>value</code> - the <code>double</code> value to be written.        
+                                                    </dd>
+                                                     
+                                                    <dt>Returns:</dt>
+                                                    <dd>this builder. </dd>
+                                                      
+                                                </dl>
+                                                  
+                                            </section>
+                                                
+                                        </li>
+                                        <li>
+                                              
+                                            <hr>
+                                             <a name="method:addVarg(java.lang.foreign.ValueLayout.OfAddress,java.lang.foreign.MemorySegment)"></a> 
+                                            <section class="detail" id="addVarg(java.lang.foreign.ValueLayout.OfAddress,java.lang.foreign.MemorySegment)">
+                                                <h3>addVarg</h3>
+                                                <div class="member-signature">
+                                                     <span class="return-type"><a href="VaList.Builder.html" title="interface in java.lang.foreign" target="_parent">VaList.Builder</a><sup><a href="#preview-java.lang.foreign.VaList.Builder">PREVIEW</a></sup></span>&nbsp;<span class="element-name">addVarg</span> 
+                                                    <wbr></wbr>
+                                                     <span class="parameters">(<a href="ValueLayout.OfAddress.html" title="interface in java.lang.foreign" target="_parent">ValueLayout.OfAddress</a><sup><a href="ValueLayout.OfAddress.html#preview-java.lang.foreign.ValueLayout.OfAddress" target="_parent">PREVIEW</a></sup>&nbsp;layout, <a href="MemorySegment.html" title="interface in java.lang.foreign" target="_parent">MemorySegment</a><sup><a href="MemorySegment.html#preview-java.lang.foreign.MemorySegment" target="_parent">PREVIEW</a></sup>&nbsp;segment) </span>   
+                                                </div>
+                                                <div class="block">
+                                                     Writes the <a href="MemorySegment.html#address()" target="_parent">address</a><sup><a href="MemorySegment.html#preview-java.lang.foreign.MemorySegment" target="_parent">PREVIEW</a></sup> of the provided native segment to the variable argument list being constructed.               
+                                                </div>
+                                                <dl class="notes">
+                                                     
+                                                    <dt>Parameters:</dt>
+                                                    <dd>
+                                                         <code>layout</code> - the layout of the value to be written.          
+                                                    </dd>
+                                                    <dd>
+                                                         <code>segment</code> - the segment whose <a href="MemorySegment.html#address()" target="_parent">address</a><sup><a href="MemorySegment.html#preview-java.lang.foreign.MemorySegment" target="_parent">PREVIEW</a></sup> is to be written.          
+                                                    </dd>
+                                                     
+                                                    <dt>Returns:</dt>
+                                                    <dd>this builder. </dd>
+                                                      
+                                                </dl>
+                                                  
+                                            </section>
+                                                
+                                        </li>
+                                        <li>
+                                              
+                                            <hr>
+                                             <a name="method:addVarg(java.lang.foreign.GroupLayout,java.lang.foreign.MemorySegment)"></a> 
+                                            <section class="detail" id="addVarg(java.lang.foreign.GroupLayout,java.lang.foreign.MemorySegment)">
+                                                <h3>addVarg</h3>
+                                                <div class="member-signature">
+                                                     <span class="return-type"><a href="VaList.Builder.html" title="interface in java.lang.foreign" target="_parent">VaList.Builder</a><sup><a href="#preview-java.lang.foreign.VaList.Builder">PREVIEW</a></sup></span>&nbsp;<span class="element-name">addVarg</span> 
+                                                    <wbr></wbr>
+                                                     <span class="parameters">(<a href="GroupLayout.html" title="interface in java.lang.foreign" target="_parent">GroupLayout</a><sup><a href="GroupLayout.html#preview-java.lang.foreign.GroupLayout" target="_parent">PREVIEW</a></sup>&nbsp;layout, <a href="MemorySegment.html" title="interface in java.lang.foreign" target="_parent">MemorySegment</a><sup><a href="MemorySegment.html#preview-java.lang.foreign.MemorySegment" target="_parent">PREVIEW</a></sup>&nbsp;value) </span>   
+                                                </div>
+                                                <div class="block">
+                                                     Writes a <code>MemorySegment</code>, with the given layout, to the variable argument list being constructed.              
+                                                </div>
+                                                <dl class="notes">
+                                                     
+                                                    <dt>Parameters:</dt>
+                                                    <dd>
+                                                         <code>layout</code> - the layout of the value to be written.          
+                                                    </dd>
+                                                    <dd>
+                                                         <code>value</code> - the <code>MemorySegment</code> whose contents will be copied.         
+                                                    </dd>
+                                                     
+                                                    <dt>Returns:</dt>
+                                                    <dd>this builder. </dd>
+                                                      
+                                                </dl>
+                                                  
+                                            </section>
+                                                
+                                        </li>
+                                    </ul>
+                                      
+                                </section>
+                                 
+                            </li>
+                        </ul>
+                          
+                    </section>
+                      
+                    <hr>
+                             
+                </main>
+                 
+            </div>
+        </div>
+        <p style="text-align:center; font-size:10px;"></p>
+    </body>
+</html>

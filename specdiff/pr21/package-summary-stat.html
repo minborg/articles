@@ -1,0 +1,213 @@
+<html>
+    <head>
+        <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <style>
+                        {
+                        font-family:Helvetica, Arial, sans-serif;
+                        }
+                        a {text-decoration:none}
+                        a:hover {text-decoration:underline}
+                        a.problem {text-decoration:underline; color:red}
+                        a.problem:hover {text-decoration:underline}
+                        .removed {
+                        background-color: #fdc6c6;
+                        }
+                        .added {
+                        background-color: #ccffcc;
+                        }
+                        .changed {
+                        color: #ff0000;
+                        }
+                        .none {
+                        color: black;
+                        }
+                        .modified {
+                        font-weight:bold;
+                        color: #ff0000;
+                        }
+                        .total {
+                        font-weight:bold;
+                        background-color:#eeeeee;
+                        }
+                        .header {
+                        background-color:#eeeeee;
+                        }
+                        .stat {
+                        font-size:80%;
+                        }
+                        .stat1 {
+                        font-size:100%;
+                        background-color: #a0a0a0;
+                        }
+                        .stat1 tr {
+                        background-color: white;
+                        }
+                        td.context {
+                        font-size:90%;
+                        }
+                    </style>
+    </head>
+    <body>
+        <table border="0" cellspacing="5" width="100%" class="stat">
+            <tr class="header">
+                <td nowrap="1"><font size="+1">Document Statistics</font></td>
+            </tr>
+            <tr>
+                <td>
+                    <table border="0" cellspacing="1" cellpadding="2" class="stat1">
+                        <tr>
+                            <td><b>Status</b></td><td colspan="5"><span class="changed">Changed</span></td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        <table border="0" cellspacing="5" width="100%" class="stat">
+            <tr class="header">
+                <td nowrap="1"><font size="+1">Package Statistics</font></td>
+            </tr>
+            <tr>
+                <td>
+                    <table border="0" cellspacing="1" cellpadding="2" class="stat1">
+                        <tr>
+                            <td>&nbsp;</td><td>Changed</td><td>Added</td><td>Removed</td><td>Unchanged</td><td><b>Total</b></td>
+                        </tr>
+                        <tr>
+                            <td>Documents</td><td class="changed">11</td><td class="added">1</td><td class="removed">4</td><td>14</td><td class="total">30</td>
+                        </tr>
+                        <tr>
+                            <td>Contexts</td><td class="changed">93</td><td class="added">24</td><td class="removed">42</td><td>146</td><td class="total">305</td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        <table border="0" cellspacing="5" width="100%" class="stat">
+            <tr class="header">
+                <td nowrap="1"><font size="+1">Package Detail</font></td>
+            </tr>
+            <tr>
+                <td nowrap="1"><font size="-2">
+                                (*) Columns: (1) - Changed, (2) - Added, (3) - Removed,
+                                &sum; - Total
+                            </font></td>
+            </tr>
+            <tr>
+                <td style="padding-left:5px">
+                    <table border="0" cellspacing="1" cellpadding="2" class="stat1">
+                        <tr>
+                            <td rowspan="3" width="100%">File</td><td colspan="6" align="center">Contexts</td>
+                        </tr>
+                        <tr>
+                            <td colspan="4" align="center" nowrap="1">Modified
+                                        <font size="-2"> (*)</font></td><td rowspan="2">Un- changed</td><td rowspan="2"><b>Total</b></td>
+                        </tr>
+                        <tr>
+                            <td>1</td><td>2</td><td>3</td><td class="modified">&sum;</td>
+                        </tr>
+                        <tr>
+                            <td class="doc"><img src="pics/specDoc.gif" title="Specification File">&nbsp;<a href="Arena.html" target="_top" class="changed" title="Document is tagged as 'CHANGED'">Arena</a></td><td class="changed">4</td><td class="added">4</td><td class="removed">3</td><td class="modified">11</td><td>0</td><td class="total">11</td>
+                        </tr>
+                        <tr>
+                            <td class="doc"><img src="pics/specDoc.gif" title="Specification File">&nbsp;<a href="FunctionDescriptor.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">FunctionDescriptor</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>10</td><td class="total">10</td>
+                        </tr>
+                        <tr>
+                            <td class="doc"><img src="pics/specDoc.gif" title="Specification File">&nbsp;<a href="GroupLayout.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">GroupLayout</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>4</td><td class="total">4</td>
+                        </tr>
+                        <tr>
+                            <td class="doc"><img src="pics/specDoc.gif" title="Specification File">&nbsp;<a href="Linker.html" target="_top" class="changed" title="Document is tagged as 'CHANGED'">Linker</a></td><td class="changed">2</td><td class="added">1</td><td class="removed">1</td><td class="modified">4</td><td>3</td><td class="total">7</td>
+                        </tr>
+                        <tr>
+                            <td class="doc"><img src="pics/specDoc.gif" title="Specification File">&nbsp;<a href="Linker.Option.html" target="_top" class="changed" title="Document is tagged as 'CHANGED'">Linker.Option</a></td><td class="changed">2</td><td class="added">3</td><td class="removed"></td><td class="modified">5</td><td>1</td><td class="total">6</td>
+                        </tr>
+                        <tr>
+                            <td class="doc"><img src="pics/specDoc.gif" title="Specification File">&nbsp;<a href="Linker.Option.CaptureCallState.html" target="_top" class="removed" title="Document is tagged as 'REMOVED'">Linker.Option.CaptureCallState</a></td><td class="changed"></td><td class="added"></td><td class="removed">3</td><td class="modified">3</td><td>0</td><td class="total">3</td>
+                        </tr>
+                        <tr>
+                            <td class="doc"><img src="pics/specDoc.gif" title="Specification File">&nbsp;<a href="MemoryLayout.html" target="_top" class="changed" title="Document is tagged as 'CHANGED'">MemoryLayout</a></td><td class="changed">9</td><td class="added"></td><td class="removed"></td><td class="modified">9</td><td>15</td><td class="total">24</td>
+                        </tr>
+                        <tr>
+                            <td class="doc"><img src="pics/specDoc.gif" title="Specification File">&nbsp;<a href="MemoryLayout.PathElement.html" target="_top" class="changed" title="Document is tagged as 'CHANGED'">MemoryLayout.PathElement</a></td><td class="changed">1</td><td class="added">2</td><td class="removed"></td><td class="modified">3</td><td>4</td><td class="total">7</td>
+                        </tr>
+                        <tr>
+                            <td class="doc"><img src="pics/specDoc.gif" title="Specification File">&nbsp;<a href="MemorySegment.html" target="_top" class="changed" title="Document is tagged as 'CHANGED'">MemorySegment</a></td><td class="changed">68</td><td class="added">6</td><td class="removed">6</td><td class="modified">80</td><td>13</td><td class="total">93</td>
+                        </tr>
+                        <tr>
+                            <td class="doc"><img src="pics/specDoc.gif" title="Specification File">&nbsp;<a href="MemorySegment.Scope.html" target="_top" class="added" title="Document is tagged as 'ADDED'">MemorySegment.Scope</a></td><td class="changed"></td><td class="added">4</td><td class="removed"></td><td class="modified">4</td><td>0</td><td class="total">4</td>
+                        </tr>
+                        <tr>
+                            <td class="doc"><img src="pics/specDoc.gif" title="Specification File">&nbsp;<a href="PaddingLayout.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">PaddingLayout</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>3</td><td class="total">3</td>
+                        </tr>
+                        <tr>
+                            <td class="doc"><img src="pics/specDoc.gif" title="Specification File">&nbsp;<a href="SegmentAllocator.html" target="_top" class="changed" title="Document is tagged as 'CHANGED'">SegmentAllocator</a></td><td class="changed">2</td><td class="added"></td><td class="removed">1</td><td class="modified">3</td><td>21</td><td class="total">24</td>
+                        </tr>
+                        <tr>
+                            <td class="doc"><img src="pics/specDoc.gif" title="Specification File">&nbsp;<a href="SegmentScope.html" target="_top" class="removed" title="Document is tagged as 'REMOVED'">SegmentScope</a></td><td class="changed"></td><td class="added"></td><td class="removed">6</td><td class="modified">6</td><td>0</td><td class="total">6</td>
+                        </tr>
+                        <tr>
+                            <td class="doc"><img src="pics/specDoc.gif" title="Specification File">&nbsp;<a href="SequenceLayout.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">SequenceLayout</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>8</td><td class="total">8</td>
+                        </tr>
+                        <tr>
+                            <td class="doc"><img src="pics/specDoc.gif" title="Specification File">&nbsp;<a href="StructLayout.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">StructLayout</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>3</td><td class="total">3</td>
+                        </tr>
+                        <tr>
+                            <td class="doc"><img src="pics/specDoc.gif" title="Specification File">&nbsp;<a href="SymbolLookup.html" target="_top" class="changed" title="Document is tagged as 'CHANGED'">SymbolLookup</a></td><td class="changed">2</td><td class="added">2</td><td class="removed">2</td><td class="modified">6</td><td>1</td><td class="total">7</td>
+                        </tr>
+                        <tr>
+                            <td class="doc"><img src="pics/specDoc.gif" title="Specification File">&nbsp;<a href="UnionLayout.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">UnionLayout</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>3</td><td class="total">3</td>
+                        </tr>
+                        <tr>
+                            <td class="doc"><img src="pics/specDoc.gif" title="Specification File">&nbsp;<a href="VaList.html" target="_top" class="removed" title="Document is tagged as 'REMOVED'">VaList</a></td><td class="changed"></td><td class="added"></td><td class="removed">12</td><td class="modified">12</td><td>0</td><td class="total">12</td>
+                        </tr>
+                        <tr>
+                            <td class="doc"><img src="pics/specDoc.gif" title="Specification File">&nbsp;<a href="VaList.Builder.html" target="_top" class="removed" title="Document is tagged as 'REMOVED'">VaList.Builder</a></td><td class="changed"></td><td class="added"></td><td class="removed">6</td><td class="modified">6</td><td>0</td><td class="total">6</td>
+                        </tr>
+                        <tr>
+                            <td class="doc"><img src="pics/specDoc.gif" title="Specification File">&nbsp;<a href="ValueLayout.html" target="_top" class="changed" title="Document is tagged as 'CHANGED'">ValueLayout</a></td><td class="changed">1</td><td class="added"></td><td class="removed"></td><td class="modified">1</td><td>22</td><td class="total">23</td>
+                        </tr>
+                        <tr>
+                            <td class="doc"><img src="pics/specDoc.gif" title="Specification File">&nbsp;<a href="ValueLayout.OfAddress.html" target="_top" class="changed" title="Document is tagged as 'CHANGED'">ValueLayout.OfAddress</a></td><td class="changed">1</td><td class="added">2</td><td class="removed">2</td><td class="modified">5</td><td>3</td><td class="total">8</td>
+                        </tr>
+                        <tr>
+                            <td class="doc"><img src="pics/specDoc.gif" title="Specification File">&nbsp;<a href="ValueLayout.OfBoolean.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">ValueLayout.OfBoolean</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>4</td><td class="total">4</td>
+                        </tr>
+                        <tr>
+                            <td class="doc"><img src="pics/specDoc.gif" title="Specification File">&nbsp;<a href="ValueLayout.OfByte.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">ValueLayout.OfByte</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>4</td><td class="total">4</td>
+                        </tr>
+                        <tr>
+                            <td class="doc"><img src="pics/specDoc.gif" title="Specification File">&nbsp;<a href="ValueLayout.OfChar.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">ValueLayout.OfChar</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>4</td><td class="total">4</td>
+                        </tr>
+                        <tr>
+                            <td class="doc"><img src="pics/specDoc.gif" title="Specification File">&nbsp;<a href="ValueLayout.OfDouble.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">ValueLayout.OfDouble</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>4</td><td class="total">4</td>
+                        </tr>
+                        <tr>
+                            <td class="doc"><img src="pics/specDoc.gif" title="Specification File">&nbsp;<a href="ValueLayout.OfFloat.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">ValueLayout.OfFloat</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>4</td><td class="total">4</td>
+                        </tr>
+                        <tr>
+                            <td class="doc"><img src="pics/specDoc.gif" title="Specification File">&nbsp;<a href="ValueLayout.OfInt.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">ValueLayout.OfInt</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>4</td><td class="total">4</td>
+                        </tr>
+                        <tr>
+                            <td class="doc"><img src="pics/specDoc.gif" title="Specification File">&nbsp;<a href="ValueLayout.OfLong.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">ValueLayout.OfLong</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>4</td><td class="total">4</td>
+                        </tr>
+                        <tr>
+                            <td class="doc"><img src="pics/specDoc.gif" title="Specification File">&nbsp;<a href="ValueLayout.OfShort.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">ValueLayout.OfShort</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>4</td><td class="total">4</td>
+                        </tr>
+                        <tr>
+                            <td colspan="7"></td>
+                        </tr>
+                        <tr>
+                            <td class="doc"><img src="pics/specDoc.gif" title="Specification File">&nbsp;<a href="package-summary.html" target="_top" class="changed" title="Document is tagged as 'CHANGED'">package-summary</a></td><td class="changed">1</td><td class="added"></td><td class="removed"></td><td class="modified">1</td><td>0</td><td class="total">1</td>
+                        </tr>
+                        <tr>
+                            <td colspan="7"></td>
+                        </tr>
+                        <tr>
+                            <td><b>Total</b></td><td class="changed">93</td><td class="added">24</td><td class="removed">42</td><td class="modified">159</td><td>146</td><td class="total">305</td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        <p style="text-align:center; font-size:10px;"></p>
+    </body>
+</html>

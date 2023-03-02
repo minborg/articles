@@ -1,0 +1,261 @@
+<html>
+    <head>
+        <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <style>
+                        h3.ctxid {
+                        padding-top:10;
+                        margin: 0;
+                        font-size: 12;
+                        color: darkblue;
+                        }
+                        .diff-html-added {
+                        font-size: 120%;
+                        color: darkgreen;
+                        background-color: #ccffcc;
+                        cursor: pointer;
+                        }
+                        .diff-html-removed {
+                        font-size: 100%;
+                        text-decoration: line-through;
+                        background-color: #fdc6c6;
+                        cursor: pointer;
+                        }
+                        span.diff-html-added img{
+                        border: 2px solid #ccffcc;
+                        }
+                        span.diff-html-removed img{
+                        border: 2px solid #fdc6c6;
+                        }
+                    </style>
+    </head>
+    <body>
+        <table cellpadding="1" cellspacing="0" border="0" width="100%">
+            <tr>
+                <td><a href="package-summary.html" target="_parent">Package Summary</a>&nbsp;&nbsp;<a href="overview-summary.html" target="_parent">Overview Summary</a></td>
+            </tr>
+        </table>
+        <table border="0" cellpadding="1" cellspacing="0" width="100%">
+            <tr>
+                <td>
+                    <h3 class="ctxid">class:ValueLayout.OfLong [NONE]</h3>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+                        <tr valign="top">
+                            <td bgcolor="#FFFFFF" colspan="1"> <a name="class:ValueLayout.OfLong"></a> 
+                                <section class="class-description" id="class-description">
+                                    <dl class="notes">
+                                         
+                                        <dt>All Superinterfaces: </dt>
+                                        <dd>
+                                             <code><a href="MemoryLayout.html" title="interface in java.lang.foreign" target="_parent">MemoryLayout</a><sup><a href="MemoryLayout.html#preview-java.lang.foreign.MemoryLayout" target="_parent">PREVIEW</a></sup></code>, <code><a href="ValueLayout.html" title="interface in java.lang.foreign" target="_parent">ValueLayout</a><sup><a href="ValueLayout.html#preview-java.lang.foreign.ValueLayout" target="_parent">PREVIEW</a></sup></code>  
+                                        </dd>
+                                         
+                                    </dl>
+                                    <dl class="notes">
+                                         
+                                        <dt>Enclosing interface: </dt>
+                                        <dd>
+                                             <code><a href="ValueLayout.html" title="interface in java.lang.foreign" target="_parent">ValueLayout</a><sup><a href="ValueLayout.html#preview-java.lang.foreign.ValueLayout" target="_parent">PREVIEW</a></sup></code> 
+                                        </dd>
+                                         
+                                    </dl>
+                                     
+                                    <hr>
+                                    <div class="type-signature">
+                                         <span class="modifiers">public static sealed interface     </span><span class="element-name type-name-label">ValueLayout.OfLong</span><span class="extends-implements"> extends <a href="ValueLayout.html" title="interface in java.lang.foreign" target="_parent">ValueLayout</a><sup><a href="ValueLayout.html#preview-java.lang.foreign.ValueLayout" target="_parent">PREVIEW</a></sup>  </span> 
+                                    </div>
+                                    <div class="preview-block" id="preview-java.lang.foreign.ValueLayout.OfLong">
+                                         <span class="preview-label"><code>OfLong</code> is a preview API of the Java platform.        </span>
+                                        <div class="preview-comment">
+                                             Programs can only use <code>OfLong</code> when preview features are enabled.          
+                                        </div>
+                                        <div class="preview-comment">Preview features may be removed in a future release, or upgraded to permanent features of the Java platform.                 </div>
+                                         
+                                    </div>
+                                    <div class="block">
+                                         A value layout whose carrier is <code>long.class</code>.       
+                                    </div>
+                                    <dl class="notes">
+                                         
+                                        <dt>Since:</dt>
+                                        <dd>19</dd>
+                                         
+                                        <dt>See Also: </dt>
+                                        <dd>
+                                            <ul class="tag-list-long">
+                                                <li>
+                                                     <a href="ValueLayout.html#JAVA_LONG" target="_parent"><code>ValueLayout.JAVA_LONG</code></a><sup><a href="ValueLayout.html#preview-java.lang.foreign.ValueLayout" target="_parent">PREVIEW</a></sup> 
+                                                </li>
+                                                <li>
+                                                     <a href="ValueLayout.html#JAVA_LONG_UNALIGNED" target="_parent"><code>ValueLayout.JAVA_LONG_UNALIGNED</code></a><sup><a href="ValueLayout.html#preview-java.lang.foreign.ValueLayout" target="_parent">PREVIEW</a></sup> 
+                                                </li>
+                                            </ul>
+                                        </dd>
+                                          
+                                    </dl>
+                                       
+                                </section>
+                                    </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        <table border="0" cellpadding="1" cellspacing="0" width="100%">
+            <tr>
+                <td>
+                    <h3 class="ctxid">method:withName(java.lang.String) [NONE]</h3>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+                        <tr valign="top">
+                            <td bgcolor="#FFFFFF" colspan="1">
+                                <li>
+                                     <a name="method:withName(java.lang.String)"></a> 
+                                    <section class="detail" id="withName(java.lang.String)">
+                                        <h3>withName</h3>
+                                        <div class="member-signature">
+                                             <span class="return-type"><a href="ValueLayout.OfLong.html" title="interface in java.lang.foreign" target="_parent">ValueLayout.OfLong</a><sup><a href="#preview-java.lang.foreign.ValueLayout.OfLong">PREVIEW</a></sup></span>&nbsp;<span class="element-name">withName</span> 
+                                            <wbr></wbr>
+                                             <span class="parameters">(<a href="../String.html" title="class in java.lang" target="_parent">String</a>&nbsp;name)</span>   
+                                        </div>
+                                        <div class="block">Returns a memory layout of the same type with the same size and alignment constraint as this layout, but with the specified name.                      </div>
+                                        <dl class="notes">
+                                             
+                                            <dt>Specified by: </dt>
+                                            <dd>
+                                                 <code><a href="MemoryLayout.html#withName(java.lang.String)" target="_parent">withName</a></code>&nbsp;in interface&nbsp;<code><a href="MemoryLayout.html" title="interface in java.lang.foreign" target="_parent">MemoryLayout</a><sup><a href="MemoryLayout.html#preview-java.lang.foreign.MemoryLayout" target="_parent">PREVIEW</a></sup></code>  
+                                            </dd>
+                                             
+                                            <dt>Specified by: </dt>
+                                            <dd>
+                                                 <code><a href="ValueLayout.html#withName(java.lang.String)" target="_parent">withName</a></code>&nbsp;in interface&nbsp;<code><a href="ValueLayout.html" title="interface in java.lang.foreign" target="_parent">ValueLayout</a><sup><a href="ValueLayout.html#preview-java.lang.foreign.ValueLayout" target="_parent">PREVIEW</a></sup></code>  
+                                            </dd>
+                                             
+                                            <dt>Parameters:</dt>
+                                            <dd>
+                                                 <code>name</code> - the layout name.     
+                                            </dd>
+                                             
+                                            <dt>Returns:</dt>
+                                            <dd>a memory layout with the given name.      </dd>
+                                             
+                                            <dt>See Also: </dt>
+                                            <dd>
+                                                <ul class="tag-list">
+                                                    <li>
+                                                         <a href="MemoryLayout.html#name()" target="_parent"><code>MemoryLayout.name()</code></a><sup><a href="MemoryLayout.html#preview-java.lang.foreign.MemoryLayout" target="_parent">PREVIEW</a></sup> 
+                                                    </li>
+                                                </ul>
+                                            </dd>
+                                                 
+                                        </dl>
+                                          
+                                    </section>
+                                      
+                                </li>
+                                  </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        <table border="0" cellpadding="1" cellspacing="0" width="100%">
+            <tr>
+                <td>
+                    <h3 class="ctxid">method:withBitAlignment(long) [NONE]</h3>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+                        <tr valign="top">
+                            <td bgcolor="#FFFFFF" colspan="1"> <a name="method:withBitAlignment(long)"></a> 
+                                <section class="detail" id="withBitAlignment(long)">
+                                    <h3>withBitAlignment</h3>
+                                    <div class="member-signature">
+                                         <span class="return-type"><a href="ValueLayout.OfLong.html" title="interface in java.lang.foreign" target="_parent">ValueLayout.OfLong</a><sup><a href="#preview-java.lang.foreign.ValueLayout.OfLong">PREVIEW</a></sup></span>&nbsp;<span class="element-name">withBitAlignment</span> 
+                                        <wbr></wbr>
+                                         <span class="parameters">(long&nbsp;bitAlignment)</span>   
+                                    </div>
+                                    <div class="block">Returns a memory layout of the same type with the same size and name as this layout, but with the specified alignment constraint (in bits).                        </div>
+                                    <dl class="notes">
+                                         
+                                        <dt>Specified by: </dt>
+                                        <dd>
+                                             <code><a href="MemoryLayout.html#withBitAlignment(long)" target="_parent">withBitAlignment</a></code>&nbsp;in interface&nbsp;<code><a href="MemoryLayout.html" title="interface in java.lang.foreign" target="_parent">MemoryLayout</a><sup><a href="MemoryLayout.html#preview-java.lang.foreign.MemoryLayout" target="_parent">PREVIEW</a></sup></code>  
+                                        </dd>
+                                         
+                                        <dt>Specified by: </dt>
+                                        <dd>
+                                             <code><a href="ValueLayout.html#withBitAlignment(long)" target="_parent">withBitAlignment</a></code>&nbsp;in interface&nbsp;<code><a href="ValueLayout.html" title="interface in java.lang.foreign" target="_parent">ValueLayout</a><sup><a href="ValueLayout.html#preview-java.lang.foreign.ValueLayout" target="_parent">PREVIEW</a></sup></code>  
+                                        </dd>
+                                         
+                                        <dt>Parameters:</dt>
+                                        <dd>
+                                             <code>bitAlignment</code> - the layout alignment constraint, expressed in bits.         
+                                        </dd>
+                                         
+                                        <dt>Returns:</dt>
+                                        <dd>a memory layout with the given alignment constraint.       </dd>
+                                            
+                                    </dl>
+                                      
+                                </section>
+                                    </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        <table border="0" cellpadding="1" cellspacing="0" width="100%">
+            <tr>
+                <td>
+                    <h3 class="ctxid">method:withOrder(java.nio.ByteOrder) [NONE]</h3>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+                        <tr valign="top">
+                            <td bgcolor="#FFFFFF" colspan="1"> <a name="method:withOrder(java.nio.ByteOrder)"></a> 
+                                <section class="detail" id="withOrder(java.nio.ByteOrder)">
+                                    <h3>withOrder</h3>
+                                    <div class="member-signature">
+                                         <span class="return-type"><a href="ValueLayout.OfLong.html" title="interface in java.lang.foreign" target="_parent">ValueLayout.OfLong</a><sup><a href="#preview-java.lang.foreign.ValueLayout.OfLong">PREVIEW</a></sup></span>&nbsp;<span class="element-name">withOrder</span> 
+                                        <wbr></wbr>
+                                         <span class="parameters">(<a href="../../nio/ByteOrder.html" title="class in java.nio" target="_parent">ByteOrder</a>&nbsp;order)</span>   
+                                    </div>
+                                    <div class="block">Returns a value layout with the same carrier, alignment constraint and name as this value layout, but with the specified byte order.                     </div>
+                                    <dl class="notes">
+                                         
+                                        <dt>Specified by: </dt>
+                                        <dd>
+                                             <code><a href="ValueLayout.html#withOrder(java.nio.ByteOrder)" target="_parent">withOrder</a></code>&nbsp;in interface&nbsp;<code><a href="ValueLayout.html" title="interface in java.lang.foreign" target="_parent">ValueLayout</a><sup><a href="ValueLayout.html#preview-java.lang.foreign.ValueLayout" target="_parent">PREVIEW</a></sup></code>  
+                                        </dd>
+                                         
+                                        <dt>Parameters:</dt>
+                                        <dd>
+                                             <code>order</code> - the desired byte order.      
+                                        </dd>
+                                         
+                                        <dt>Returns:</dt>
+                                        <dd>a value layout with the given byte order.       </dd>
+                                           
+                                    </dl>
+                                      
+                                </section>
+                                        </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        <p style="text-align:center; font-size:10px;"></p>
+    </body>
+</html>
