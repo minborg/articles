@@ -151,6 +151,7 @@ static final class Point {
     }
 }
 ----
+Note that the `VarHandle` objects are declared `static final` and that there are explicit `(int)` casts for the getters `x()` and `y()`. Failure to observe this coding convention will reduce performance substantially.
 
 Note that we are passing an `Arena` to the constructor so that we can control the lifecycle of the `MemorySegment` used. Here is how the Point class can be used:
 
@@ -208,7 +209,7 @@ Here are some resources that could kickstart your Panama FFM voyage.
 
 === JDK 21 Early-Access Builds
 
-Run your own code on JDK 21 today by downloading a https://jdk.java.net[JDK 21 Early-Access Build].
+Run your own code on JDK 21 today by downloading a https://jdk.java.net[JDK 21 Early-Access Build]. As mentioned above, you cannot run the new version of FFM until the PR is merged.
 
 === Panama FFM
 
