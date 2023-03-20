@@ -56,7 +56,7 @@ try (var arena = Arena.ofConfined()) {
 ----
 
 === Work with Memory Layouts
-Memory layouts can be used to describe the layout of a `MemorySegment`. Here is how a point with `int` coordinates can be defined:
+Memory layouts can be used to describe the layout of a `MemorySegment`. Here is how a Point with `int` coordinates can be defined:
 
 [source, java]
 ----
@@ -151,9 +151,9 @@ static final class Point {
     }
 }
 ----
-Note that the `VarHandle` objects are declared `static final` and that there are explicit `(int)` casts for the getters `x()` and `y()`. Failure to observe this coding convention will reduce performance substantially.
+Note that the `VarHandle` objects are declared `static final` and that there are explicit `(int)` casts for the getters `x()` and `y()`. Failure to observe these coding conventions will reduce performance substantially.
 
-Also note that we are passing an `Arena` to the constructor so that we can control the lifecycle of the `MemorySegment` used. Here is how the Point class can be used:
+Also note that we are passing an `Arena` to the constructor so that we can control the lifecycle of the `MemorySegment` used. Here is how the `Point` class can be used:
 
 [source, java]
 ----
@@ -172,8 +172,8 @@ When run, this program will produce the following output:
 (3, 4)
 ----
 
-=== Making a Generic Segment Wrapper
-We could create a generic `MemorySegment` wrapper that relieve us from the burden of writing custom constructors, `toString()`, `hashCode()` and `equals()` method for such classes:
+=== Writing an Abstract Segment Wrapper
+We could easily create a generic `MemorySegment` wrapper that relieve us from the burden of writing a segment declaration, custom constructors, `toString()`, `hashCode()` and, `equals()` methods in inheriting classes:
 
 [source, java]
 ----
@@ -181,7 +181,7 @@ public abstract class AbstractSegmentWrapper {
 
     private final MemorySegment segment;
 
-    public AbstractSegmentWrapper(Arena arena) {
+    protected AbstractSegmentWrapper(Arena arena) {
         this.segment = arena.allocate(layout());
     }
 
