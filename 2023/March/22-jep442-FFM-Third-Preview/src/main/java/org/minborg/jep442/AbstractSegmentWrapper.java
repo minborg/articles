@@ -1,4 +1,4 @@
-package org.minborg.goodies;
+package org.minborg.jep442;
 
 import java.lang.foreign.Arena;
 import java.lang.foreign.MemorySegment;
@@ -12,7 +12,7 @@ public abstract class AbstractSegmentWrapper {
 
     private final MemorySegment segment;
 
-    public AbstractSegmentWrapper(Arena arena) {
+    protected AbstractSegmentWrapper(Arena arena) {
         this.segment = arena.allocate(layout());
     }
 

@@ -15,7 +15,7 @@ The evolution of the FFM API is driven by several factors whereof community feed
 === Community Feedback
 There was a lot of feedback from the previous FFM previews that were taken into consideration in the JEP, some of which are listed here:
 
-* There were two different ways to allocate native memory (e.g. via `MemorySegment::allocateNative` and `Arena::alocate`).
+* There were two different ways to allocate native memory (e.g. via `MemorySegment::allocateNative` and `Arena::allocate`).
 * Users are inclined to use `Arena` directly and so, using a derived `SegmentScope` for the lifecycle is a bit confusing.
 * There is no default linker for unsupported platforms.
 * There is no "performance mode" for very short-lived native calls.
@@ -171,6 +171,107 @@ When run, this program will produce the following output:
 ----
 (3, 4)
 ----
+
+=== Making a Generic Segment Wrapper
+We could create a generic `MemorySegment` wrapper that relieve us from the burden of writing custom constructors, `toString()`, `hashCode()` and `equals()` method for such classes:
+
+[source, java]
+----
+public abstract class AbstractSegmentWrapper {
+
+    private final MemorySegment segment;
+
+    public AbstractSegmentWrapper(Arena arena) {
+        this.segment = arena.allocate(layout());
+    }
+
+    abstract protected StructLayout layout();
+
+    abstract protected List<VarHandle> varHandles();
+
+    protected MemorySegment segment() {
+        return segment;
+    }
+
+    @Override
+    public String toString() {
+        return getClass().getSimpleName() + layout().memberLayouts()
+                .stream()
+                .map(l -> l.name().orElse(l.toString()) + "=" + l.varHandle().get(segment))
+                .collect(Collectors.joining(", ", "{", "}"));
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || !getClass().equals(o.getClass())) {
+            return false;
+        }
+        AbstractSegmentWrapper that = (AbstractSegmentWrapper) o;
+        return varHandles().stream()
+                .allMatch(vh -> Objects.equals(vh.get(this.segment), vh.get(that.segment)));
+    }
+
+    @Override
+    public int hashCode() {
+        return varHandles().stream()
+                .map(vh -> vh.get(segment))
+                .mapToInt(v -> v == null ? 0 : v.hashCode())
+                .reduce(1, (a, b) -> a * 31 + b);
+    }
+
+}
+----
+
+Using the abstract class above, we could more easily create wrapper classes like `Point` here:
+
+[source, java]
+----
+public final class Point extends AbstractSegmentWrapper {
+
+    private static final StructLayout POINT = structLayout(
+            JAVA_INT.withName("x"),
+            JAVA_INT.withName("y")
+    ).withName("point");
+
+    private static final VarHandle X = POINT.varHandle(groupElement("x"));
+    private static final VarHandle Y = POINT.varHandle(groupElement("y"));
+
+    private static final List<VarHandle> VAR_HANDLES = List.of(X, Y);
+
+    public Point(Arena arena) {
+        super(arena);
+    }
+
+    @Override
+    protected StructLayout layout() {
+        return POINT;
+    }
+
+    @Override
+    protected List<VarHandle> varHandles() {
+        return VAR_HANDLES;
+    }
+
+    int x() {
+        return (int) X.get(segment());
+    }
+
+    int y() {
+        return (int) Y.get(segment());
+    }
+
+    void x(int x) {
+        X.set(segment(), x);
+    }
+
+    void y(int y) {
+        Y.set(segment(), y);
+    }
+
+}
+----
+
+As always, it is important to declare the `MethodHandle` instances `final`.
 
 === Call a Native Method
 With FFM, it is possible to call many native functions directly. Below is an example where we invoke the system library call  link:https://man7.org/linux/man-pages/man3/strlen.3.html['strlen'] directly from Java. This is made in two steps where, in step one, we obtain a `MethodHandle` for the native method:
