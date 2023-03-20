@@ -7,7 +7,7 @@ Per Minborg
 The link:https://openjdk.org/jeps/442[JEP 442] Foreign Function & Memory API (Third Preview) just broke cover. In this article we will explore some new features proposed in this JEP, the JEP being a _candidate_ to be included in JDK 21.
 
 == First Reactions
-The JEP is a link:https://openjdk.org/jeps/12[Preview Feature] meaning the Foreign Function & Memory API (hereafter "FFM") will not be a final feature in JDK 21. I think some of us hoped it could make it into finality in 21. If it goes final, it will be in a later release.
+The JEP is a link:https://openjdk.org/jeps/12[Preview Feature] meaning the Foreign Function & Memory API (hereafter "FFM") will not be a final feature in JDK 21. I think some of us hoped it could make it into finality in 21. However, my personal opinion is that the API is very unlikely to change in any significant way and what we are seeing in 21 will be very close to the final FMM API. My bets are the FFM is going to be final in 22 or in 23 at the latest.
 
 == What's New?
 The evolution of the FFM API is driven by several factors whereof community feedback is perhaps the most important one. If you are less interested in the FFM history and evolution, please feel free to skip directly to the section link:#show_me_the_code[Show Me the Code].

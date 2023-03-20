@@ -40,7 +40,7 @@ public class Demo {
             MemorySegment segment = Arena.ofAuto().allocate(16);
             // ...
         } // Segment eligible for collection by the GC here.
-          // Actual time of collection is unspecified.
+        // Actual time of collection is unspecified.
 
         try (var arena = Arena.ofConfined()) {
             var segment = arena.allocate(16);
