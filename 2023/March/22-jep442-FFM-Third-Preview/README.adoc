@@ -153,7 +153,7 @@ static final class Point {
 ----
 Note that the `VarHandle` objects are declared `static final` and that there are explicit `(int)` casts for the getters `x()` and `y()`. Failure to observe this coding convention will reduce performance substantially.
 
-Note that we are passing an `Arena` to the constructor so that we can control the lifecycle of the `MemorySegment` used. Here is how the Point class can be used:
+Also note that we are passing an `Arena` to the constructor so that we can control the lifecycle of the `MemorySegment` used. Here is how the Point class can be used:
 
 [source, java]
 ----
