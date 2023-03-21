@@ -271,7 +271,7 @@ public final class Point extends AbstractSegmentWrapper {
 }
 ----
 
-As always, it is important to declare the `MethodHandle` instances `final`.
+As always, it is important to declare the `VarHandle` instances `final`.
 
 === Call a Native Method
 With FFM, it is possible to call many native functions directly. Below is an example where we invoke the system library call  link:https://man7.org/linux/man-pages/man3/strlen.3.html['strlen'] directly from Java. This is made in two steps where, in step one, we obtain a `MethodHandle` for the native method:
