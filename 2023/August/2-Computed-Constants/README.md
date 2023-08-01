@@ -33,7 +33,7 @@ While this works well in theory, there are significant drawbacks:
  * Only works if the decoupled constants are independent
  * Does only work for `static` variables and not for instance variables and objects
 
-Another way is to use the  [double-checked locking idiom](https://en.wikipedia.org/wiki/Double-checked_locking) that can also be used for deferring initialization and, it works for both `static` variables, instance variables and objects:
+Another way is to use the  [double-checked locking idiom](https://en.wikipedia.org/wiki/Double-checked_locking) that can also be used for deferring initialization. This works for both `static` variables, instance variables and objects:
 
 ```java
 // Double-checked locking idiom
@@ -55,7 +55,7 @@ class Foo {
     }
 }
 ...
-    foo.logger().log(...);
+foo.logger().log(...);
 ```
 There is no way for the (current) JVM to determine that the `logger` is _monotonic_ in the sense that it can only change from `null` to a value _once_ and so, the JVM is unable to apply constant folding and other optimizations. Also, because `logger` needs to be declared `volatile` there is a small performance penalty paid for each access. 
 
@@ -83,7 +83,7 @@ This is similar in spirit to the class-holder idiom, and offers the same perform
 
 ## Benchmarks
 
-I've run some benchmarks on my Mac Pro M1 ARM-based machine and preliminary results indicates excellent performance for `ComputedConstant` static fields:
+I've run some benchmarks on my Mac Pro M1 ARM-based machine and preliminary results indicates excellent performance for `static` `ComputedConstant` fields:
 
 ```text
 Benchmark                                    Mode  Cnt  Score   Error  Units
@@ -136,7 +136,7 @@ The Computed Constant API allows modeling this cleanly, while still preserving g
 
 ## Benchmarks Collections
 
-These benchmarks were run on the same platform as above and shows collections of `ComputedConstant` elements enjoys the same performance benefits as the single ones do:
+These benchmarks were run on the same platform as above and shows collections of `ComputedConstant` elements enjoy the same performance benefits as the single ones do:
 
 ```text
 Benchmark                                 Mode  Cnt  Score   Error  Units
@@ -161,9 +161,9 @@ So, `ComputedConstant` is more than 40% faster than the double-checked holder cl
 
 ## Resources
 
-[JEP draft: Computed Constants](https://openjdk.org/jeps/8312611)
-[Proposed ComputedConstant API](https://cr.openjdk.org/~pminborg/computed-constant/api/java.base/java/lang/ComputedConstant.html)
-[Benchmarks](https://github.com/openjdk/leyden/blob/computed-constants/test/micro/org/openjdk/bench/java/lang/ComputedConstantStatic.java)
+ * [JEP draft: Computed Constants](https://openjdk.org/jeps/8312611)
+ * [Proposed ComputedConstant API](https://cr.openjdk.org/~pminborg/computed-constant/api/java.base/java/lang/ComputedConstant.html)
+ * [Benchmarks](https://github.com/openjdk/leyden/blob/computed-constants/test/micro/org/openjdk/bench/java/lang/ComputedConstantStatic.java)
 
 ## Acknowledgements
 
