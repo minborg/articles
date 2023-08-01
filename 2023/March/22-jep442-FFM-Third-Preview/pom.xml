@@ -9,8 +9,8 @@
     <version>1.0.0-SNAPSHOT</version>
 
     <properties>
-        <maven.compiler.source>21</maven.compiler.source>
-        <maven.compiler.target>21</maven.compiler.target>
+        <maven.compiler.source>22</maven.compiler.source>
+        <maven.compiler.target>22</maven.compiler.target>
     </properties>
 
     <build>
@@ -21,10 +21,10 @@
                 <version>3.10.1</version>
                 <configuration>
                     <!--                    <release>21</release>-->
-                    <release>21</release>
+                    <release>22</release>
                     <compilerArgs>--enable-preview</compilerArgs>
-                    <source>21</source>
-                    <target>21</target>
+                    <source>22</source>
+                    <target>22</target>
                 </configuration>
             </plugin>
 
@@ -40,7 +40,7 @@
                             <goal>java</goal>
                         </goals>
                         <configuration>
-                            <mainClass>org.minborg.goodies.Demo</mainClass>
+                            <mainClass>org.minborg.jep442.Demo</mainClass>
                         </configuration>
                     </execution>
 
