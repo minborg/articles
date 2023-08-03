@@ -14,7 +14,7 @@ LOGGER.log(...);
 ```
 The `LOGGER` variable will be unconditionally initialized as soon as the class where it is declared is loaded (loading occurs upon the class being first referenced).
 
-The [class holder idiom](https://en.wikipedia.org/wiki/Initialization-on-demand_holder_idiom) allows us to defer initialization until we actually need the variable:
+One way to prevent all static fields in a class from being initialized at the same time is to use the [class holder idiom](https://en.wikipedia.org/wiki/Initialization-on-demand_holder_idiom) allowing us to defer initialization until we actually need the variable:
 
 ```java
 // Initialization-on-demand holder idiom
@@ -57,7 +57,7 @@ class Foo {
 ...
 foo.logger().log(...);
 ```
-There is no way for the (current) JVM to determine that the `logger` is _monotonic_ in the sense that it can only change from `null` to a value _once_ and so, the JVM is unable to apply constant folding and other optimizations. Also, because `logger` needs to be declared `volatile` there is a small performance penalty paid for each access. 
+There is no way for the (current) JVM to determine that the `logger` is _monotonic_ in the sense that it can only change from `null` to a value _once_ and then will always remain. So, the JVM is unable to apply constant folding and other optimizations. Also, because `logger` needs to be declared `volatile` there is a small performance penalty paid for each access.
 
 The `ComputedConstant` class comes to the rescue here and offers the best of two worlds: Flexible initialization and good performance!
 
@@ -96,7 +96,7 @@ As can be seen, a `ComputedConstant` has the same performance as the static hold
 
 ## Collections of ComputedConstant
 
-So far so good. However, the hidden gem in the JEP is the ability to obtain Collections of `ComputedConstant` elements. This is achieved using a factory method that provides not a single `ComputedConstant` with its provider but a whole `List` of `ComputedConstant` elements that is handled by a single providing mapper that can initialize all the elements in the list. This allows a large number of variables to be handled via a _single_ list, thereby saving space compared to having many single constants and initialization lambdas (for example). 
+So far so good. However, the hidden gem in the JEP is the ability to obtain Collections of `ComputedConstant` elements. This is achieved using a factory method that provides not a single `ComputedConstant` (with its provider) but a whole `List` of `ComputedConstant` elements that is handled by a single providing mapper that can initialize all the elements in the list. This allows a large number of variables to be handled via a _single_ list, thereby saving space compared to having many single constants and initialization lambdas (for example). 
 
 Like a `ComputedConstant<V>` variable, a `List<ComputedConstant<V>>` variable is created by providing an element mapper - typically in the form of a lambda expression, which is used to compute the value associated with the i-th element of the `List` when the element value is first accessed:
 
@@ -159,10 +159,15 @@ ComputedConstantInstance.constant       avgt   15  0.728 ? 0.022  ns/op // Compu
 
 So, `ComputedConstant` is more than 40% faster than the double-checked holder class tested on my machine.
 
+## Where is it?
+
+At the time of writing this article, `ComputedConstant` is not yet available in the mainline JDK repository. Check out the next section for a link to the proposed source code.
+
 ## Resources
 
  * [JEP draft: Computed Constants](https://openjdk.org/jeps/8312611)
  * [Proposed ComputedConstant API](https://cr.openjdk.org/~pminborg/computed-constant/api/java.base/java/lang/ComputedConstant.html)
+ * [Proposed Source Code](https://github.com/openjdk/leyden/blob/computed-constants/src/java.base/share/classes/java/lang/ComputedConstant.java)
  * [Benchmarks](https://github.com/openjdk/leyden/blob/computed-constants/test/micro/org/openjdk/bench/java/lang/ComputedConstantStatic.java)
 
 ## Acknowledgements
