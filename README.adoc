@@ -11,16 +11,19 @@ Happy Reading! /Per Minborg | image:images/per-brighter.png[alt=Golden Gate,scal
 
 == Articles 2023
 
+=== link:2023/August/2-Computed-Constants/README.adoc[Java: JEP Draft: "Computed Constants"] (2023-Aug-2)
+
+The draft JEP "Computed Constants" went public. `ComputedConstant` objects are superfast immutable value holders that can be initialized independently of when they are created. As an added benefit, these objects may in the future be even more optimized via "condensers" that eventually might become available through project Leyden.
+
 === link:2023/February/13-ImagePerformanceImprovements/README.adoc[JDK 21: Image Performance Improvements] (2023-Feb-13)
 
-_In a link:2023/January/26-PerformanceImprovementsRevealed/[previous article], I talked about how serialization and file I/O performance was improved in Java 21 thanks to the use of `VarHandle` constructs. The method employed there has now also been applied to Java’s image-handling library making it faster. Here is what happened._
+In a link:2023/January/26-PerformanceImprovementsRevealed/[previous article], I talked about how serialization and file I/O performance was improved in Java 21 thanks to the use of `VarHandle` constructs. The method employed there has now also been applied to Java’s image-handling library making it faster. Here is what happened.
 
 === link:2023/February/7-jFocus2023/README.adoc[jFocus 2023 Presentation: Panama Foreign Function and Memory API] (2023-Feb-7)
 The Panama FFM API previewed for a second time in JDK 20. In this article, we will see how to make use of the new APIs and how to call native functions in a native library. This article summarized key points made at https://www.jfokus.se[jFocus 2023 in Stockholm].
 
 === link:2023/January/26-PerformanceImprovementsRevealed/README.adoc[JDK 21: Performance Improvements Revealed] (2023-Jan-26)
-
-_In Java 21, old code might run significantly faster due to recent internal performance optimizations made in the Java Core Libraries. In this article, we will take a closer look at some of these changes and see how much faster your favorite programming language has become. Buckle up, for we are about to run at full speed!_
+_In Java 21, old code might run significantly faster due to recent internal performance optimizations made in the Java Core Libraries. In this article, we will take a closer look at some of these changes and see how much faster your favorite programming language has become. Buckle up, for we are about to run at full speed!
 
 == Safe Harbor Statement
 The following is intended to outline our general product direction. It is intended
