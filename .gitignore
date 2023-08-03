@@ -2,3 +2,7 @@
 2023/February/7-jFocus2023/target/**
 InfiniteArena-*
 out/**
+**/target/**
+**/.DS_Store
+.DS_Store
+.DS_Store?

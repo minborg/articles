@@ -1,0 +1,240 @@
+= JEP 442: Foreign Function & Memory API (Third Preview)
+Per Minborg
+:toc:
+:homepage: http://minborgsjavapot.blogspot.com/
+
+== Introduction
+The link:https://openjdk.org/jeps/442[JEP 442] Foreign Function & Memory API (Third Preview) just broke cover. In this article we will explore some new features proposed in this JEP, the JEP being a _candidate_ to be included in JDK 21.
+
+== First Reactions
+The JEP is a link:https://openjdk.org/jeps/12[Preview Feature] meaning the Foreign Function & Memory API (hereafter "FFM") will not be a final feature in JDK 21. I think some of us hoped it could make it into finality in 21. However, my personal opinion is that the API is very unlikely to change in any significant way and what we are seeing in 21 will be very close to the final FMM API. My bets are the FFM is going to be final in 22 or in 23 at the latest.
+
+== What's New?
+The evolution of the FFM API is driven by several factors whereof community feedback is perhaps the most important one. If you are less interested in the FFM history and evolution, please feel free to skip directly to the section link:#show_me_the_code[Show Me the Code].
+
+=== Community Feedback
+There was a lot of feedback from the previous FFM previews that were taken into consideration in the JEP, some of which are listed here:
+
+* There were two different ways to allocate native memory (e.g. via `MemorySegment::allocateNative` and `Arena::alocate`).
+* Users are inclined to use `Arena` directly and so, using a derived `SegmentScope` for the lifecycle is a bit confusing.
+* There is no default linker for unsupported platforms.
+* There is no "performance mode" for very short-lived native calls.
+
+=== Improvements
+* Allocation of native memory is now exclusively done via the `Arena::allocate` overloads. The rationale behind this is further described in link:http://cr.openjdk.java.net/~mcimadamore/panama/scoped_arenas.html[this post].
+* `SegmentScope` was dropped in favor of a much smaller construct named `MemorySegment.Scope` which is a pure lifetime abstraction. `Arena` is used directly in most cases.
+* A default linker based on link:https://github.com/libffi/libffi[libffi] was added greatly simplifying porting of Java to various platforms.
+* A new linker option was added to mark calls as "trivial" speeding up native calls. A "trivial" method must complete in a duration comparable to a no-op call and must not call back to Java.
+
+Note:: The entire list of improvements can be viewed link:https://bugs.openjdk.org/browse/JDK-8303240[here]
+
+== Show Me the Code! [[show_me_the_code]]
+In this chapter, we will explore some of the basic features of the FFM API. The examples below will run *only when link:https://github.com/openjdk/jdk/pull/13079[this PR] is merged* into the Java mainline repo and only in JDK 21.
+
+=== Allocate Native Memory
+Here is an example of how to allocate 16 bytes of native memory that is automatically managed by the garbage collector (GC).
+
+[source, java]
+----
+{
+    // ...
+    MemorySegment segment = Arena.ofAuto().allocate(16);
+    // ...
+} // Segment eligible for collection by the GC here.
+  // Actual time of collection is unspecified.
+----
+
+=== Allocate Native Memory Deterministically
+Here is another example where memory is implicitly and deterministically
+released:
+
+[source, java]
+----
+try (var arena = Arena.ofConfined()) {
+    var segment = arena.allocate(16);
+} // Segment is deterministically freed here
+----
+
+=== Work with Memory Layouts
+Memory layouts can be used to describe the layout of a `MemorySegment`. Here is how a point with `int` coordinates can be defined:
+
+[source, java]
+----
+import static java.lang.foreign.MemoryLayout.PathElement.*;
+import static java.lang.foreign.MemoryLayout.*;
+import static java.lang.foreign.ValueLayout.*;
+
+private static final MemoryLayout POINT = structLayout(
+        JAVA_INT.withName("x"),
+        JAVA_INT.withName("y")
+).withName("point");
+
+// Accessor for x
+private static final VarHandle X = POINT.varHandle(groupElement("x"));
+// Accessor for y
+private static final VarHandle Y = POINT.varHandle(groupElement("y"));
+----
+
+Armed with these static variables, we can (somewhat manually) roll a memory-segment-backed point:
+
+[source, java]
+----
+try (var arena = Arena.ofConfined()) {
+    MemorySegment point = arena.allocate(POINT);
+    X.set(point, 3);
+    Y.set(point, 4);
+    System.out.println(
+            Arrays.toString(point.toArray(JAVA_INT))
+    );
+} // Point is deterministically freed here
+----
+
+When run, this program will produce the following output:
+
+[source, text]
+----
+[3, 4]
+----
+
+=== Encapsulating Memory Layouts
+It is often better to encapsulate the inner workings of constructs that are using memory layouts. Here is how a custom `Point` class can be written using a backing native `MemorySegment`:
+
+[source, java]
+----
+static final class Point {
+
+    private static final MemoryLayout POINT = structLayout(
+            JAVA_INT.withName("x"),
+            JAVA_INT.withName("y")
+    ).withName("point");
+
+    private static final VarHandle X = POINT.varHandle(groupElement("x"));
+    private static final VarHandle Y = POINT.varHandle(groupElement("y"));
+
+    private final MemorySegment segment;
+
+    public Point(Arena arena) {
+        this.segment = arena.allocate(POINT);
+    }
+
+    int x() {
+        return (int) X.get(segment);
+    }
+
+    int y() {
+       return (int) Y.get(segment);
+    }
+
+    void x(int x) {
+       X.set(segment, x);
+    }
+
+    void y(int y) {
+        Y.set(segment, y);
+    }
+
+    @Override
+    public String toString() {
+        return "(" + x() + ", " + y() + ")";
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        return o instanceof Point that &&
+                this.x() == that.x() &&
+                this.x() == that.y();
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(x(), y());
+    }
+}
+----
+
+Note that we are passing an `Arena` to the constructor so that we can control the lifecycle of the `MemorySegment` used. Here is how the Point class can be used:
+
+[source, java]
+----
+try (var arena = Arena.ofConfined()) {
+    var point = new Point(arena);
+    point.x(3);
+    point.y(4);
+    System.out.println(point);
+} // Point is deterministically freed here
+----
+
+When run, this program will produce the following output:
+
+[source, text]
+----
+(3, 4)
+----
+
+=== Call a Native Method
+With FFM, it is possible to call many native functions directly. Below is an example where we invoke the system library call  link:https://man7.org/linux/man-pages/man3/strlen.3.html['strlen'] directly from Java. This is made in two steps where, in step one, we obtain a `MethodHandle` for the native method:
+
+[source, text]
+----
+Linker linker = Linker.nativeLinker();
+MethodHandle strlen = linker.downcallHandle(
+        linker.defaultLookup().find("strlen").get(),
+        FunctionDescriptor.of(JAVA_LONG, ADDRESS)
+);
+----
+
+With the `MethodHandle` `strlen`, we can, in a second step, easily invoke the method directly from Java:
+
+[source, text]
+----
+try (Arena arena = Arena.ofConfined()) {
+    MemorySegment str = arena.allocateUtf8String("Hello");
+    long len = (long) strlen.invoke(str);
+    System.out.println("The length is " + len);
+}
+----
+
+When run, this program will produce the following output:
+
+[source, text]
+----
+The length is 5
+----
+
+This is correct as "Hello" consists of five ASCII characters (not including the terminating '/0' character used by C/C++).
+
+== Interesting Panama FFM Projects and Resources
+Here are some resources that could kickstart your Panama FFM voyage.
+
+=== JDK 21 Early-Access Builds
+
+Run your own code on JDK 21 today by downloading a https://jdk.java.net[JDK 21 Early-Access Build].
+
+=== Panama FFM
+
+* https://openjdk.org/jeps/434[JEP 442] Foreign Function & Memory API (Third Preview)
+* Open-Source Panama FFM on GitHub: https://github.com/openjdk/panama-foreign[github.com/openjdk/panama-foreign]
+
+=== Jextract
+
+* jextract on GitHub: https://github.com/openjdk/jextract/tree/panama[github.com/openjdk/jextract/tree/panama]
+* https://github.com/openjdk/jextract/tree/panama/samples/libzstd[Integrating with various native libraries using jextract]
+* https://github.com/openjdk/jextract/tree/panama/samples/libzstd[Integrating with zlib using jextract]
+
+=== Panama 4 Newbies
+
+* https://github.com/carldea/panama4newbies[Panama 4 Newbies: https://github.com/carldea/panama4newbies]
+
+=== Real-World Use of the Panama FFM API
+
+* Lucene  https://github.com/apache/lucene/pull/173[]
+* Netty   https://github.com/netty/netty-incubator-buffer-api[]
+* Tomcat  https://github.com/rmaucher/openssl-panama-foreign[]
+
+== Clone Me!
+All code and the entire presentation can be cloned via https://github.com/minborg/articles
+
+== Safe Harbor Statement
+The following is intended to outline our general product direction. It is intended for information purposes only, and may not be incorporated into any contract. It is not a commitment to deliver any material, code, or functionality, and should not be relied upon in making purchasing decisions. The development, release, timing, and pricing of any features or functionality described for Oracle’s products may change and remains at the sole discretion of Oracle Corporation.
+
+link:../../LICENSE[Copyright (c) 2023, Oracle and/or its affiliates.]
