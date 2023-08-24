@@ -47,10 +47,10 @@ Note:: It should be noted that the benchmarks are not purely about string conver
 Here are two diagrams outlining the performance benefits of FFM in comparison with JNI. The diagram also includes FFM in Java 21 to highlight the recent performance improvements made in 22.
 
 image::C-to-Java.png[C to Java String]
-_Diagram 1, showing the performance of converting a C string to a Java String._
+_Diagram 1, shows the performance of converting a C string to a Java String._
 
 image::Java-to-C.png[Java to C String]
-_Diagram 2, showing the performance of converting a Java string to a C String._
+_Diagram 2, shows the performance of converting a Java string to a C String._
 
 == Future Improvements
 
