@@ -1,6 +1,6 @@
 = Java 22: Panama FFM Provides Massive Performance Improvements for Strings
 
-The Panama Foreign Function and Memory (FFM) API is slated to be finalized in Java 22 and will then be a part of the public Java API. One thing that is perhaps less known is the significant performance improvements made by FFM in certain areas in 22. In this short article we will be looking at benchmarking string conversion in FFM for Java 21 and Java 22 compared to using old JNI calls.
+The Panama Foreign Function and Memory (FFM) API is slated to be finalized in Java 22 and will then be a part of the public Java API. One thing that is perhaps less known is the significant performance improvements made by FFM in certain areas in 22. In this short article we will be looking at _benchmarking string conversion_ in FFM for Java 21 and Java 22 compared to using old JNI calls.
 
 == C and Java Strings
 
@@ -38,7 +38,7 @@ ToCStringTest.panama_writeString     200  avgt   30   57.255 ? 0.451  ns/op
 
 Needless to say, the `ToJavaStringTest` runs are converting a C string to a Java string whereas the `ToCStringTest` runs convert a Java string to a C string. The `size` indicates the number of bytes of the original string. Java strings were coded in UTF-8.
 
-As can be seen, we can expect FFM to convert C strings to Java strings more than *three times faster with FFM in Java 22*. In the other direction, performance will be about the same for small strings but for larger strings (when is matters more) the speedup factor will be ever-increasing. For example, for strings of length 200, the speedup factor is more than three.
+As can be seen, we can expect FFM to convert C strings to Java strings more than *three times faster with FFM in Java 22*. In the other direction, performance will be about the same for small strings but for larger strings (when is matters more), the speedup factor will be ever-increasing. For example, for strings of length 200, the speedup factor is more than three times.
 
 Note:: It should be noted that the benchmarks are not purely about string conversion as a JNI call also incurs a small state transition penalty for each call.
 
