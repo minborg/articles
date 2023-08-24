@@ -1,0 +1,55 @@
+= Java 22: Panama FFM Mopping the Floor with JNI
+
+The Panama Foreign Function and Memory (FFM) API is slated to be finalized in Java 22 and will then be a part of the public Java API. One thing that is perhaps less known is the significant performance improvements made by FFM in certain areas in 22. In this short article we will be looking at benchmarking string conversion in FFM compared to using old JNI calls.
+
+== C and Java Strings
+
+The Java Native Interface (JNI) has been used historically as a means to bridge Java to native calls before FFM was available. Both schemes entail converting strings back and forth between C and Java String data structures. As you might remember, C strings are just a bunch of bytes that are zero terminated whereas Java Strings are using a backing array with a known length.
+
+When calling native function that takes one or more strings and/or returns a string (both are relatively common), the performance of converting strings back and forth becomes important.
+
+== Benchmarks
+
+We have run some string benchmarks on a XXXX machine and preliminary results indicates blistering performance for FFM string conversion:
+
+[source,text]
+----
+Benchmark                           (size)  Mode  Cnt    Score   Error  Units
+ToJavaStringTest.jni_readString          5  avgt   30   83.045 ? 1.489  ns/op
+ToJavaStringTest.jni_readString         20  avgt   30   91.784 ? 0.725  ns/op
+ToJavaStringTest.jni_readString        100  avgt   30  138.391 ? 1.478  ns/op
+ToJavaStringTest.jni_readString        200  avgt   30  186.049 ? 1.639  ns/op
+ToJavaStringTest.panama_readString       5  avgt   30   21.201 ? 0.228  ns/op
+ToJavaStringTest.panama_readString      20  avgt   30   34.759 ? 0.788  ns/op
+ToJavaStringTest.panama_readString     100  avgt   30   45.645 ? 2.603  ns/op
+ToJavaStringTest.panama_readString     200  avgt   30   48.659 ? 1.497  ns/op
+
+
+Benchmark                         (size)  Mode  Cnt    Score   Error  Units
+ToCStringTest.jni_writeString          5  avgt   30   46.110 ? 1.363  ns/op
+ToCStringTest.jni_writeString         20  avgt   30   57.819 ? 3.231  ns/op
+ToCStringTest.jni_writeString        100  avgt   30  107.820 ? 2.635  ns/op
+ToCStringTest.jni_writeString        200  avgt   30  162.562 ? 5.140  ns/op
+ToCStringTest.panama_writeString       5  avgt   30   49.006 ? 0.783  ns/op
+ToCStringTest.panama_writeString      20  avgt   30   52.451 ? 1.120  ns/op
+ToCStringTest.panama_writeString     100  avgt   30   53.802 ? 1.240  ns/op
+ToCStringTest.panama_writeString     200  avgt   30   57.255 ? 0.451  ns/op
+----
+
+Needless to say, the ToJavaStringTest runs are converting a C string to a Java string whereas the ToCStringTest runs convert a Java string to a C string. The `size` indicates the number of bytes of the original string. Java strings were coded in UTF-8.
+
+As can be seen, we can expect FFM to convert C strings to Java strings more than *three times faster with FFM*. In the other direction, performance will be about the same for small strings but for larger strings (when is matters more) the speedup factor will be ever-increasing. For example, for strings of length 200, the speedup factor is more than three.
+
+== Future Improvements
+
+FFM allows us to use custom allocators and so, if we make several calls, we can reuse memory segments thereby improving performance further. This is not possible with JNI.
+
+It is also possible that we will see even better FFM performance in future Java versions once the Vector API becomes a final feature.
+
+== Resources
+
+* https://openjdk.org/jeps/8310626[JEP draft: Foreign Function & Memory API]
+
+== Acknowledgments
+
+Parts of the text in this article were written by Maurizio Cimadamore
