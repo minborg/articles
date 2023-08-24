@@ -1,4 +1,4 @@
-= Java 22: Panama FFM Mopping the Floor with JNI
+= Java 22: Panama FFM Provides Massive Performance Improvements for Strings
 
 The Panama Foreign Function and Memory (FFM) API is slated to be finalized in Java 22 and will then be a part of the public Java API. One thing that is perhaps less known is the significant performance improvements made by FFM in certain areas in 22. In this short article we will be looking at benchmarking string conversion in FFM for Java 21 and Java 22 compared to using old JNI calls.
 
@@ -10,7 +10,7 @@ When calling native function that takes one or more strings and/or returns a str
 
 == Benchmarks
 
-We have run some string benchmarks (see https://github.com/openjdk/panama-foreign/pull/874/files[the source code here]) on a XXXX machine and preliminary results indicates blistering performance for FFM string conversion in Java 22:
+We have run some string benchmarks (see https://github.com/openjdk/panama-foreign/pull/874/files[the source code here]) on a AMD Ryzen 9 3900X 12-Core Processor machine and preliminary results indicates blistering performance for FFM string conversion in Java 22:
 
 [source,text]
 ----
