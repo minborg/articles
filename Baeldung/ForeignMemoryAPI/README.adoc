@@ -1,0 +1,253 @@
+= Using the Foreign Memory Access API in Java 21
+
+The Foreign Memory Access API in Java 21 provides significant improvements in working with native memory compared to the native `ByteBuffer` abstraction that was the predominant native memory construct previously used.
+
+In this tutorial, we will take a closer look at this API.
+
+== Motivation
+
+Regular Java Objects (like `String` objects) are stored on the JVM's _heap_ and are subject to garbage collection (including being moved from one physical location to another). In order to interact with native code (like C libraries), data needs to be stored in non-relocatable _off-heap_ memory (also named "native memory").
+
+== The ByteBuffer API
+
+Native memory can be allocated using the `ByteBuffer::allocateDirect` method. Unfortunately, `ByteBuffer` instances obtained this way:
+
+* Can only hold less than 2 GiB of data (indexing is based on `int` parameters).
+* Cannot be deterministically freed (the garbage collector is responsible for freeing them).
+* Does not prevent unintended threads to modify its content.
+
+== The Unsafe API
+
+Raw native memory can also be allocated using `Unsafe` providing serious drawbacks including it:
+
+* Does not provide any spatial constrains (memory can be arbitrary addressed).
+* Does not provide any temporal guarantees (e.g. one valid memory region can point to another region that is already freed).
+* Memory can leak unless memory is explicitly freed.
+* Does not prevent unintended threads to modify its content.
+* Is a non-standard API that can change and/or be reduced over time.
+
+It is not uncommon for Unsafe-based applications to crash the VM or even worse, silently modify/read arbitrary memory.
+
+== The Foreign Memory API
+
+The Foreign Memory API provides a safe and yet performant way of handling native memory and consists of several abstractions, some of which are:
+
+* `Arena`
+* `MemorySegment`
+* `MemoryLayout`
+
+== Arena
+
+An `Arena` is the main way of allocating new native memory and also provides a common lifecycle for all memory segments allocated from it. When an `Arena` is closed, said segments are atomically freed.
+
+```
+try (var arena = Arena.ofConfined()) {
+    var segment = arena.allocate(16); // Allocates 16 bytes of native memory.
+    // use segment ...
+} // Segment is deterministically freed here
+```
+
+There are several factory methods for arenas:
+
+* `Arena.ofConfined()` : Creates a new `Arena` that only the current thread can access.
+* `Arena.ofShared()` : Creates a new `Arena` that any thread can access.
+* `Arena.ofAuto()` : Creates a new `Arena` that is automatically managed by the garbage collector (same as for `ByteBuffer`).
+* `Arena.global()` : Returns the one and only _global_ `Arena` that never closes and for which allocated segments live forever.
+
+Working with add-hook allocation is simple:
+
+`MemorySegment segment = Arena.ofAuto().allocate(16)` will allocate 16 bytes of native memory which, when not referenced anymore, will be eligible for garbage collection (at some unspecified later time). This is similar to how ByteBuffers work.
+
+
+== MemorySegment
+
+The `MemorySegment` class safely models a contiguous 64-bit memory region where spatial boundaries (start address and extent of the region), temporal bounds (the region is not freed) and thread confinements (if any) are safely enforced. It is not possible to violate these constraints without an `Exception` being thrown. Hence, it is not possible to crash the VM or read/write arbitrary memory locations using unrestricted operations.
+
+As opposed to a `ByteBuffer`, a `MemorySegment` is immutable and contains no cursors (e.g. `position()`). Instead, memory content is directly read using offsets.
+
+It is also possible to allocate `MemorySegment` instances that models heap memory by creating a view of a backing array:
+
+```
+// Create a 400 byte segment backed by an int array with 100 elements.
+MemorySegment segment = MemorySegment.ofArray(new int[100]);
+```
+
+A `MemorySegment` can also act as a view for a `ByteBuffer` or vise versa:
+
+```
+// Create a 16 byte segment backed by a ByteBuffer
+MemorySegment segment = MemorySegment.ofBuffer(ByteBuffer.allocateDirect(16));
+
+// Create a ByteBuffer backed by a segment
+ByteBuffer bb = s2.asByteBuffer();
+```
+
+The underlying memory address of a segment is available via the `MemorySegment::address` function and the size of a segment is available via the `MemorySegment::byteSize` and is returned as a `long`.
+
+== MemoryLayout
+
+`MemoryLayout` objects allows the content of memory segments to be described similar to C structs and unions:
+
+```
+struct Point {
+   int x;
+   int y;
+};
+```
+
+This can be expressed in Java as:
+
+```
+MemoryLayout POINT = structLayout(
+    JAVA_INT.withName("x"),
+    JAVA_INT.withName("y")
+);
+```
+
+Provided we have statically imported `MemoryLayout.{empty}*` and `ValueLayout.{empty}*`
+
+=== VarHandle Access
+
+Structured memory can be accesses using `VarHandle` instances:
+
+```
+// Accessor for x
+private static final VarHandle X = POINT.varHandle(groupElement("x"));
+// Accessor for y
+private static final VarHandle Y = POINT.varHandle(groupElement("y"));
+
+...
+
+try (var arena = Arena.ofConfined()) {
+    MemorySegment point = arena.allocate(POINT);
+    X.set(point, 3);
+    Y.set(point, 4);
+    System.out.println(
+            Arrays.toString(point.toArray(JAVA_INT)) // [3, 4]
+    );
+} // Point is deterministically freed here
+
+```
+
+=== Class Encapsulation
+
+By creating a wrapper class, memory segments can be viewed as ordinary Java objects event though they might be backed by native memory:
+
+```
+    static final class Point {
+
+        private static final MemoryLayout POINT = structLayout(
+                JAVA_INT.withName("x"),
+                JAVA_INT.withName("y")
+        ).withName("point");
+
+        private static final VarHandle X = POINT.varHandle(groupElement("x"));
+        private static final VarHandle Y = POINT.varHandle(groupElement("y"));
+
+        private final MemorySegment segment;
+
+        public Point(Arena arena) {
+            this.segment = arena.allocate(POINT);
+        }
+
+        int x() {
+            return (int) X.get(segment);
+        }
+
+        int y() {
+            return (int) Y.get(segment);
+        }
+
+        void x(int x) {
+            X.set(segment, x);
+        }
+
+        void y(int y) {
+            Y.set(segment, y);
+        }
+
+        @Override
+        public String toString() {
+            return "Point[" + x() + ", " + y() + "]";
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            return o instanceof Point that &&
+                    this.x() == that.x() &&
+                    this.x() == that.y();
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(x(), y());
+        }
+    }
+```
+
+
+=== Memory Layout Types
+
+There are several built-in layout types for common Java primitives including `ValueLayout.JAVA_INT`, `ValueLayout.JAVA_LONG` and the likes. These can be composed into more complex forms using any of the factory methods in the `MemoryLayout` class:
+
+* `structLayout()` : creates a structure of any number of other memory layouts. Elements are laid out consecutively in memory.
+* `unionLayout()` : creates a union of any number of other memory layouts. Elements are laid out on the same location in memory.
+* `sequenceLayout()` : creates a sequence (repetition) of a single other memory layout. Elements are laid out consecutively in memory.
+* `paddingLayout()` : creates a padding (an unused hole) in the memory layout. This can be used for alignment or for reserving memory for future use.
+
+For example, the layout of an array of 128 longs can be modelled like this:
+
+```
+SequenceLayout sequenceLayout = MemoryLayout.sequenceLayout(128, JAVA_LONG);
+```
+
+
+== Memory Slicing
+
+Memory segments can be sliced to provide a spatially reduced view of an arbitrary subsection of a backing segments:
+
+```
+// Create a slice of a memory location representing the x-coordinate of a point segment
+MemorySegment xSegment = pointSegment.slice(0, JAVA_INT);
+// Create a slice of a memory location representing the y-coordinate of a point segment
+MemorySegment ySegment = pointSegment.slice(4, JAVA_INT);
+```
+
+== Memory Mapping
+
+Memory segment can also be mapped onto a file:
+
+```
+Set<OpenOption> sparse = Set.of(CREATE_NEW, SPARSE, READ, WRITE);
+
+try (var fc = FileChannel.open(Path.of("sparse"), sparse)) {
+
+    // Create a large mapped memory segment managed by the GC (Arena.auto())
+     // The file can be shared across threads and/or processes
+    MemorySegment mapped = fc.map(READ_WRITE, 0, 1L << 26, Arena.ofAuto());
+
+    System.out.println(mapped);
+}
+```
+This is useful when doing fast persistent inter-thread communication for example.
+
+
+=== Preview Feature
+
+The Foreign Memory API is a _preview feature_ in Java 21 and, in order to use it, we must use the `--enable-preview` command line argument as https://www.baeldung.com/java-preview-features[described here].
+
+It is expected that the API will be a final feature in Java 22.
+
+=== Conclusion
+
+In this article, we have learned the basics of the Foreign Memory API in Java 21.
+
+Initially, we looked at some of the previous constructs like `ByteBuffer` and `Unsafe` and their limitations. Then we learned how the Foreign Memory API provides a safe and performant abstraction of both native and heap memory.
+
+Finally, we explored some examples that is using the API.
+
+== Resources
+
+* https://openjdk.org/jeps/434[JEP 442] Foreign Function & Memory API (Third Preview)
+* Run your own code on an early access JDK today by downloading a https://jdk.java.net[JDK Early-Access Build].
+
