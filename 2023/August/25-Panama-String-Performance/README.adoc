@@ -38,7 +38,7 @@ ToCStringTest.panama_writeString     200  avgt   30   49.060 ? 0.694  ns/op
 
 Needless to say, the `ToJavaStringTest` runs are converting a C string to a Java string whereas the `ToCStringTest` runs convert a Java string to a C string. The `size` indicates the number of bytes of the original string. Java strings were coded in UTF-8.
 
-As can be seen, we can expect FFM to convert C strings to Java strings more than *three times faster with FFM in Java 22*. In the other direction, performance will be about the same for small strings but for larger strings (where is matters more), the speedup factor will be ever-increasing. For example, for strings of length 200, the speedup factor is more than three times.
+As can be seen, we can expect FFM to convert C strings to Java strings more than *three times faster with FFM in Java 22*. In the other direction, performance will be about the same for small strings but for larger strings (where it matters more), the speedup factor will be ever-increasing. For example, for strings of length 200, the speedup factor is more than three times.
 
 Note:: It should be noted that the benchmarks are not purely about string conversion as a JNI call also incurs a small state transition penalty for each call. The Java to C string performs a memory allocation (for the string bytes). While this could be avoided, it was included in the benchmark as that is what happens with JNI's `GetStringUTFChars`.
 
@@ -72,4 +72,4 @@ Note:: At the time of writing this article, the performance improvements are not
 
 == Acknowledgments
 
-This article were written by me (Per Minborg) and Maurizio Cimadamore.
+This article was written by me (Per Minborg) and Maurizio Cimadamore.
