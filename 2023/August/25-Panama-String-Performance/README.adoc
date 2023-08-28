@@ -30,10 +30,10 @@ ToCStringTest.jni_writeString          5  avgt   30   46.110 ? 1.363  ns/op
 ToCStringTest.jni_writeString         20  avgt   30   57.819 ? 3.231  ns/op
 ToCStringTest.jni_writeString        100  avgt   30  107.820 ? 2.635  ns/op
 ToCStringTest.jni_writeString        200  avgt   30  162.562 ? 5.140  ns/op
-ToCStringTest.panama_writeString       5  avgt   30   49.006 ? 0.783  ns/op
-ToCStringTest.panama_writeString      20  avgt   30   52.451 ? 1.120  ns/op
-ToCStringTest.panama_writeString     100  avgt   30   53.802 ? 1.240  ns/op
-ToCStringTest.panama_writeString     200  avgt   30   57.255 ? 0.451  ns/op
+ToCStringTest.panama_writeString       5  avgt   30  45.932 ? 0.874  ns/op
+ToCStringTest.panama_writeString      20  avgt   30  48.464 ? 0.715  ns/op
+ToCStringTest.panama_writeString     100  avgt   30  47.187 ? 1.114  ns/op
+ToCStringTest.panama_writeString     200  avgt   30  51.094 ? 2.149  ns/op
 ----
 
 Needless to say, the `ToJavaStringTest` runs are converting a C string to a Java string whereas the `ToCStringTest` runs convert a Java string to a C string. The `size` indicates the number of bytes of the original string. Java strings were coded in UTF-8.
