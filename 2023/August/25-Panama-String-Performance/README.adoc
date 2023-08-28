@@ -15,32 +15,32 @@ We have run some string benchmarks (see https://github.com/openjdk/panama-foreig
 [source,text]
 ----
 Benchmark                           (size)  Mode  Cnt    Score   Error  Units
-ToJavaStringTest.jni_readString          5  avgt   30   83.045 ? 1.489  ns/op
-ToJavaStringTest.jni_readString         20  avgt   30   91.784 ? 0.725  ns/op
-ToJavaStringTest.jni_readString        100  avgt   30  138.391 ? 1.478  ns/op
-ToJavaStringTest.jni_readString        200  avgt   30  186.049 ? 1.639  ns/op
-ToJavaStringTest.panama_readString       5  avgt   30   21.201 ? 0.228  ns/op
-ToJavaStringTest.panama_readString      20  avgt   30   34.759 ? 0.788  ns/op
-ToJavaStringTest.panama_readString     100  avgt   30   45.645 ? 2.603  ns/op
-ToJavaStringTest.panama_readString     200  avgt   30   48.659 ? 1.497  ns/op
+ToJavaStringTest.jni_readString          5  avgt   30   86.520 ? 1.842  ns/op
+ToJavaStringTest.jni_readString         20  avgt   30   97.151 ? 1.459  ns/op
+ToJavaStringTest.jni_readString        100  avgt   30  143.853 ? 1.287  ns/op
+ToJavaStringTest.jni_readString        200  avgt   30  189.867 ? 2.337  ns/op
+ToJavaStringTest.panama_readString       5  avgt   30   21.380 ? 0.351  ns/op
+ToJavaStringTest.panama_readString      20  avgt   30   36.250 ? 0.520  ns/op
+ToJavaStringTest.panama_readString     100  avgt   30   43.368 ? 0.544  ns/op
+ToJavaStringTest.panama_readString     200  avgt   30   53.442 ? 2.048  ns/op
 
 
 Benchmark                         (size)  Mode  Cnt    Score   Error  Units
-ToCStringTest.jni_writeString          5  avgt   30   46.110 ? 1.363  ns/op
-ToCStringTest.jni_writeString         20  avgt   30   57.819 ? 3.231  ns/op
-ToCStringTest.jni_writeString        100  avgt   30  107.820 ? 2.635  ns/op
-ToCStringTest.jni_writeString        200  avgt   30  162.562 ? 5.140  ns/op
-ToCStringTest.panama_writeString       5  avgt   30  45.932 ? 0.874  ns/op
-ToCStringTest.panama_writeString      20  avgt   30  48.464 ? 0.715  ns/op
-ToCStringTest.panama_writeString     100  avgt   30  47.187 ? 1.114  ns/op
-ToCStringTest.panama_writeString     200  avgt   30  51.094 ? 2.149  ns/op
+ToCStringTest.jni_writeString          5  avgt   30   47.450 ? 0.832  ns/op
+ToCStringTest.jni_writeString         20  avgt   30   56.208 ? 0.422  ns/op
+ToCStringTest.jni_writeString        100  avgt   30  108.341 ? 0.459  ns/op
+ToCStringTest.jni_writeString        200  avgt   30  157.119 ? 1.669  ns/op
+ToCStringTest.panama_writeString       5  avgt   30   45.361 ? 0.717  ns/op
+ToCStringTest.panama_writeString      20  avgt   30   47.742 ? 0.554  ns/op
+ToCStringTest.panama_writeString     100  avgt   30   47.580 ? 0.673  ns/op
+ToCStringTest.panama_writeString     200  avgt   30   49.060 ? 0.694  ns/op
 ----
 
 Needless to say, the `ToJavaStringTest` runs are converting a C string to a Java string whereas the `ToCStringTest` runs convert a Java string to a C string. The `size` indicates the number of bytes of the original string. Java strings were coded in UTF-8.
 
-As can be seen, we can expect FFM to convert C strings to Java strings more than *three times faster with FFM in Java 22*. In the other direction, performance will be about the same for small strings but for larger strings (when is matters more), the speedup factor will be ever-increasing. For example, for strings of length 200, the speedup factor is more than three times.
+As can be seen, we can expect FFM to convert C strings to Java strings more than *three times faster with FFM in Java 22*. In the other direction, performance will be about the same for small strings but for larger strings (where is matters more), the speedup factor will be ever-increasing. For example, for strings of length 200, the speedup factor is more than three times.
 
-Note:: It should be noted that the benchmarks are not purely about string conversion as a JNI call also incurs a small state transition penalty for each call.
+Note:: It should be noted that the benchmarks are not purely about string conversion as a JNI call also incurs a small state transition penalty for each call. The Java to C string performs a memory allocation (for the string bytes). While this could be avoided, it was included in the benchmark as that is what happens with JNI's `GetStringUTFChars`.
 
 == Diagrams
 
@@ -60,7 +60,7 @@ It is also possible that we will see even better FFM performance in future Java 
 
 === JDK Early-Access Builds
 
-Run your own code on an early access JDK today by downloading a https://jdk.java.net[JDK 21 Early-Access Build].
+Run your own code on an early access JDK today by downloading a https://jdk.java.net[JDK Early-Access Build].
 
 Note:: At the time of writing this article, the performance improvements are not merged in the Java 22 mainline yet. You can however build your own snapshot version with the performance improvements mentioned above by cloning https://github.com/openjdk/panama-foreign[github.com/openjdk/panama-foreign]
 
