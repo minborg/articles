@@ -11,6 +11,10 @@ Happy Reading! /Per Minborg | image:images/per-brighter.png[alt=Golden Gate,scal
 
 == Articles 2023
 
+=== link:2023/August/25-Panama-String-Performance/README.adoc[Java 22: Panama FFM Provides Massive Performance Improvements for Strings] (2023-Aug-25)
+
+The Panama Foreign Function and Memory (FFM) API is slated to be finalized in Java 22 and will then be a part of the public Java API. One thing that is perhaps less known is the significant performance improvements made by FFM in certain areas in 22. In this short article we will be looking at _benchmarking string conversion_ in FFM for Java 21 and Java 22 compared to using old JNI calls.
+
 === link:2023/August/2-Computed-Constants/README.adoc[Java: JEP Draft: "Computed Constants"] (2023-Aug-2)
 
 The draft JEP "Computed Constants" went public. `ComputedConstant` objects are superfast immutable value holders that can be initialized independently of when they are created. As an added benefit, these objects may in the future be even more optimized via "condensers" that eventually might become available through project Leyden.
