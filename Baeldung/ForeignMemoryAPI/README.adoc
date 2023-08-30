@@ -31,7 +31,7 @@ Raw native memory regions can also be allocated using `Unsafe` providing serious
 
 It is not uncommon for Unsafe-based applications to crash the VM or even worse, silently modify/read arbitrary memory.
 
-== The FFM API
+== Overview of the FFM API
 
 The FFM API provides a safe and yet performant way of handling native memory and consists of several abstractions, some of which are:
 
@@ -39,7 +39,7 @@ The FFM API provides a safe and yet performant way of handling native memory and
 * `MemorySegment`
 * `MemoryLayout`
 
-== Arena
+== Arenas
 
 An `Arena` is the main way of allocating new native memory and also provides a common lifecycle for all memory segments allocated from it. When an `Arena` is closed, said segments are atomically freed.
 
@@ -63,7 +63,7 @@ If you are used to working with ByteBuffers that are managed by the garbage coll
 
 This will allocate 16 bytes of native memory which, when not referenced anymore, is eligible for garbage collection (at some unspecified later time).
 
-== MemorySegment
+== Memory Segments
 
 The `MemorySegment` class safely models a contiguous 64-bit memory region where spatial boundaries (start address and extent of the region), temporal bounds (the region is not freed) and thread confinements (if any) are safely enforced. Trying to violate these constraints will always result in an exception being thrown. Hence, it is not possible to crash the VM or read/write arbitrary memory locations using any access operations.
 
@@ -88,9 +88,31 @@ ByteBuffer bb = s2.asByteBuffer();
 
 The underlying memory address of a segment is available via the `MemorySegment::address` function and the size of a segment is available via the `MemorySegment::byteSize` and is returned as a `long` (theoretically allowing up to 63-bit sized segments).
 
-== MemoryLayout
+There are a number of get/set operations for memory segments. Here is an example where we set a long value in a segment:
 
-Memory layouts provide a way to describe the contents of a memory region. For example, given this C struct:
+```
+// At byte offset 8 in the segment, sets a long value of 42L
+segment.set(ValueLayout.JAVA_LONG, 8, 42L);
+```
+
+== Memory Layouts
+
+Memory layouts provide a way to describe the contents of a memory region.
+
+There are several built-in layout types for common Java primitive types including `ValueLayout.JAVA_INT`, `ValueLayout.JAVA_LONG`. These, together with `PaddingLayout`, can be composed into more complex forms using any of the factory methods in the `MemoryLayout` class:
+
+* `structLayout(...)` : creates a structure of any number of other memory layouts. Elements are laid out consecutively in memory.
+* `unionLayout(...)` : creates a union of any number of other memory layouts. Elements are laid out on the same location in memory.
+* `sequenceLayout(...)` : creates a sequence (repetition) of a single other memory layout. Elements are laid out consecutively in memory.
+
+For example, the layout of an array of 128 longs can be modeled like this:
+
+```
+SequenceLayout sequenceLayout = MemoryLayout.sequenceLayout(128, JAVA_LONG);
+```
+
+
+Here is another example with a C struct:
 
 ```
 struct Point {
@@ -99,7 +121,7 @@ struct Point {
 };
 ```
 
-A corresponding `MemoryLayout` can be modeled like this:
+where a corresponding `MemoryLayout` can be modeled like this:
 
 ```
 MemoryLayout POINT = structLayout(
@@ -110,7 +132,7 @@ MemoryLayout POINT = structLayout(
 
 Provided we have statically imported `MemoryLayout.{empty}*` and `ValueLayout.{empty}*`
 
-=== VarHandle Access
+=== Structured Segment Access
 
 Structured memory can be accessed using `VarHandle` instances:
 
@@ -133,7 +155,9 @@ try (var arena = Arena.ofConfined()) {
 
 ```
 
-=== Class Encapsulation
+NOTE:: `VarHandle` variables should be declared `static final` in order to enable full performance.
+
+=== Modeling Structs
 
 By creating a wrapper class, memory segments can be viewed as ordinary Java objects even though they might be backed by native memory:
 
@@ -153,6 +177,11 @@ By creating a wrapper class, memory segments can be viewed as ordinary Java obje
         public Point(Arena arena) {
             this.segment = arena.allocate(POINT);
         }
+
+        public Point(Segment segment) {
+            this.segment = Objects.requireNonNull(segment);
+        }
+
 
         int x() {
             return (int) X.get(segment);
@@ -190,21 +219,7 @@ By creating a wrapper class, memory segments can be viewed as ordinary Java obje
 ```
 
 
-=== Memory Layout Types
-
-There are several built-in layout types for common Java primitives including `ValueLayout.JAVA_INT`, `ValueLayout.JAVA_LONG`. These, together with `PaddingLayout`, can be composed into more complex forms using any of the factory methods in the `MemoryLayout` class:
-
-* `structLayout()` : creates a structure of any number of other memory layouts. Elements are laid out consecutively in memory.
-* `unionLayout()` : creates a union of any number of other memory layouts. Elements are laid out on the same location in memory.
-* `sequenceLayout()` : creates a sequence (repetition) of a single other memory layout. Elements are laid out consecutively in memory.
-
-For example, the layout of an array of 128 longs can be modeled like this:
-
-```
-SequenceLayout sequenceLayout = MemoryLayout.sequenceLayout(128, JAVA_LONG);
-```
-
-== Memory Slicing
+== Slicing Memory Segments
 
 Memory segments can be sliced to provide a spatially reduced view of an arbitrary subsection of backing segments:
 
@@ -215,7 +230,19 @@ MemorySegment xSegment = pointSegment.slice(0, JAVA_INT);
 MemorySegment ySegment = pointSegment.slice(4, JAVA_INT);
 ```
 
-== Memory Mapping
+Interestingly, it is possible to create a `Stream` of slices from any memory segment using an arbitrary memory layout. For example, we could create a stream of slices of points from a memory segment that contains a sequence of points:
+
+```
+segment.elements(Point.POINT)      // Stream<MemorySegment> slices of size 16
+    .map(Point::new)               // Stream<Point>
+    .forEach(System.out::println);
+```
+
+This will print out all out points on the standard output.
+
+By initially using `Arena.ofShared` when creating the memory segment with a sequence, a parallel stream can be constructed.
+
+== Working with Memory-Mapped Files
 
 It is also possible to map a region of a file into a mapped memory segment:
 
