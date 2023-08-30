@@ -1,6 +1,6 @@
-= Using Memory with the Foreign Function and Memory Access API in Java 21
+= Accessing Off-Heap Memory with the Foreign Function & Memory Access API
 
-The Foreign Function & Memory (hereafter FFM) API in Java 21 provides significant improvements in working with native memory compared to the native `ByteBuffer` abstraction which is the predominant native memory construct.
+The Foreign Function & Memory (hereafter FFM) API in Java 21 provides significant improvements in working with native memory compared to the native `ByteBuffer` abstraction which is the predominant native (off-heap) memory construct.
 
 In this tutorial, we will take a closer look at working with native memory with this API.
 
