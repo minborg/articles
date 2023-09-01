@@ -52,10 +52,10 @@ try (var arena = Arena.ofConfined()) {
 
 There are several factory methods for arenas:
 
-* `Arena.ofConfined()` : Creates a new `Arena` that only the current thread can access.
-* `Arena.ofShared()` : Creates a new `Arena` that any thread can access.
-* `Arena.ofAuto()` : Creates a new `Arena` that is automatically managed by the garbage collector (same as for `ByteBuffer`).
-* `Arena.global()` : Returns the one and only _global_ `Arena` that never closes and for which allocated segments live forever.
+* `Arena.ofConfined()` : Creates a new thread-confined `Arena` that only the current thread can access.
+* `Arena.ofShared()` : Creates a new shared `Arena` that any thread can access.
+* `Arena.ofAuto()` : Creates a new shared `Arena` that is automatically managed by the garbage collector (same as for `ByteBuffer`).
+* `Arena.global()` : Returns the one and only shared, _global_ `Arena` that never closes and for which allocated segments live forever.
 
 If you are used to working with ByteBuffers that are managed by the garbage collector, here is how to create a `MemorySegment` in a similar fashion:
 
