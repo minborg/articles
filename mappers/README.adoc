@@ -1,7 +1,7 @@
 = FFM Mappers: Informal Requirement Specifications
 
 == Background
-There is a gap between the low level primitives currently offered by FFM and regular Java design principles. Modelling data structures that resides in native memory (i.e. in a `MemorySegment') can be done by composing relevant memory layouts as illustrated in the following uncomplicated example where we model an external data representation in one of the C-language variants:
+There is a gap between the low level primitives currently offered by FFM and regular Java design principles. Modelling data structures that resides in native memory (i.e. in a `MemorySegment`) can be done by composing relevant memory layouts as illustrated in the following uncomplicated example where we model an external data representation in one of the C-language variants:
 
 ```
 // C/C++ struct:
@@ -78,20 +78,21 @@ As can be seen, the level of originality for the wrapper class is low. Looking a
 
 It would be desirable to provide a mechanism where native memory could be not only modeled but actually used with normal Java semantics.
 
+We anticipate two fundamental mappers; _Record Mappers_ (creating a snapshot of an underlying memory segment) and _Interface Mappers_ (creating a read/write wrapper around an underlying memory segment much like in the example above).
 
-== Example of Use
+== Example of Use for a Record Mapper
 
-Once mappers are available, the process of deriving wrapper classes is greatly simplified as illustrated in this example (the exact syntax is to be decided, see the section "<<sketches>>" below):
+Once mappers are available, the process of deriving wrapper classes is greatly simplified as illustrated in this example (the exact syntax to obtain a mapper and how the mapper actually is expressed is to be decided, see the section "<<sketches>>" below):
 
 ```
 MemorySegment segment = MemorySegment.ofArray(new int[]{3, 4});
-
-public record Point(int x, int y){}
 
 var pointLayout = MemoryLayout.structLayout(
     JAVA_INT.withName("x"),
     JAVA_INT.withName("y")
 );
+
+public record Point(int x, int y){}
 
 // Created once but can be used many times
 Function<MemorySegment, Point> pointExtractor = pointLayout.recordMapper(Point.class);
@@ -99,8 +100,6 @@ Function<MemorySegment, Point> pointExtractor = pointLayout.recordMapper(Point.c
 // Extracts a new Point from the provided MemorySegment
 Point point = pointExtractor.apply(segment); // Point[x=3, y=4]
 ```
-
-
 
 == Functional Requirements
 
@@ -115,7 +114,7 @@ It shall be possible to both read and write an entire record to/from native memo
 
 === Mapping Definitions
 
-A `MemoryLayout` does not contain enough information to automatically create a mapper. In order to provide the missing peaces, a `Record` class or one or more interfaces has to be added whereby the names and signatures of methods mandates how mapping is to be performed.
+A `MemoryLayout` does not contain enough information to automatically create a mapper. In order to provide the missing pieces, a `Record` class or one or more interfaces has to be added whereby the names and signatures of methods mandates how mapping is to be performed.
 
 For record mappers, a record class is provided as shown in the following example:
 
@@ -123,7 +122,7 @@ For record mappers, a record class is provided as shown in the following example
 public Point(int x, int y){}`
 ```
 
-For interface mappers, one or more interfaces are provided as shown in the following example:
+For interface mappers, an interface is provided as shown in the following example:
 
 ```
 public interface Point {
@@ -151,7 +150,7 @@ public record FlippedPoint(int y, int x) {}
 
 ```
 
-These, classes would not be legal as no apparent mapping exists for at least one method:
+However, these other classes would not be legal as no apparent mapping exists for at least one class method:
 
 ```
 public 3dPoint(int x, int y, int z); // Unable to match `z`
@@ -163,7 +162,7 @@ public interface 3dPoint extends Point {
 
 === Complex Types
 
-It should be possible to form more complex type mappers using an arbitrary depth of record/interfaces:
+It should be possible to form more complex type mappers with arbitrary depths of record/interfaces:
 
 ```
 POINT_SEGMENT = MemorySegment.ofArray(new int[]{
@@ -221,7 +220,7 @@ SequenceBox sequenceBox = mapper.apply(segment);
 assertEquals(new SequenceBox(0, new int[]{1, 2}, 3), sequenceBox);
 ```
 
-Any array rank should be supported.
+Any array ranks should be supported.
 
 It shall be possible to map arrays of structs as indicated by this record:
 
@@ -293,9 +292,7 @@ assertEquals(List.of(new Point(2, 3), new Point(4, 5)), list);
 
 === Recursive Definitions
 
-To Be Improved ...
-
-Here is how a general tree could be handled using mapping:
+Here is how a general tree could be modeled using record mapping:
 
 ```
 
@@ -381,17 +378,23 @@ public record IfcuReqPointer(MemorySegment ifcu_req) {
 
 === MethodHandle support
 
-The mapper should support returning a `MethodHandle` in response to a mapping request where the returned `MethodHandle` shall have a coordinates of:
+The record mapper should support returning a `MethodHandle` in response to a mapping request where the returned `MethodHandle` shall have a coordinates of:
 
 `(MemorySegment, long)T`
 
 Where the long coordinate represents an offset in the provided MemorySegment.
 
+These method handles can later be composed with other low-level mechanisms.
+
+== Interface Mapper
+
+Relevant `toString()`, `hashCode()` and `equals()` methods should be automatically provided (To be discussed).
+
 == Non-Functional Requirements
 
-The performance of the mappers classes should be on pair with custom-made classes.
+The performance of the mappers classes should be on par with custom-made classes.
 
-The often-once process of creating a mapper is not time critical.
+The often-once process of creating a mapper is not that time critical.
 
 == Sketches [[sketches,Sketches]]
 
