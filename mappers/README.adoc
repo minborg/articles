@@ -613,8 +613,12 @@ When we get record "withers", some use cases can be handled just using record ma
 Maybe we are able to create mappers up-front with a condenser and Leyden:
 
 ```
-private static final ComputedConstant<RecordMapper<Point>> PM =
-        ComputedConstant.of(POINT::recordMapper);
+private static final ComputedConstant<RecordMapper<Point>> PM = ComputedConstant.of(POINT::recordMapper);
+
+// ...
+
+Point point = PM.get().get(segment);
+
 ```
 
 === Lookup
