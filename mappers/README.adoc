@@ -625,9 +625,23 @@ Point point = PM.get().get(segment);
 
 `MethodHandles.Lookup` as a parameter (optional override) or rely on `MethodHandles.publicLookup()` only (mandates all records and interfaces being declared `public`)? We could use a builder pattern if there are many parameters to define.
 
-=== Reuse
+=== Linker
 
-The FFM Linker provides automatic conversion between certain parameters. Maybe we can reuse concepts from there.
+Mappers or something similar could also be used when linking to native methods:
+
+```
+// C function
+double distance(struct Point)
+```
+
+could become:
+
+```
+interface Header {
+    // Point is a mapped struct/interface
+    double distance(Point p);
+}
+```
 
 === Performance
 
