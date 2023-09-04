@@ -386,7 +386,7 @@ Where the long coordinate represents an offset in the provided MemorySegment.
 
 These method handles can later be composed with other low-level mechanisms.
 
-== Interface Mapper
+== Extra Generated Methods for Interface Mappers
 
 Relevant `toString()`, `hashCode()` and `equals()` methods should be automatically provided (To be discussed).
 
