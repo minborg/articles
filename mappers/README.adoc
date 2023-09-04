@@ -20,10 +20,10 @@ private static final StructLayout POINT = structLayout(
 );
 ```
 
-However, it is not possible to directly use the FFM layout in the way we can do in C. Instead, we would have to mechanically derive a "wrapper class" that presents a Java-like surface but that is actually backed by native memory:
+Albeit good, it is not possible to directly use the FFM layout in the way we can do in C. Instead, we would have to mechanically derive a "wrapper class" that presents a Java-like surface but that is actually backed by native memory:
 
 ```
-static final class Point {
+final class Point {
 
     private static final StructLayout POINT = structLayout(
             JAVA_INT.withName("x"),
@@ -37,6 +37,10 @@ static final class Point {
 
     public Point(Arena arena) {
         this.segment = arena.allocate(POINT);
+    }
+
+    public Point(MemorySegment segment) {
+        this.segment = Objects.requireNonNull(segment);
     }
 
     int x() {
@@ -76,13 +80,13 @@ static final class Point {
 
 As can be seen, the level of originality for the wrapper class is low. Looking at larger software projects (like the JDK itself), it is not unreasonable to expect hundreds of such wrapper classes are needed. Another example is the `jextract` tool that provides mechanical modeling of external libraries. While this is a great tool, it only provides static methods and no Java models.
 
-It would be desirable to provide a mechanism where native memory could be not only modeled but actually used with normal Java semantics.
+It would be desirable to provide a mechanism where native memory could be not only _modeled_ but actually _used_ with normal Java semantics.
 
 We anticipate two fundamental mappers; _Record Mappers_ (creating a snapshot of an underlying memory segment) and _Interface Mappers_ (creating a read/write wrapper around an underlying memory segment much like in the example above).
 
 == Example of Use for a Record Mapper
 
-Once mappers are available, the process of deriving wrapper classes is greatly simplified as illustrated in this example (the exact syntax to obtain a mapper and how the mapper actually is expressed is to be decided, see the section "<<sketches>>" below):
+Once record and interface mappers are available, the process of deriving wrapper classes is greatly simplified as illustrated in this example (the exact syntax to obtain a mapper and how the mapper actually is expressed is to be decided, see the section "<<sketches>>" below):
 
 ```
 MemorySegment segment = MemorySegment.ofArray(new int[]{3, 4});
@@ -135,7 +139,7 @@ public interface Point {
 
 Matching of the memory layout elements and types and the accessors are made by matching the layout names with the names of the accessors and the types of the layouts with the types of the accessors.
 
-The set of accessors must be a *subset* of the available memory layout component and access type variants. This means these would be a valid mapping class:
+The set of accessors must be a *subset* of the available memory layout component and access type variants. This means these would be valid mapping classes:
 
 ```
 public record PointX(int x){}
@@ -150,7 +154,7 @@ public record FlippedPoint(int y, int x) {}
 
 ```
 
-However, these other classes would not be legal as no apparent mapping exists for at least one class method:
+However, these other classes would not be legal as no valid mapping exists for at least one class method:
 
 ```
 public 3dPoint(int x, int y, int z); // Unable to match `z`
@@ -180,7 +184,7 @@ assertEquals(LINE_LAYOUT.recordMapper(Line.class), new Line(new Point(3, 4), new
 
 ```
 
-=== Arrays
+=== Arrays and Lists
 
 It should be possible to map `SequenceLayout` instances to Java arrays as shown in this example:
 
@@ -220,7 +224,7 @@ SequenceBox sequenceBox = mapper.apply(segment);
 assertEquals(new SequenceBox(0, new int[]{1, 2}, 3), sequenceBox);
 ```
 
-As can be seen above, mapping to arrays means the record becomes complicated to write and therefore, it should optionally be possible to map to `List` types instead:
+As can be seen above, mapping to arrays means the record becomes complicated to write and therefore, it should also be possible to map to `List` types instead:
 
 ```
 public record SequenceBox(int before, List<Integer> ints, int after) {}
@@ -390,7 +394,7 @@ Relevant `toString()`, `hashCode()` and `equals()` methods should be automatical
 
 The performance of the mappers classes should be on par with custom-made classes.
 
-The often-once process of creating a mapper is not that time critical and might be improved by Leyden (See <<_leyden_and_mappers>>).
+The often-once process of creating a mapper is not that time critical and might be improved by Leyden (See <<Leyden and Mappers>>).
 
 == Sketches [[sketches,Sketches]]
 
@@ -605,7 +609,7 @@ Here is a way to model interfaces when it resides in the class `GroupLayout`:
 
 When we get record "withers", some use cases can be handled just using record mappers. For example, implementing a persistent queue with memory mapped memory segments would be very easy to implement. A client can read from one queue and write to another while modifying one or more fields (e.g. time stamp).
 
-=== Leyden and Mappers
+=== Leyden and Mappers [[leyden,Leyden]]
 Maybe we are able to create mappers up-front with a condenser and Leyden:
 
 ```
