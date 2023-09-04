@@ -1,0 +1,630 @@
+= FFM Mappers: Informal Requirement Specifications
+
+== Background
+There is a gap between the low level primitives currently offered by FFM and regular Java design principles. Modelling data structures that resides in native memory (i.e. in a `MemorySegment') can be done by composing relevant memory layouts as illustrated in the following uncomplicated example where we model an external data representation in one of the C-language variants:
+
+```
+// C/C++ struct:
+struct Point {
+    int x;
+    int y;
+};
+```
+
+This corresponds to the following FFM model:
+
+```
+private static final StructLayout POINT = structLayout(
+    JAVA_INT.withName("x"),
+    JAVA_INT.withName("y")
+);
+```
+
+However, it is not possible to directly use the FFM layout in the way we can do in C. Instead, we would have to mechanically derive a "wrapper class" that presents a Java-like surface but that is actually backed by native memory:
+
+```
+static final class Point {
+
+    private static final StructLayout POINT = structLayout(
+            JAVA_INT.withName("x"),
+            JAVA_INT.withName("y")
+    ).withName("point");
+
+    private static final VarHandle X = POINT.varHandle(groupElement("x"));
+    private static final VarHandle Y = POINT.varHandle(groupElement("y"));
+
+    private final MemorySegment segment;
+
+    public Point(Arena arena) {
+        this.segment = arena.allocate(POINT);
+    }
+
+    int x() {
+        return (int) X.get(segment);
+    }
+
+    int y() {
+        return (int) Y.get(segment);
+    }
+
+    void x(int x) {
+        X.set(segment, x);
+    }
+
+    void y(int y) {
+        Y.set(segment, y);
+    }
+
+    @Override
+    public String toString() {
+        return "Point[" + x() + ", " + y() + "]";
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        return o instanceof Point that &&
+                this.x() == that.x() &&
+                this.x() == that.y();
+    }
+
+    @Override
+    public int hashCode() {
+       return Objects.hash(x(), y());
+    }
+}
+```
+
+As can be seen, the level of originality for the wrapper class is low. Looking at larger software projects (like the JDK itself), it is not unreasonable to expect hundreds of such wrapper classes are needed. Another example is the `jextract` tool that provides mechanical modeling of external libraries. While this is a great tool, it only provides static methods and no Java models.
+
+It would be desirable to provide a mechanism where native memory could be not only modeled but actually used with normal Java semantics.
+
+
+== Example of Use
+
+Once mappers are available, the process of deriving wrapper classes is greatly simplified as illustrated in this example (the exact syntax is to be decided, see the section "<<sketches>>" below):
+
+```
+MemorySegment segment = MemorySegment.ofArray(new int[]{3, 4});
+
+public record Point(int x, int y){}
+
+var pointLayout = MemoryLayout.structLayout(
+    JAVA_INT.withName("x"),
+    JAVA_INT.withName("y")
+);
+
+// Created once but can be used many times
+Function<MemorySegment, Point> pointExtractor = pointLayout.recordMapper(Point.class);
+
+// Extracts a new Point from the provided MemorySegment
+Point point = pointExtractor.apply(segment); // Point[x=3, y=4]
+```
+
+
+
+== Functional Requirements
+
+=== Mapper Types
+
+It shall be possible to model both taking a snapshot of native memory and working directly by transparently accessing memory components (with get and set operations):
+
+ * Record Mapper (Snapshot)
+ * Interface Mapper (Transparent access)
+
+It shall be possible to both read and write an entire record to/from native memory.
+
+=== Mapping Definitions
+
+A `MemoryLayout` does not contain enough information to automatically create a mapper. In order to provide the missing peaces, a `Record` class or one or more interfaces has to be added whereby the names and signatures of methods mandates how mapping is to be performed.
+
+For record mappers, a record class is provided as shown in the following example:
+
+```
+public Point(int x, int y){}`
+```
+
+For interface mappers, one or more interfaces are provided as shown in the following example:
+
+```
+public interface Point {
+    int x();
+    void x(int x);
+    int y();
+    void y(int y)
+}
+```
+
+Matching of the memory layout elements and types and the accessors are made by matching the layout names with the names of the accessors and the types of the layouts with the types of the accessors.
+
+The set of accessors must be a *subset* of the available memory layout component and access type variants. This means these would be a valid mapping class:
+
+```
+public record PointX(int x){}
+
+public interface PointXUpdater {
+    void x(int x);
+}
+
+public record Empty(){}
+
+public record FlippedPoint(int y, int x) {}
+
+```
+
+These, classes would not be legal as no apparent mapping exists for at least one method:
+
+```
+public 3dPoint(int x, int y, int z); // Unable to match `z`
+
+public interface 3dPoint extends Point {
+    int z(); // Unable to match `z`
+}
+```
+
+=== Complex Types
+
+It should be possible to form more complex type mappers using an arbitrary depth of record/interfaces:
+
+```
+POINT_SEGMENT = MemorySegment.ofArray(new int[]{
+            3, 4,
+            6, 0});
+
+GroupLayout LINE_LAYOUT = MemoryLayout.structLayout(
+    POINT_LAYOUT.withName("begin"),
+    POINT_LAYOUT.withName("end")
+);
+
+public record Line(Point begin, Point end) {}
+
+assertEquals(LINE_LAYOUT.recordMapper(Line.class), new Line(new Point(3, 4), new Point(6, 0)));
+
+```
+
+=== Arrays
+
+It should be possible to map `SequenceLayout` instances to Java arrays as shown in this example:
+
+```
+var segment = MemorySegment.ofArray(IntStream.rangeClosed(0, 3).toArray());
+
+var layout = MemoryLayout.structLayout(
+    JAVA_INT.withName("before"),
+    MemoryLayout.sequenceLayout(2, JAVA_INT).withName("ints"),
+    JAVA_INT.withName("after")
+);
+
+public record SequenceBox(int before, int[] ints, int after) {
+
+    @Override
+    public boolean equals(Object obj) {
+        return obj instanceof SequenceOfPoints other &&
+                before == other.before &&
+                Arrays.equals(points, other.points) &&
+                after == other.after;
+    }
+
+    // hashCode() not shown
+
+    @Override
+    public String toString() {
+        return "SequenceOfPoints[before=" + before +
+                ", points=" + Arrays.toString(points) +
+                ", after=" + after + "]";
+    }
+}
+
+var mapper = layout.recordMapper(SequenceBox.class);
+
+SequenceBox sequenceBox = mapper.apply(segment);
+
+assertEquals(new SequenceBox(0, new int[]{1, 2}, 3), sequenceBox);
+```
+
+Any array rank should be supported.
+
+It shall be possible to map arrays of structs as indicated by this record:
+
+```
+public record SequenceOfPoints(int before, Point[] points, int after){}
+```
+
+Here is an example of a multi-dimensional array with record components:
+
+```
+var segment = MemorySegment.ofArray(IntStream.rangeClosed(0, 13).toArray());
+
+var layout = MemoryLayout.structLayout(
+    JAVA_INT.withName("before"),
+    MemoryLayout.sequenceLayout(2,
+        MemoryLayout.sequenceLayout(3, POINT_LAYOUT))
+            .withName("points"),
+    JAVA_INT.withName("after")
+);
+
+public record MultiSequenceOfPoints(int before, Point[][] points, int after) {
+        @Override
+        public boolean equals(Object obj) {
+            return obj instanceof MultiSequenceOfPoints other &&
+                    before == other.before &&
+                    Arrays.deepEquals(points, other.points) &&
+                    after == other.after;
+        }
+
+        // hashCode() not shown
+
+        @Override
+        public String toString() {
+            return "MultiSequenceOfPoints[before=" + before +
+                    ", points=" + Arrays.deepToString(points) +
+                    ", after=" + after + "]";
+        }
+}
+
+var mapper = layout.recordMapper(MultiSequenceOfPoints.class);
+
+MultiSequenceOfPoints actual = mapper.apply(segment);
+
+var expected = new MultiSequenceOfPoints(0,
+    new Point[][]{
+        {new Point(1, 2), new Point(3, 4), new Point(5, 6)},
+        {new Point(7, 8), new Point(9, 10), new Point(11, 12)}},
+    13);
+
+assertEquals(expected, actual);
+```
+
+
+=== Streaming
+
+Here is an example how streaming is greatly simplified by mapping:
+
+```
+var segment = MemorySegment.ofArray(new int[]{-1, 2, 3, 4, 5, -2});
+var s2 = segment.asSlice(4, 16);
+var mapper = POINT_LAYOUT.recordMapper(Point.class);
+
+var list = s2.elements(POINT_LAYOUT)
+            .map(mapper)
+            .toList();
+
+assertEquals(List.of(new Point(2, 3), new Point(4, 5)), list);
+```
+
+=== Recursive Definitions
+
+To Be Improved ...
+
+Here is how a general tree could be handled using mapping:
+
+```
+
+MemorySegment rootSegment = ...;
+
+// MemoryLayouts are immutable so we need to create a "raw" representation first
+var rawLayout = MemoryLayout.structLayout(
+        MemoryLayout.sequenceLayout(3, ADDRESS),
+        JAVA_INT
+);
+
+var layout = MemoryLayout.structLayout(
+        MemoryLayout.sequenceLayout(
+                3,
+                ADDRESS.withTargetLayout(rawLayout)
+        ).withName("children"),
+        JAVA_INT.withName("value")
+);
+
+public record TreeNode(MemorySegment[] children, int value){
+   // equals/hashCode/toString not shown
+}
+
+var mapper = layout.recordMapper(TreeNode.class);
+
+TreeNode root = mapper.apply(rootSegment);
+
+TreeNode firstChild = mapper.apply(root.children()[0]);
+TreeNode secondChild = mapper.apply(root.children()[1]);
+```
+
+
+=== Widening/Narrowing
+
+The mappers shall support widening/narrowing of primitive values as per https://docs.oracle.com/javase/specs/jls/se20/html/jls-5.html#jls-5.1.4[JLS 5.1].
+
+```
+public record LongPoint(long x, long y) {}
+
+POINT_LAYOUT.recordMapper(LongPoint.class); // Valid. Ints will be widened to longs
+```
+
+Question: What would happen when a `LongPoint` gets written to a `MemorySegment` with `int` representation? Throw `ArithmeticException` on overflow?
+
+Note:: Having widening/narrowing would reduce the number of variants needed for different platforms.
+
+
+=== Memory Layout Types
+
+Mapping shall be supported for both `StructLayout` and `UnionLayout`.
+
+Only one variant of a `UnionLayout` is supported per mapper. This means, the union variant is decided up-front and separate mappers have to be created for each variant needed.
+
+```
+union {
+    caddr_t ifcu_buf;
+    struct ifreq* ifcu_req;
+};
+```
+
+Can be modelled like so:
+
+```
+UnionLayout LAYOUT = MemoryLayout.unionLayout(
+    C_POINTER.withName("ifcu_buf"),
+    C_POINTER.withName("ifcu_req")
+);
+```
+
+And the following record types can be provided when creating two mappers, one for each variant:
+
+```
+public record IfcuBufPointer(MemorySegment ifcu_buff) {}
+
+public record IfcuReqPointer(MemorySegment ifcu_req) {
+   IfRec req() {
+      // Use another mapper to dereference the IfReq
+      return ...;
+   }
+}
+```
+
+
+=== MethodHandle support
+
+The mapper should support returning a `MethodHandle` in response to a mapping request where the returned `MethodHandle` shall have a coordinates of:
+
+`(MemorySegment, long)T`
+
+Where the long coordinate represents an offset in the provided MemorySegment.
+
+== Non-Functional Requirements
+
+The performance of the mappers classes should be on pair with custom-made classes.
+
+The often-once process of creating a mapper is not time critical.
+
+== Sketches [[sketches,Sketches]]
+
+Here is an sketch of how a record mapper could be modeled when it resides in the class `GroupLayout`:
+
+```
+    /**
+     * Represents {@code get()} (unmarshall/deserialize) and {@code set()} (marshall/serialize)
+     * operations for certain Java classes (such as records ) where instances of these
+     * types can be read and written from/to a MemorySegment at certain offsets.
+     *
+     * @param <T> type to map
+     */
+    interface Mapper<T> {
+
+        /**
+         * {@return a {@link MethodHandle} representing a "get" operation for this mapper.  The MethodHandle
+         * has the coordinates {@code (MemorySegment, long)T} where the long coordinate represents an offset
+         * into the MemorySegment}
+         */
+        MethodHandle getterHandle();
+
+        /**
+         * {@return a {@link MethodHandle} representing a "set" operation for this mapper.  The MethodHandle
+         * has the coordinates {@code (MemorySegment, long, T)void} where the long coordinate represents an offset
+         * into the MemorySegment}
+         */
+        MethodHandle setterHandle();
+
+        /**
+         * {@return the {@link GroupLayout} from which this mapper was derived}
+         */
+        GroupLayout layout();
+
+        /**
+         * {@return the type for which this mapper was constructed}
+         */
+        Class<T> type();
+
+        // Convenience methods
+
+        /**
+         * {@return a {@link MethodHandle} representing a "get" operation for this mapper at the provided
+         * {@code offset}.  The MethodHandle has the coordinates {@code (MemorySegment)T}}
+         *
+         * @param offset in the segment
+         */
+        default MethodHandle getterHandle(long offset) {
+            return insertOffset(getterHandle(), offset);
+        }
+
+        /**
+         * {@return a {@link MethodHandle} representing a "get" operation for this mapper at the provided
+         * {@code index} taking the {@link GroupLayout#byteSize()} into consideration.  The MethodHandle
+         * has the coordinates {@code (MemorySegment)T}}
+         *
+         * @param index in the segment
+         */
+        default MethodHandle getterHandleAtIndex(long index) {
+            return insertOffset(getterHandle(), index * layout().byteSize());
+        }
+
+        /**
+         * {@return a {@link MethodHandle} representing a "set" operation for this mapper at the provided
+         * {@code offset}.  The MethodHandle has the coordinates {@code (MemorySegment, T)void}}
+         *
+         * @param offset in the segment
+         */
+        default MethodHandle setterHandle(long offset) {
+            return insertOffset(setterHandle(), offset);
+        }
+
+        /**
+         * {@return a {@link MethodHandle} representing a "set" operation for this mapper at the provided
+         * {@code offset}.  The MethodHandle has the coordinates {@code (MemorySegment, T)void}}
+         *
+         * @param index in the segment
+         */
+        default MethodHandle setterHandleAtIndex(long index) {
+            return insertOffset(setterHandle(), index * layout().byteSize());
+        }
+
+        /**
+         * {@return a new instance of type T obtained by unmarshalling (deserializing)
+         * the object from the provided {@code segment} starting at the provided
+         * {@code offset}}
+         *
+         * @param segment from which to get an object
+         * @param offset at which to start unmarshalling
+         */
+        @SuppressWarnings("unchecked")
+        default T get(MemorySegment segment, long offset) {
+            try {
+                return (T) getterHandle().invokeExact(segment, offset);
+            } catch (Throwable t) {
+                throw new IllegalArgumentException(t);
+            }
+        }
+
+        /**
+         * {@return a new instance of type T by obtained unmarshalling (deserializing)
+         * the object from the provided {@code segment} starting at position zero}
+         *
+         * @param segment from which to get an object
+         */
+        default T get(MemorySegment segment) {
+            return get(segment, 0L);
+        }
+
+        /**
+         * {@return a new instance of type T by obtained unmarshalling (deserializing)
+         * the object from the provided {@code segment} starting at the provided {@code index})}
+         *
+         * @param segment from which to get an object
+         * @param index at which to start
+         */
+        default T getAtIndex(MemorySegment segment, long index) {
+            return get(segment, index * layout().byteSize());
+        }
+
+        /**
+         * Sets (marshals/serializes) the provided {@code value} into the provided
+         * {@code segment} starting at the provided {@code offset}.
+         *
+         * @param segment to which a value should be marshalled
+         * @param offset  at which to start marshalling
+         * @param value   to marshall
+         */
+        default void set(MemorySegment segment, long offset, T value) {
+            try {
+                setterHandle().invokeExact(segment, offset, value);
+            } catch (Throwable e) {
+                throw new IllegalArgumentException(e);
+            }
+        }
+
+        /**
+         * Sets (marshals/serializes) the provided {@code value} into the provided
+         * {@code segment} starting at position zero.
+         *
+         * @param segment to which a value should be marshalled
+         * @param value   to marshall
+         */
+        default void set(MemorySegment segment, T value) {
+            set(segment, 0L, value);
+        }
+
+        /**
+         * Sets (marshals/serializes) the provided {@code value} into the provided
+         * {@code segment} starting at the provided {@code index}.
+         *
+         * @param segment to which a value should be marshalled
+         * @param index   in the segment
+         * @param value   to marshall
+         *
+         */
+        default void setAtIndex(MemorySegment segment, long index, T value) {
+            set(segment, index * layout().byteSize(), value);
+        }
+
+        private static MethodHandle insertOffset(MethodHandle mh, long offset) {
+            return MethodHandles.insertArguments(mh, 1, offset);
+        }
+
+    }
+
+    /**
+     * {@return ...}
+     * @param recordType record type to mapp
+     * @param <R> record type
+     */
+    default <R extends Record> Mapper<R> recordMapper(Class<R> recordType) {
+        // Implicit null check
+        if (recordType.equals(Record.class)) {
+            throw new IllegalArgumentException();
+        }
+        return ...;
+    }
+
+```
+
+Here is a way to model interfaces when it resides in the class `GroupLayout`:
+
+```
+
+     /**
+     * Represents proxy operations for Java interfaces where instances of these
+     * types can be used to read read and written from/to a MemorySegment at certain offsets.
+     *
+     * @param <T> type to map
+     */
+    interface InterfaceMapper<T> {
+
+        /**
+         * {@return the {@link GroupLayout} from which this mapper was derived}
+         */
+        GroupLayout layout();
+
+        /**
+         * {@return the type for which this mapper was constructed}
+         */
+        Class<T> type();
+
+        T wrap(MemorySegment segment, long offset);
+
+        default T wrap(MemorySegment segment) {
+            return wrap(segment, 0);
+        }
+
+        T wrapAtIndex(MemorySegment segment, long index) {
+            return wrap(segment, layout().byteSize() * index);
+        }
+
+    }
+
+
+    /**
+     * {@return ...}
+     * @param interfaceType ...
+     * @param <I> ...
+     */
+    default <I> InterfaceMapper<I> interfaceMapper(Class<I> interfaceType) {
+        // Implicit null check
+        if (!interfaceType.isInterface()) {
+            throw new IllegalArgumentException();
+        }
+        return ...;
+    }
+
+```
+
+
+
+== Open Issues
+
+Maybe when we get record "withers", the need for interface mappers is reduced.
