@@ -220,7 +220,15 @@ SequenceBox sequenceBox = mapper.apply(segment);
 assertEquals(new SequenceBox(0, new int[]{1, 2}, 3), sequenceBox);
 ```
 
+As can be seen above, mapping to arrays means the record becomes complicated to write and therefore, it should optionally be possible to map to `List` types instead:
+
+```
+public record SequenceBox(int before, List<Integer> ints, int after) {}
+```
+
 Any array ranks should be supported.
+
+Any depth of lists should be supported.
 
 It shall be possible to map arrays of structs as indicated by this record:
 
@@ -241,33 +249,16 @@ var layout = MemoryLayout.structLayout(
     JAVA_INT.withName("after")
 );
 
-public record MultiSequenceOfPoints(int before, Point[][] points, int after) {
-        @Override
-        public boolean equals(Object obj) {
-            return obj instanceof MultiSequenceOfPoints other &&
-                    before == other.before &&
-                    Arrays.deepEquals(points, other.points) &&
-                    after == other.after;
-        }
-
-        // hashCode() not shown
-
-        @Override
-        public String toString() {
-            return "MultiSequenceOfPoints[before=" + before +
-                    ", points=" + Arrays.deepToString(points) +
-                    ", after=" + after + "]";
-        }
-}
+public record MultiSequenceOfPoints(int before, List<List<Point>> points, int after) {}
 
 var mapper = layout.recordMapper(MultiSequenceOfPoints.class);
 
 MultiSequenceOfPoints actual = mapper.apply(segment);
 
 var expected = new MultiSequenceOfPoints(0,
-    new Point[][]{
-        {new Point(1, 2), new Point(3, 4), new Point(5, 6)},
-        {new Point(7, 8), new Point(9, 10), new Point(11, 12)}},
+    List.of(
+        List.of(new Point(1, 2), new Point(3, 4), new Point(5, 6)),
+        List.of(new Point(7, 8), new Point(9, 10), new Point(11, 12))),
     13);
 
 assertEquals(expected, actual);
@@ -298,23 +289,16 @@ Here is how a general tree could be modeled using record mapping:
 
 MemorySegment rootSegment = ...;
 
-// MemoryLayouts are immutable so we need to create a "raw" representation first
-var rawLayout = MemoryLayout.structLayout(
-        MemoryLayout.sequenceLayout(3, ADDRESS),
-        JAVA_INT
-);
-
 var layout = MemoryLayout.structLayout(
         MemoryLayout.sequenceLayout(
                 3,
-                ADDRESS.withTargetLayout(rawLayout)
+                // One way to express a ref to a linked element
+                ADDRESS.withName("{value}"),
         ).withName("children"),
         JAVA_INT.withName("value")
 );
 
-public record TreeNode(MemorySegment[] children, int value){
-   // equals/hashCode/toString not shown
-}
+public record TreeNode(List<TreeNode> children, int value){}
 
 var mapper = layout.recordMapper(TreeNode.class);
 
@@ -324,6 +308,7 @@ TreeNode firstChild = mapper.apply(root.children()[0]);
 TreeNode secondChild = mapper.apply(root.children()[1]);
 ```
 
+The mapper will check if we are trying to dereference a `MemorySegment.NULL` and will not add such an elements to a `List` and will insert a `null` reference if an array is used for mapping (or should we just return a shorter array?).
 
 === Widening/Narrowing
 
@@ -344,7 +329,7 @@ Note:: Having widening/narrowing would reduce the number of variants needed for 
 
 Mapping shall be supported for both `StructLayout` and `UnionLayout`.
 
-Only one variant of a `UnionLayout` is supported per mapper. This means, the union variant is decided up-front and separate mappers have to be created for each variant needed.
+For record mappers, only one variant of a `UnionLayout` can be expressed per record type. This means, the union variant is decided up-front and separate mappers have to be created for each variant needed.
 
 ```
 union {
@@ -362,7 +347,7 @@ UnionLayout LAYOUT = MemoryLayout.unionLayout(
 );
 ```
 
-And the following record types can be provided when creating two mappers, one for each variant:
+And the following record types can be provided when creating two distinct mappers, one for each variant:
 
 ```
 public record IfcuBufPointer(MemorySegment ifcu_buff) {}
@@ -375,6 +360,17 @@ public record IfcuReqPointer(MemorySegment ifcu_req) {
 }
 ```
 
+For interface mappers, an interface is free to implement zero or more union method variants as shown hereunder:
+
+```
+public interface Ifcu {
+    MemorySegment ifcu_req();
+    MemorySegment ifcu_req();
+    default IfReq req() {
+        return IfReq.MAPPER.dereference(ifcu_req());
+    }
+}
+```
 
 === MethodHandle support
 
@@ -394,7 +390,7 @@ Relevant `toString()`, `hashCode()` and `equals()` methods should be automatical
 
 The performance of the mappers classes should be on par with custom-made classes.
 
-The often-once process of creating a mapper is not that time critical.
+The often-once process of creating a mapper is not that time critical and might be improved by Leyden (See <<_leyden_and_mappers>>).
 
 == Sketches [[sketches,Sketches]]
 
@@ -447,17 +443,6 @@ Here is an sketch of how a record mapper could be modeled when it resides in the
         }
 
         /**
-         * {@return a {@link MethodHandle} representing a "get" operation for this mapper at the provided
-         * {@code index} taking the {@link GroupLayout#byteSize()} into consideration.  The MethodHandle
-         * has the coordinates {@code (MemorySegment)T}}
-         *
-         * @param index in the segment
-         */
-        default MethodHandle getterHandleAtIndex(long index) {
-            return insertOffset(getterHandle(), index * layout().byteSize());
-        }
-
-        /**
          * {@return a {@link MethodHandle} representing a "set" operation for this mapper at the provided
          * {@code offset}.  The MethodHandle has the coordinates {@code (MemorySegment, T)void}}
          *
@@ -465,16 +450,6 @@ Here is an sketch of how a record mapper could be modeled when it resides in the
          */
         default MethodHandle setterHandle(long offset) {
             return insertOffset(setterHandle(), offset);
-        }
-
-        /**
-         * {@return a {@link MethodHandle} representing a "set" operation for this mapper at the provided
-         * {@code offset}.  The MethodHandle has the coordinates {@code (MemorySegment, T)void}}
-         *
-         * @param index in the segment
-         */
-        default MethodHandle setterHandleAtIndex(long index) {
-            return insertOffset(setterHandle(), index * layout().byteSize());
         }
 
         /**
@@ -626,8 +601,26 @@ Here is a way to model interfaces when it resides in the class `GroupLayout`:
 
 ```
 
+== Comments and Open Issues
 
+When we get record "withers", some use cases can be handled just using record mappers. For example, implementing a persistent queue with memory mapped memory segments would be very easy to implement. A client can read from one queue and write to another while modifying one or more fields (e.g. time stamp).
 
-== Open Issues
+=== Leyden and Mappers
+Maybe we are able to create mappers up-front with a condenser and Leyden:
 
-Maybe when we get record "withers", the need for interface mappers is reduced.
+```
+private static final ComputedConstant<RecordMapper<Point>> PM =
+        ComputedConstant.of(POINT::recordMapper);
+```
+
+=== Lookup
+
+`MethodHandles.Lookup` as a parameter (optional override) or rely on `MethodHandles.publicLookup()` only (mandates all records and interfaces being declared `public`)? We could use a builder pattern if there are many parameters to define.
+
+=== Reuse
+
+The FFM Linker provides automatic conversion between certain parameters. Maybe we can reuse concepts from there.
+
+=== Performance
+
+An initial prototype performed very well, almost as fast as a hand-written mapper.
