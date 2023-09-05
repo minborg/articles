@@ -660,9 +660,13 @@ interface Header {
 
 Perhaps we could consider also supporting Set/Queue and the likes for mapping elements from a `SequenceLayout`.
 
+=== Prototype
+
+An initial prototype can be found https://github.com/openjdk/panama-foreign/pull/833[Here].
+
 === Performance
 
-An initial prototype performed very well. Here is a benchmark where we materialize a record Point(int x, int y) (benchmarks 'pointMapper') and an array of three int components (benchmarks 'arrayMapper'):
+The initial prototype performed very well. Here is a benchmark where we materialize a record Point(int x, int y) (benchmarks 'pointMapper') and an array of three int components (benchmarks 'arrayMapper'):
 
 ```
 Benchmark                         Mode  Cnt  Score   Error  Units
@@ -677,3 +681,4 @@ The explicit mappers are hand-crafted mappers like this one:
 private static final Function<MemorySegment, Point> POINT_EXPLICIT_MAPPER =
         ms -> new Point(ms.get(JAVA_INT, 0L), ms.get(JAVA_INT, 4));
 ```
+
