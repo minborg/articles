@@ -662,4 +662,18 @@ Perhaps we could consider also supporting Set/Queue and the likes for mapping el
 
 === Performance
 
-An initial prototype performed very well, almost as fast as a hand-written mapper.
+An initial prototype performed very well. Here is a benchmark where we materialize a record Point(int x, int y) (benchmarks 'pointMapper') and an array of three int components (benchmarks 'arrayMapper'):
+
+```
+Benchmark                         Mode  Cnt  Score   Error  Units
+RecordMapper.arrayExplicitMapper  avgt   30  9.361 ± 0.060  ns/op
+RecordMapper.arrayMapper          avgt   30  7.697 ± 0.035  ns/op
+RecordMapper.pointExplicitMapper  avgt   30  2.235 ± 0.016  ns/op
+RecordMapper.pointMapper          avgt   30  2.299 ± 0.007  ns/op
+```
+The explicit mappers are hand-crafted mappers like this one:
+
+```
+private static final Function<MemorySegment, Point> POINT_EXPLICIT_MAPPER =
+        ms -> new Point(ms.get(JAVA_INT, 0L), ms.get(JAVA_INT, 4));
+```
