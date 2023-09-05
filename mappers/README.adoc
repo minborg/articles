@@ -123,7 +123,7 @@ A `MemoryLayout` does not contain enough information to automatically create a m
 For record mappers, a record class is provided as shown in the following example:
 
 ```
-public Point(int x, int y){}`
+public record Point(int x, int y){}`
 ```
 
 For interface mappers, an interface is provided as shown in the following example:
@@ -139,7 +139,7 @@ public interface Point {
 
 Matching of the memory layout elements and types and the accessors are made by matching the layout names with the names of the accessors and the types of the layouts with the types of the accessors.
 
-The set of accessors must be a *subset* of the available memory layout component and access type variants. This means these would be valid mapping classes:
+The set of accessors must be a *subset* of the available memory layout component and access type variants or an exception will be thrown upon creating a mapper. This means these would be valid mapping classes:
 
 ```
 public record PointX(int x){}
@@ -154,7 +154,7 @@ public record FlippedPoint(int y, int x) {}
 
 ```
 
-However, these other classes would not be legal as no valid mapping exists for at least one class method:
+However, these other classes would not be legal as no valid mapping exists for at least one method in the classes:
 
 ```
 public 3dPoint(int x, int y, int z); // Unable to match `z`
@@ -186,7 +186,7 @@ assertEquals(LINE_LAYOUT.recordMapper(Line.class), new Line(new Point(3, 4), new
 
 === Arrays and Lists
 
-It should be possible to map `SequenceLayout` instances to Java arrays as shown in this example:
+It should be possible to map `SequenceLayout` instances to Java arrays and Lists as shown in this example:
 
 ```
 var segment = MemorySegment.ofArray(IntStream.rangeClosed(0, 3).toArray());
@@ -224,11 +224,13 @@ SequenceBox sequenceBox = mapper.apply(segment);
 assertEquals(new SequenceBox(0, new int[]{1, 2}, 3), sequenceBox);
 ```
 
-As can be seen above, mapping to arrays means the record becomes complicated to write and therefore, it should also be possible to map to `List` types instead:
+As can be seen above, mapping to arrays means the record becomes complicated to write and therefore, it should also be possible to map to `List` (see note below) types instead:
 
 ```
 public record SequenceBox(int before, List<Integer> ints, int after) {}
 ```
+
+Note:: The List's generic type is not available at runtime as opposed to the component type of an array.
 
 Any array ranks should be supported.
 
@@ -297,6 +299,7 @@ var layout = MemoryLayout.structLayout(
         MemoryLayout.sequenceLayout(
                 3,
                 // One way to express a ref to a linked element
+                // Another way would be to `reinterpret()` segments
                 ADDRESS.withName("{value}"),
         ).withName("children"),
         JAVA_INT.withName("value")
@@ -324,10 +327,9 @@ public record LongPoint(long x, long y) {}
 POINT_LAYOUT.recordMapper(LongPoint.class); // Valid. Ints will be widened to longs
 ```
 
-Question: What would happen when a `LongPoint` gets written to a `MemorySegment` with `int` representation? Throw `ArithmeticException` on overflow?
+Question: What would happen when a `LongPoint` with out-of-int values gets written to a `MemorySegment` with `int` representation? Throw `ArithmeticException` on overflow?
 
 Note:: Having widening/narrowing would reduce the number of variants needed for different platforms.
-
 
 === Memory Layout Types
 
@@ -342,7 +344,7 @@ union {
 };
 ```
 
-Can be modelled like so:
+Can be modelled like this:
 
 ```
 UnionLayout LAYOUT = MemoryLayout.unionLayout(
@@ -378,23 +380,23 @@ public interface Ifcu {
 
 === MethodHandle support
 
-The record mapper should support returning a `MethodHandle` in response to a mapping request where the returned `MethodHandle` shall have a coordinates of:
+Both the mapper types should support returning a `MethodHandle` in response to a mapping request where the returned `MethodHandle` shall have a coordinates of:
 
 `(MemorySegment, long)T`
 
-Where the long coordinate represents an offset in the provided MemorySegment.
+Where the `long` coordinate represents an offset in the provided `MemorySegment`.
 
 These method handles can later be composed with other low-level mechanisms.
 
 == Extra Generated Methods for Interface Mappers
 
-Relevant `toString()`, `hashCode()` and `equals()` methods should be automatically provided (To be discussed).
+Relevant `toString()`, `hashCode()` and `equals()` methods should be automatically provided (To be discussed, perhaps only a `toString()` method). The methods `hashCode()` and `equals()` can be implemented simply by comparing the backing memory segments.
 
 == Non-Functional Requirements
 
 The performance of the mappers classes should be on par with custom-made classes.
 
-The often-once process of creating a mapper is not that time critical and might be improved by Leyden (See <<Leyden and Mappers>>).
+The often-once process of creating a mapper is not that time critical and might be improved by Leyden condensers (See <<Leyden and Mappers>>).
 
 == Sketches [[sketches,Sketches]]
 
@@ -577,6 +579,13 @@ Here is a way to model interfaces when it resides in the class `GroupLayout`:
          */
         Class<T> type();
 
+        /**
+         * {@return a {@link MethodHandle} representing a "wrap" operation for this mapper.  The MethodHandle
+         * has the coordinates {@code (MemorySegment, long)T} where the long coordinate represents an offset
+         * into the MemorySegment}
+         */
+        MethodHandle handle();
+
         T wrap(MemorySegment segment, long offset);
 
         default T wrap(MemorySegment segment) {
@@ -606,6 +615,10 @@ Here is a way to model interfaces when it resides in the class `GroupLayout`:
 ```
 
 == Comments and Open Issues
+
+This chapter contains some comments and open issues.
+
+=== Withers
 
 When we get record "withers", some use cases can be handled just using record mappers. For example, implementing a persistent queue with memory mapped memory segments would be very easy to implement. A client can read from one queue and write to another while modifying one or more fields (e.g. time stamp).
 
@@ -642,6 +655,10 @@ interface Header {
     double distance(Point p);
 }
 ```
+
+=== Other Collections
+
+Perhaps we could consider also supporting Set/Queue and the likes for mapping elements from a `SequenceLayout`.
 
 === Performance
 
