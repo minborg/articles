@@ -666,7 +666,7 @@ An initial prototype can be found https://github.com/openjdk/panama-foreign/pull
 
 === Performance
 
-The initial prototype performed very well. Here is a benchmark where we materialize a record Point(int x, int y) (benchmarks 'pointMapper') and an array of three int components (benchmarks 'arrayMapper'):
+The initial prototype performed very well. Here is a benchmark where we materialize a `record Point(int x, int y)` (benchmarks 'pointMapper') and an array of three int components (benchmarks 'arrayMapper'):
 
 ```
 Benchmark                         Mode  Cnt  Score   Error  Units
