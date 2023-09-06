@@ -3,26 +3,29 @@
 == Background
 There is a gap between the low level primitives currently offered by FFM and regular Java design principles. Modelling data structures that resides in native memory (i.e. in a `MemorySegment`) can be done by composing relevant memory layouts as illustrated in the following uncomplicated example where we model an external data representation in one of the C-language variants:
 
-```
+[source java]
+----
 // C/C++ struct:
 struct Point {
     int x;
     int y;
 };
-```
+----
 
 This corresponds to the following FFM model:
 
-```
+[source java]
+----
 private static final StructLayout POINT = structLayout(
     JAVA_INT.withName("x"),
     JAVA_INT.withName("y")
 );
-```
+----
 
 Albeit good, it is not possible to directly use the FFM layout in the way we can do in C. Instead, we would have to mechanically derive a "wrapper class" that presents a Java-like surface but that is actually backed by native memory:
 
-```
+[source java]
+----
 final class Point {
 
     private static final StructLayout POINT = structLayout(
@@ -76,7 +79,7 @@ final class Point {
        return Objects.hash(x(), y());
     }
 }
-```
+----
 
 As can be seen, the level of originality for the wrapper class is low. Looking at larger software projects (like the JDK itself), it is not unreasonable to expect hundreds of such wrapper classes are needed. Another example is the `jextract` tool that provides mechanical modeling of external libraries. While this is a great tool, it only provides static methods and no Java models.
 
@@ -88,7 +91,8 @@ We anticipate two fundamental mappers; _Record Mappers_ (creating a snapshot of 
 
 Once record and interface mappers are available, the process of deriving wrapper classes is greatly simplified as illustrated in this example (the exact syntax to obtain a mapper and how the mapper actually is expressed is to be decided, see the section "<<sketches>>" below):
 
-```
+[source java]
+----
 MemorySegment segment = MemorySegment.ofArray(new int[]{3, 4});
 
 var pointLayout = MemoryLayout.structLayout(
@@ -103,7 +107,7 @@ Function<MemorySegment, Point> pointExtractor = pointLayout.recordMapper(Point.c
 
 // Extracts a new Point from the provided MemorySegment
 Point point = pointExtractor.apply(segment); // Point[x=3, y=4]
-```
+----
 
 == Functional Requirements
 
@@ -122,26 +126,29 @@ A `MemoryLayout` does not contain enough information to automatically create a m
 
 For record mappers, a record class is provided as shown in the following example:
 
-```
+[source java]
+----
 public record Point(int x, int y){}`
-```
+----
 
 For interface mappers, an interface is provided as shown in the following example:
 
-```
+[source java]
+----
 public interface Point {
     int x();
     void x(int x);
     int y();
     void y(int y)
 }
-```
+----
 
 Matching of the memory layout elements and types and the accessors are made by matching the layout names with the names of the accessors and the types of the layouts with the types of the accessors.
 
 The set of accessors must be a *subset* of the available memory layout component and access type variants or an exception will be thrown upon creating a mapper. This means these would be valid mapping classes:
 
-```
+[source java]
+----
 public record PointX(int x){}
 
 public interface PointXUpdater {
@@ -151,24 +158,25 @@ public interface PointXUpdater {
 public record Empty(){}
 
 public record FlippedPoint(int y, int x) {}
-
-```
+----
 
 However, these other classes would not be legal as no valid mapping exists for at least one method in the classes:
 
-```
+[source java]
+----
 public 3dPoint(int x, int y, int z); // Unable to match `z`
 
 public interface 3dPoint extends Point {
     int z(); // Unable to match `z`
 }
-```
+----
 
 === Complex Types
 
 It should be possible to form more complex type mappers with arbitrary depths of record/interfaces:
 
-```
+[source java]
+----
 POINT_SEGMENT = MemorySegment.ofArray(new int[]{
             3, 4,
             6, 0});
@@ -181,14 +189,14 @@ GroupLayout LINE_LAYOUT = MemoryLayout.structLayout(
 public record Line(Point begin, Point end) {}
 
 assertEquals(LINE_LAYOUT.recordMapper(Line.class), new Line(new Point(3, 4), new Point(6, 0)));
-
-```
+----
 
 === Arrays and Lists
 
 It should be possible to map `SequenceLayout` instances to Java arrays and Lists as shown in this example:
 
-```
+[source java]
+----
 var segment = MemorySegment.ofArray(IntStream.rangeClosed(0, 3).toArray());
 
 var layout = MemoryLayout.structLayout(
@@ -222,13 +230,14 @@ var mapper = layout.recordMapper(SequenceBox.class);
 SequenceBox sequenceBox = mapper.apply(segment);
 
 assertEquals(new SequenceBox(0, new int[]{1, 2}, 3), sequenceBox);
-```
+----
 
 As can be seen above, mapping to arrays means the record becomes complicated to write and therefore, it should also be possible to map to `List` (see note below) types instead:
 
-```
+[source java]
+----
 public record SequenceBox(int before, List<Integer> ints, int after) {}
-```
+----
 
 Note:: The List's generic type is not available at runtime as opposed to the component type of an array.
 
@@ -238,13 +247,15 @@ Any depth of lists should be supported.
 
 It shall be possible to map arrays of structs as indicated by this record:
 
-```
+[source java]
+----
 public record SequenceOfPoints(int before, Point[] points, int after){}
-```
+----
 
 Here is an example of a multi-dimensional array with record components:
 
-```
+[source java]
+----
 var segment = MemorySegment.ofArray(IntStream.rangeClosed(0, 13).toArray());
 
 var layout = MemoryLayout.structLayout(
@@ -268,14 +279,14 @@ var expected = new MultiSequenceOfPoints(0,
     13);
 
 assertEquals(expected, actual);
-```
-
+----
 
 === Streaming
 
 Here is an example how streaming is greatly simplified by mapping:
 
-```
+[source java]
+----
 var segment = MemorySegment.ofArray(new int[]{-1, 2, 3, 4, 5, -2});
 var s2 = segment.asSlice(4, 16);
 var mapper = POINT_LAYOUT.recordMapper(Point.class);
@@ -285,14 +296,14 @@ var list = s2.elements(POINT_LAYOUT)
             .toList();
 
 assertEquals(List.of(new Point(2, 3), new Point(4, 5)), list);
-```
+----
 
 === Recursive Definitions
 
 Here is how a general tree could be modeled using record mapping:
 
-```
-
+[source java]
+----
 MemorySegment rootSegment = ...;
 
 var layout = MemoryLayout.structLayout(
@@ -313,7 +324,7 @@ TreeNode root = mapper.apply(rootSegment);
 
 TreeNode firstChild = mapper.apply(root.children()[0]);
 TreeNode secondChild = mapper.apply(root.children()[1]);
-```
+----
 
 The mapper will check if we are trying to dereference a `MemorySegment.NULL` and will not add such an elements to a `List` and will insert a `null` reference if an array is used for mapping (or should we just return a shorter array?).
 
@@ -321,15 +332,25 @@ The mapper will check if we are trying to dereference a `MemorySegment.NULL` and
 
 The mappers shall support widening/narrowing of primitive values as per https://docs.oracle.com/javase/specs/jls/se20/html/jls-5.html#jls-5.1.4[JLS 5.1].
 
-```
+[source java]
+----
 public record LongPoint(long x, long y) {}
 
 POINT_LAYOUT.recordMapper(LongPoint.class); // Valid. Ints will be widened to longs
-```
+----
 
 Question: What would happen when a `LongPoint` with out-of-int values gets written to a `MemorySegment` with `int` representation? Throw `ArithmeticException` on overflow?
 
 Note:: Having widening/narrowing would reduce the number of variants needed for different platforms.
+
+=== General Component Mapping
+
+It is possible to allow a much more liberate component mapping scheme:
+
+[source java]
+----
+public record Point(String x, double y){}
+----
 
 === Memory Layout Types
 
@@ -337,25 +358,28 @@ Mapping shall be supported for both `StructLayout` and `UnionLayout`.
 
 For record mappers, only one variant of a `UnionLayout` can be expressed per record type. This means, the union variant is decided up-front and separate mappers have to be created for each variant needed.
 
-```
+[source java]
+----
 union {
     caddr_t ifcu_buf;
     struct ifreq* ifcu_req;
 };
-```
+----
 
 Can be modelled like this:
 
-```
+[source java]
+----
 UnionLayout LAYOUT = MemoryLayout.unionLayout(
     C_POINTER.withName("ifcu_buf"),
     C_POINTER.withName("ifcu_req")
 );
-```
+----
 
 And the following record types can be provided when creating two distinct mappers, one for each variant:
 
-```
+[source java]
+----
 public record IfcuBufPointer(MemorySegment ifcu_buff) {}
 
 public record IfcuReqPointer(MemorySegment ifcu_req) {
@@ -364,11 +388,12 @@ public record IfcuReqPointer(MemorySegment ifcu_req) {
       return ...;
    }
 }
-```
+----
 
 For interface mappers, an interface is free to implement zero or more union method variants as shown hereunder:
 
-```
+[source java]
+----
 public interface Ifcu {
     MemorySegment ifcu_req();
     MemorySegment ifcu_req();
@@ -376,7 +401,7 @@ public interface Ifcu {
         return IfReq.MAPPER.dereference(ifcu_req());
     }
 }
-```
+----
 
 === MethodHandle support
 
@@ -387,6 +412,27 @@ Both the mapper types should support returning a `MethodHandle` in response to a
 Where the `long` coordinate represents an offset in the provided `MemorySegment`.
 
 These method handles can later be composed with other low-level mechanisms.
+
+=== Mapping Components to MemorySegments
+
+It shall be possible to map a component to a `MemorySegment` thereby providing an "escape hatch" for types not modelled or where we perhaps want to materialize the content later using another mapper.
+
+[source Java]
+----
+/*
+ * {@snippet :
+ * struct ifconf {
+ *     int ifc_len;
+ *     union  ifc_ifcu;
+ * };
+ * }
+*/
+
+public record IfConf(int ifc_len, MemorySegment ifc_ifcu){}
+----
+
+Mapped records will contain a slice of the original segment for the `ifc_ifcu` component. The slice might then be lazily mapped using another mapper.
+
 
 == Extra Generated Methods for Interface Mappers
 
@@ -400,9 +446,12 @@ The often-once process of creating a mapper is not that time critical and might 
 
 == Sketches [[sketches,Sketches]]
 
-Here is an sketch of how a record mapper could be modeled when it resides in the class `GroupLayout`:
+Here is an sketch of how a record mapper could be modeled if it resides in the class `GroupLayout`.
 
-```
+Note:: It is envisioned, the mapper should reside outside (or at least should not be  hard-wired to) the FMM API as it is more high level and less stringent in terms of type conversions.
+
+[source java]
+----
     /**
      * Represents {@code get()} (unmarshall/deserialize) and {@code set()} (marshall/serialize)
      * operations for certain Java classes (such as records ) where instances of these
@@ -554,12 +603,12 @@ Here is an sketch of how a record mapper could be modeled when it resides in the
         }
         return ...;
     }
-
-```
+----
 
 Here is a way to model interfaces when it resides in the class `GroupLayout`:
 
-```
+[source java]
+----
 
      /**
      * Represents proxy operations for Java interfaces where instances of these
@@ -611,8 +660,7 @@ Here is a way to model interfaces when it resides in the class `GroupLayout`:
         }
         return ...;
     }
-
-```
+----
 
 == Comments and Open Issues
 
@@ -625,14 +673,14 @@ When we get record "withers", some use cases can be handled just using record ma
 === Leyden and Mappers [[leyden,Leyden]]
 Maybe we are able to create mappers up-front with a condenser and Leyden:
 
-```
+[source java]
+----
 private static final Supplier<RecordMapper<Point>> PM = ComputedConstant.of(POINT::recordMapper);
 
 // ...
 
 Point point = PM.get().get(segment);
-
-```
+----
 
 === Lookup
 
@@ -642,19 +690,21 @@ Point point = PM.get().get(segment);
 
 Mappers or something similar could also be used when linking to native methods:
 
-```
+[source c]
+----
 // C function
 double distance(struct Point)
-```
+----
 
 could become:
 
-```
+[source java]
+----
 interface Header {
     // Point is a mapped struct/interface
     double distance(Point p);
 }
-```
+----
 
 === Other Collections
 
@@ -668,17 +718,141 @@ An initial prototype can be found https://github.com/openjdk/panama-foreign/pull
 
 The initial prototype performed very well. Here is a benchmark where we materialize a `record Point(int x, int y)` (benchmarks 'pointMapper') and an array of three int components (benchmarks 'arrayMapper'):
 
-```
+[source text]
+----
 Benchmark                         Mode  Cnt  Score   Error  Units
 RecordMapper.arrayExplicitMapper  avgt   30  9.361 ± 0.060  ns/op
 RecordMapper.arrayMapper          avgt   30  7.697 ± 0.035  ns/op
 RecordMapper.pointExplicitMapper  avgt   30  2.235 ± 0.016  ns/op
 RecordMapper.pointMapper          avgt   30  2.299 ± 0.007  ns/op
-```
+----
 The explicit mappers are hand-crafted mappers like this one:
 
-```
+[source java]
+----
 private static final Function<MemorySegment, Point> POINT_EXPLICIT_MAPPER =
         ms -> new Point(ms.get(JAVA_INT, 0L), ms.get(JAVA_INT, 4));
-```
+----
 
+== Applications
+
+This section outlines some potential use cases of the FFM mappers:
+
+=== Ad hoc Serialization
+
+[source java]
+----
+var point = new Point(1, 2);
+
+// Creates a layout-less ad hoc mapper
+var pointMapper = GroupMapper.ofRecord(Point.class);
+
+MemorySegment segment = ...
+
+// Marshals the point to native memory
+pointMapper.set(segment, point);
+
+// ...
+
+// Unmarshall a point from native memory
+var point2 = pointMapper.get(segment);
+----
+
+=== Working with C Structs and Native Calls
+
+Given the following layouts (which could be extracted by `jextract`):
+
+[source java]
+----
+/**
+ * {@snippet :
+ * union {
+ *     caddr_t ifcu_buf;
+ *     struct ifreq* ifcu_req;
+ * };
+ * }
+ */
+UnionLayout IFCU_LAYOUT = MemoryLayout.unionLayout(
+       C_POINTER.withName("ifcu_buf").withByteAlignment(4), // #pragma pack(4),
+       C_POINTER.withName("ifcu_req").withByteAlignment(4) // #pragma pack(4)
+);
+
+/**
+ * {@snippet :
+ * struct ifconf {
+ *     int ifc_len;
+ *     union  ifc_ifcu;
+ * };
+ * }
+ */
+StructLayout IFCONF_LAYOUT = MemoryLayout.structLayout(
+        C_INT.withName("ifc_len"),
+        IFCU_LAYOUT.withName("ifc_ifcu")
+).withName("ifconf");
+----
+
+We could use a record mapper simplifying struct access:
+
+[source java]
+----
+public record IfConf(int ifc_len, IfcU ifc_ifcu){}
+// Model one union variant
+public record IfcUBuff(MemorySegment ifcu_buf){}
+// Model the other union variant
+public record IfcUReq(IfReq ifcu_req){}
+
+GroupMapper<IfConf> mapper = GroupMapper.ofRecord(IfConf.class, LAYOUT);
+
+Socket socket = ...;
+MemorySegment ifcP = arena.allocate(IFC_LAYOUT);
+
+if (ioctl(socket, SIOCGIFCONF, ifc) < 0) {
+    return;
+}
+
+IfConf ifConf = mapper.get(ifcP);
+
+long byteSize = ifcConf.ifc_len();
+----
+
+
+Interface mapper allowing direct manipulation of the underlying `MemorySegment`:
+
+[source java]
+----
+ public interface IfConf extends Mappable {
+
+    int ifc_len();
+    void ifc_len(int value);
+
+    IfcU ifc_ifcu();
+    void ifc_ifcu(IfcU value);
+}
+
+// Model both union variant in one interface
+public interface IfcU extends Mappable {
+
+    MemorySegment ifcu_buf();
+    void ifcu_buf(MemorySegment value);
+
+    IfReq ifcu_req();
+    void ifcu_req(IfReq value);
+
+}
+
+GroupMapper<IfConf> mapper = GroupMapper.ofInterface(IfConf.class, LAYOUT);
+
+Socket socket = ...;
+IfConf ifc = mapper.allocate(arena);
+
+if (ioctl(socket, SIOCGIFCONF, ifc) < 0) {
+    return;
+}
+
+long byteSize = ifc.ifc_len();
+...
+----
+
+=== Calling Native Methods
+
+To be written
