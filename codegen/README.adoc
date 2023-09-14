@@ -1,0 +1,14 @@
+= Code Gen
+Per Minborg
+:toc:
+:homepage: http://minborgsjavapot.blogspot.com/
+
+== Introduction
+
+This project shows a small code generator for Java.
+
+== Demo
+
+TBW
+
+link:../LICENSE[Copyright (c) 2023, Oracle and/or its affiliates.]
