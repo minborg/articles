@@ -11,6 +11,10 @@ Happy Reading! /Per Minborg | image:images/per-brighter.png[alt=Golden Gate,scal
 
 == Articles 2023
 
+=== link:2023/September/14-Trusted-Records/README.adoc[Java Records are "Trusted" and Consequently Faster] (2023-Sep-14)
+
+Did you know Java records are trusted by the Hotspot VM in a special way? This makes their speed superior in some aspects compared to regular Java classes. In this short article, we will take a look at _constant folding of instance fields_ and how this can bolster the performance of your Java application.
+
 === link:2023/August/25-Panama-String-Performance/README.adoc[Java 22: Panama FFM Provides Massive Performance Improvements for Strings] (2023-Aug-25)
 
 The Panama Foreign Function and Memory (FFM) API is slated to be finalized in Java 22 and will then be a part of the public Java API. One thing that is perhaps less known is the significant performance improvements made by FFM in certain areas in 22. In this short article we will be looking at _benchmarking string conversion_ in FFM for Java 21 and Java 22 compared to using old JNI calls.
