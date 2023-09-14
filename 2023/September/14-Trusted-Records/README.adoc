@@ -55,7 +55,7 @@ As an extra bonus, there is an emerging property for records that makes them eli
 
 == Setup
 
-Suppose we keep track of the special origin point in a `static` variable like this:
+Suppose we keep track of the unique origin point in a `static` variable like this:
 
 [source,java]
 ----
@@ -72,7 +72,7 @@ public static boolean isOrigin(Point point) {
 }
 ----
 
-We could then write a small program that demos the principle:
+We could then write a small program that demonstrates the principles:
 
 [source,java]
 ----
@@ -187,7 +187,7 @@ Bench.record   avgt   15   9.412 ± 0.181  ns/op
 
 As can be seen, records are about 10% faster than regular classes in this benchmark.
 
-Here is how it looks like in a graph:
+Here is what it looks like in a graph:
 
 image::TrustedRecordChart.png[RegularPoint vs RecordPoint]
 
@@ -195,7 +195,7 @@ _Graph 1, shows the performance of regular and record classes._
 
 == Under the Hood
 
-Looking at why records can be faster in cases like the above, there is a clue in the class https://github.com/openjdk/jdk/blob/master/src/hotspot/share/ci/ciField.cpp#L240[ciField.cpp] which tells the Hotspot compiler which instance fields should be "trusted" when performing constant folding. The class also gives away some clues of other Java classes that benefit from the same optimizations. One example is the https://openjdk.org/jeps/454[Foreign Function & Memory API] that is slated to be finalized in Java 22 and where, for example, all classes implementing the various `MemoryLayout` variants all are eligible for constant folding optimizations.
+Looking at why records can be faster in cases like the above, there is a clue in the class https://github.com/openjdk/jdk/blob/master/src/hotspot/share/ci/ciField.cpp#L240[ciField.cpp] which tells the Hotspot compiler which instance fields should be "trusted" when performing constant folding. The class also gives away some clues about other Java classes that benefit from the same optimizations. One example is the https://openjdk.org/jeps/454[Foreign Function & Memory API] that is slated to be finalized in Java 22 and where, for example, all classes implementing the various `MemoryLayout` variants all are eligible for constant folding optimizations.
 
 The C++ class above is not available to regular Java programs but, by switching to records, we may directly reap the benefits of constant folding for instance fields.
 
