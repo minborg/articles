@@ -199,7 +199,7 @@ Looking at why records can be faster in cases like the above, there is a clue in
 
 The C++ class above is not available to regular Java programs but, by switching to records, we may directly reap the benefits of constant folding for instance fields.
 
-As a final note, it should be said that modifying records fields (which are `private` and `final`) using, for example, `Usafe` is ... well unsafe and would produce an undefined result. Don't do that!
+As a final note, it should be said that modifying records fields (which are `private` and `final`) using, for example, `Usafe` is ... well ... unsafe and would produce an undefined result. Don't do that!
 
 == Conclusion
 
