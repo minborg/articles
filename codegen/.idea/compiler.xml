@@ -9,8 +9,5 @@
         <module name="codegen" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="jfocus2023" target="21" />
-    </bytecodeTargetLevel>
   </component>
 </project>

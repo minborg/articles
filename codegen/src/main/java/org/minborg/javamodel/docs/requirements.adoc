@@ -1,0 +1,24 @@
+= Requirements Java Language Data Model
+
+== JSL Consistency
+The data model shall be directly derived from the JLS.
+
+== Immutability
+The data model shall be immutable.
+
+== Expressability
+It shall not be possible to express an illegal state.
+
+No sequence of operations shall exist such that it puts the data model in an illegal state.
+
+== Translating
+The data model shall support the translation of data models.
+
+[source, Java]
+----
+UnaryFunction<Model, Model> translator;
+----
+
+== Cardinality
+The cardinality of elements should be expressed via types (exactly-one [!], zero-or-one [?], zero-or-more [*] and one-or-more [+])
+

@@ -1,14 +1,15 @@
-package org.minborg.codegen;
+package org.minborg.javamodel;
 
+import javax.swing.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
 
-public final class Model {
+public final class Models {
 
-    private Model() {
+    private Models() {
     }
 
     // General Models for arity
@@ -40,12 +41,14 @@ public final class Model {
         String name();
     }
 
+    interface Model {}
+
     // JLS:  https://docs.oracle.com/javase/specs/jls/se20/html/jls-7.html#jls-7.3
 
 
     // 7.3. Compilation Units
 
-    public sealed interface CompilationUnit
+    public sealed interface CompilationUnit extends Model
             permits OrdinaryCompilationUnit, ModularCompilationUnit {
         ZeroOrMore<ImportDeclaration> importDeclarations();
     }
@@ -54,13 +57,13 @@ public final class Model {
             Optional<PackageDeclaration> packageDeclaration,
             ZeroOrMore<ImportDeclaration> importDeclarations,
             ZeroOrMore<TopLevelClassOrInterfaceDeclaration> topLevelClassOrInterfaceDeclarations
-    ) implements CompilationUnit {
+    ) implements CompilationUnit, Model {
     }
 
     public record ModularCompilationUnit(
             ZeroOrMore<ImportDeclaration> importDeclarations,
             ModuleDeclaration moduleDeclaration
-    ) implements CompilationUnit {
+    ) implements CompilationUnit, Model {
     }
 
     // 7.4. Package Declarations
@@ -68,41 +71,46 @@ public final class Model {
     public record PackageDeclaration(
             ZeroOrMore<PackageModifier> packageModifiers,
             OneOrMore<Identifier> identifiers
-    ) {
+    ) implements Model {
     }
 
-    public record PackageModifier(Annotation annotation) {
+    public record PackageModifier(Annotation annotation)
+            implements Model {
     }
 
 
     // 7.5. Import Declarations
 
     public sealed interface ImportDeclaration
+            extends Model
             permits SingleTypeImportDeclaration,
             TypeImportOnDemandDeclaration,
             SingleStaticImportDeclaration,
             StaticImportOnDemandDeclaration {}
 
     public record SingleTypeImportDeclaration(TypeName typeName)
-            implements ImportDeclaration{}
+            implements ImportDeclaration, Model {}
 
     public record TypeImportOnDemandDeclaration(PackageOrTypeName typeName)
-            implements ImportDeclaration{}
+            implements ImportDeclaration, Model {}
 
     public record SingleStaticImportDeclaration(TypeName typeName, Identifier identifier)
-            implements ImportDeclaration{}
+            implements ImportDeclaration, Model {}
 
     public record StaticImportOnDemandDeclaration(TypeName typeName)
-            implements ImportDeclaration{}
+            implements ImportDeclaration, Model {}
 
 
     // 7.6. Top Level Class and Interface Declarations
 
     public sealed interface TopLevelClassOrInterfaceDeclaration
-        permits ClassDeclaration,
-        InterfaceDeclaration {}
+            extends Model
+            permits ClassDeclaration,
+            InterfaceDeclaration {
+    }
 
     public sealed interface ClassDeclaration
+            extends Model
             permits NormalClassDeclaration,
             EnumDeclaration,
             RecordDeclaration {
@@ -116,14 +124,15 @@ public final class Model {
             Optional<ClassImplements> classImplements,
             Optional<ClassPermits> classPermits,
             ClassBody classBody)
-    implements ClassDeclaration {}
+    implements ClassDeclaration, Model {}
 
 
     sealed interface ClassModifier
+         extends Model
          permits Annotation, ClassModifierKeywords{}
 
     // (one of)
-    public enum ClassModifierKeywords implements HasName, ClassModifier {
+    public enum ClassModifierKeywords implements HasName, ClassModifier, Model {
         PUBLIC,
         PROTECTED,
         PRIVATE,
@@ -149,22 +158,104 @@ public final class Model {
 
     public record TypeParameters(
             TypeParameterList typeParameterList
-    ){}
+    ) implements Model {}
 
     public record TypeParameterList(
             OneOrMore<TypeParameter> typeParameters
-    ){}
+    ) implements Model {}
 
     public record TypeParameter(
             ZeroOrMore<TypeParameterModifier> typeParameterModifiers,
             TypeIdentifier typeIdentifier,
             Optional<TypeBound> typeBound
-    ){}
+    ) implements Model {}
 
     TypeParameterModifier()
 
 
+    // Expressions
 
+    interface Expression extends Model {}
+
+
+    // 9.1. Interface Declarations
+
+    public sealed interface InterfaceDeclaration permits
+            NormalInterfaceDeclaration,
+            AnnotationInterfaceDeclaration {}
+
+    public record NormalInterfaceDeclaration()
+
+
+    // 14.2. Blocks
+
+    public record Block(Optional<BlockStatements> blockStatements)
+            implements Model, Statement {
+    }
+
+    public record BlockStatements(OneOrMore<BlockStatement> blockStatements)
+        implements Model, Statement {
+    }
+
+    public sealed interface BlockStatement
+        permits LocalClassOrInterfaceDeclaration,
+                LocalVariableDeclarationStatement,
+                Statement {}
+
+    // 14.3. Local Class and Interface Declarations
+
+    public sealed interface LocalClassOrInterfaceDeclaration
+            permits ClassDeclaration,
+            NormalInterfaceDeclaration {
+    }
+
+
+
+    // 14.5. Statements
+
+    interface Statement extends Model {}
+
+    public record IfThenStatement(Expression expression, Statement statement)
+            implements Statement, Model {
+    }
+
+    public record IfThenElseStatement(Expression expression,
+                                      StatementNoShortIf statementNoShortIf,
+                                      Statement statement)
+            implements Statement, Model {
+    }
+
+    public record IfThenElseStatementNoShortIf(Expression expression,
+                                               StatementNoShortIf statementNoShortIf,
+                                               StatementNoShortIf elseStatementNoShortIf)
+            implements Statement, Model {
+
+    }
+
+    public interface StatementNoShortIf
+
+        StatementWithoutTrailingSubstatement
+                LabeledStatementNoShortIf
+                IfThenElseStatementNoShortIf
+                WhileStatementNoShortIf
+                ForStatementNoShortIf
+
+
+    public interface StatementWithoutTrailingSubstatement
+            extends Expression, Model {}
+
+                EmptyStatement
+                ExpressionStatement
+                AssertStatement
+                SwitchStatement
+                DoStatement
+                BreakStatement
+                ContinueStatement
+                ReturnStatement
+                SynchronizedStatement
+                ThrowStatement
+                TryStatement
+                YieldStatement
 
     //
 

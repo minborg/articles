@@ -1,4 +1,4 @@
-package org.minborg.codegen;
+package org.minborg.javamodel;
 
 public class DemoAST {
 
