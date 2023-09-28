@@ -5,18 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="441b2358-5691-4817-8eee-9eb0decb4802" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/minborg/javamodel/docs/requirements.adoc" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Baeldung/ForeignMemoryAPI/.idea/ForeignMemoryAPI.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../2023/February/7-jFocus2023/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../2023/February/7-jFocus2023/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/jarRepositories.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/minborg/codegen/Controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/minborg/javamodel/Controller.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/minborg/codegen/Demo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/minborg/javamodel/Demo.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/minborg/codegen/DemoAST.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/minborg/javamodel/DemoAST.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/minborg/codegen/Model.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/minborg/javamodel/Models.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/minborg/codegen/View.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/minborg/javamodel/View.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -26,21 +17,21 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 6
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 6
+}</component>
   <component name="ProjectId" id="2VcPKWEuO0I8tSy03vWZPo3Q37f" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "codegen"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;codegen&quot;
   }
-}]]></component>
+}</component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
