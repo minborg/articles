@@ -36,7 +36,7 @@
                             <goal>java</goal>
                         </goals>
                         <configuration>
-                            <mainClass>org.minborg.trustedrecords.Demo</mainClass>
+                            <mainClass>org.minborg.panamadojo.Demo5_AtomicOperations</mainClass>
                         </configuration>
                     </execution>
 
