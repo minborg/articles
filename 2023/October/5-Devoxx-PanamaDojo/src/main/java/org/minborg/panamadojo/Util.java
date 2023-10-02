@@ -33,7 +33,7 @@ final class Util {
     static final VarHandle LOW = varHandle("low");
 
     private static VarHandle varHandle(String fieldName) {
-        return Util.MARKET_INFO.varHandle(PathElement.groupElement(fieldName));
+        return MARKET_INFO.varHandle(PathElement.groupElement(fieldName));
     }
 
     public enum Symbol {

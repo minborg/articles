@@ -4,10 +4,10 @@ import java.lang.foreign.Arena;
 import java.lang.foreign.MemoryLayout;
 import java.lang.foreign.MemorySegment;
 
-public class Demo2_RecordMapper {
+public class Kata2_RecordMapper {
 
     public record MarketInfoRecord(long time, int symbol, int high, int last, int low)
-            implements MarketInfo { // Does not implement any Updater!
+            implements MarketInfo { // Does *not* implement MarketInfoUpdater!
 
         @Override
         public String toString() {
@@ -16,7 +16,7 @@ public class Demo2_RecordMapper {
     }
 
     static final RecordMapper<MarketInfoRecord>
-            RECORD_MAPPER = new RecordMapper<>() {
+            MARKET_INFO_RECORD_MAPPER = new RecordMapper<>() {
 
         @Override
         public MarketInfoRecord get(MemorySegment s) {
@@ -58,23 +58,23 @@ public class Demo2_RecordMapper {
             System.out.println(mi);
             // MarketInfo{time = 231006111523, symbol = ORCL, high = 107, last = 106, low = 104}
 
-            RECORD_MAPPER.set(seg, mi);
+            MARKET_INFO_RECORD_MAPPER.set(seg, mi);
             System.out.println(Util.toHex(seg));
             // 23 87 09 c9 35 00 00 00 4f 52 43 4c 6b 00 00 00 6a 00 00 00 68 00 00 00
             // | time=231016111523    | O  R  C  L| high=107  | last=106  | low=104  |
 
             // Read back from the segment
-            var mi2 = RECORD_MAPPER.get(seg);
+            var mi2 = MARKET_INFO_RECORD_MAPPER.get(seg);
             System.out.println(mi2);
 
             System.out.println("mi.equals(mi2) = " + mi.equals(mi2));
             // true
 
-            // 🤩Thread safety
+            // 🤩 Thread safety
             Thread.ofPlatform().start(() -> System.out.println(mi));
         }
 
-        // 🤩 Holds no backing Segment
+        // 🤩 Holds no backing segment
         System.out.println(mi);
     }
 

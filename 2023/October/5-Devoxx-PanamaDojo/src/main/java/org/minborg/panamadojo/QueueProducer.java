@@ -12,26 +12,33 @@ import java.util.Set;
 import static java.nio.channels.FileChannel.MapMode.READ_WRITE;
 import static java.nio.file.StandardOpenOption.*;
 import static java.nio.file.StandardOpenOption.WRITE;
-import static org.minborg.panamadojo.Demo5_AtomicOperations.*;
+import static org.minborg.panamadojo.Kata5_AtomicOperations.*;
 
 public interface QueueProducer<T extends Record> extends AutoCloseable {
 
+    /**
+     * Appends an element at the end of the queue.
+     *
+     * @param element to append
+     */
     void append(T element);
 
     @Override
     void close();
 
-    static <T extends Record> QueueProducer<T> of(RecordMapper<T> mapper, Path path) {
+    static <T extends Record> QueueProducer<T> of(RecordMapper<T> mapper,
+                                                  Path path) {
         return new Impl<>(mapper, path);
     }
 
     final class Impl<T extends Record> implements QueueProducer<T> {
 
-        private static final Set<OpenOption> OPEN_OPTIONS = Set.of(CREATE, SPARSE, READ, WRITE);
+        private static final Set<OpenOption> OPEN_OPTIONS =
+                Set.of(CREATE, SPARSE, READ, WRITE);
 
         private final RecordMapper<T> mapper;
         private final Arena arena;
-        private final MemorySegment segment;
+        private final MemorySegment segment; // mmap:ed
         private long position;
 
         public Impl(RecordMapper<T> mapper, Path path) {
@@ -60,9 +67,10 @@ public interface QueueProducer<T extends Record> extends AutoCloseable {
             // Now we are alone
             MemorySegment payload =
                     segment.asSlice(position + HEADER.byteSize(), mapper.layout());
+
             mapper.set(payload, element);
             header.index(++index);
-            header.complete();
+            header.complete(); // HB
         }
 
         @Override

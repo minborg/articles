@@ -12,23 +12,28 @@ import java.util.Set;
 
 import static java.nio.channels.FileChannel.MapMode.READ_ONLY;
 import static java.nio.file.StandardOpenOption.*;
-import static org.minborg.panamadojo.Demo5_AtomicOperations.*;
-import static org.minborg.panamadojo.Demo5_AtomicOperations.HEADER;
+import static org.minborg.panamadojo.Kata5_AtomicOperations.*;
+import static org.minborg.panamadojo.Kata5_AtomicOperations.HEADER;
 
 public interface QueueConsumer<T extends Record> extends AutoCloseable {
 
+    /**
+     * {@return the next element from the queue or else returns Optional.empty()}
+     */
     Optional<T> next();
 
     @Override
     void close();
 
-    static <T extends Record> QueueConsumer<T> of(RecordMapper<T> mapper, Path path) {
+    static <T extends Record> QueueConsumer<T> of(RecordMapper<T> mapper,
+                                                  Path path) {
         return new Impl<>(mapper, path);
     }
 
     final class Impl<T extends Record> implements QueueConsumer<T> {
 
-        private static final Set<OpenOption> OPEN_OPTIONS = Set.of(SPARSE, READ);
+        private static final Set<OpenOption> OPEN_OPTIONS =
+                Set.of(SPARSE, READ);
 
         private final RecordMapper<T> mapper;
         private final Arena arena;
@@ -49,10 +54,13 @@ public interface QueueConsumer<T extends Record> extends AutoCloseable {
         @Override
         public Optional<T> next() {
             Header header = headerAtPosition();
-            if (!header.isCompleted()) return Optional.empty();
+            if (!header.isCompleted()) { // HB
+                return Optional.empty();
+            }
 
             MemorySegment payload =
                     segment.asSlice(position + HEADER.byteSize(), mapper.layout());
+
             position += HEADER.byteSize() + mapper.layout().byteSize();
             return Optional.of(mapper.get(payload));
         }

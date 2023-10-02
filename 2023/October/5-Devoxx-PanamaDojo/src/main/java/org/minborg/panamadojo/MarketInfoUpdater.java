@@ -1,6 +1,6 @@
 package org.minborg.panamadojo;
 
-interface MarketInfoUpdater {
+interface MarketInfoUpdater { // AKA "setters"
     void time(long time);
     void symbol(int symbol);
     void high(int high);

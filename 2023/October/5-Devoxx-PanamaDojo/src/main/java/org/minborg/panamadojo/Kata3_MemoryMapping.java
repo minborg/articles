@@ -12,9 +12,10 @@ import static java.nio.channels.FileChannel.MapMode.READ_WRITE;
 import static java.nio.file.StandardOpenOption.*;
 import static java.nio.file.StandardOpenOption.WRITE;
 
-public class Demo3_MemoryMapping {
+public class Kata3_MemoryMapping {
 
-    private static final Set<OpenOption> OPEN_OPTIONS = Set.of(CREATE, SPARSE, READ, WRITE);
+    private static final Set<OpenOption> OPEN_OPTIONS =
+            Set.of(CREATE, SPARSE, READ, WRITE);
 
     public static void main(String[] args) throws IOException {
         try (var fc = FileChannel.open(Path.of("market-data"), OPEN_OPTIONS);
@@ -26,7 +27,7 @@ public class Demo3_MemoryMapping {
             System.out.println("mapped = " + mapped);
             // mapped = MemorySegment{ heapBase: Optional.empty address:********** limit: 24 }
 
-            var mi = new Demo2_RecordMapper.MarketInfoRecord(
+            var mi = new Kata2_RecordMapper.MarketInfoRecord(
                     23_10_06__11_15_23L,
                     Util.symbolAsInt("ORCL"),
                     107,
@@ -36,12 +37,15 @@ public class Demo3_MemoryMapping {
             System.out.println(mi);
             // MarketInfo{time = 231006111523, symbol = ORCL, high = 107, last = 106, low = 104}
 
-            Demo2_RecordMapper.RECORD_MAPPER.set(mapped, mi);
+            Kata2_RecordMapper.MARKET_INFO_RECORD_MAPPER.set(mapped, mi);
             System.out.println(Util.toHex(mapped));
             // 23 87 09 c9 35 00 00 00 4f 52 43 4c 6b 00 00 00 6a 00 00 00 68 00 00 00
             // | time=231016111523    | O  R  C  L| high=107  | last=106  | low=104  |
 
         } // <- Segment is deterministically unmapped here
     }
-
+    // % hexdump -C market-data
+    // 00000000  23 87 09 c9 35 00 00 00  4f 52 43 4c 6b 00 00 00  |#...5...ORCLk...|
+    // 00000010  6a 00 00 00 68 00 00 00                           |j...h...|
+    // 00000018
 }

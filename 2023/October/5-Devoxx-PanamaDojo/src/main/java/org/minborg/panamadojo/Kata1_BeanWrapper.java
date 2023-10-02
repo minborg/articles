@@ -2,9 +2,9 @@ package org.minborg.panamadojo;
 
 import java.lang.foreign.Arena;
 import java.lang.foreign.MemorySegment;
-import java.util.Arrays;
+import java.util.Objects;
 
-public class Demo1_BeanWrapper {
+public class Kata1_BeanWrapper {
 
     public static final class MarketInfoSegmentBean
             implements MarketInfo, MarketInfoUpdater {
@@ -73,6 +73,7 @@ public class Demo1_BeanWrapper {
         @Override
         public boolean equals(Object obj) {
             return obj instanceof MarketInfo that &&
+                    this.time() == that.time() &&
                     this.symbol() == that.symbol() &&
                     this.high() == that.high() &&
                     this.last() == that.last() &&
@@ -81,7 +82,7 @@ public class Demo1_BeanWrapper {
 
         @Override
         public int hashCode() {
-            return Arrays.hashCode(new int[]{symbol(), high(), last(), low()});
+            return Objects.hash(time(), symbol(), high(), last(), low());
         }
 
     }
@@ -107,12 +108,12 @@ public class Demo1_BeanWrapper {
             // 23 87 09 c9 35 00 00 00 4f 52 43 4c 6b 00 00 00 6a 00 00 00 68 00 00 00
             // | time=231016111523    | O  R  C  L| high=107  | last=106  | low=104  |
 
-            // ☹️Thread safety
+            // ☹️ Thread safety
             Thread.ofPlatform().start(() -> System.out.println(mi));
             // Exception in thread "Thread-0" java.lang.WrongThreadException
         }
 
-        // ☹️ Holds the backing Segment
+        // ☹️ Holds the backing segment
         // System.out.println(mi)
     }
 }
