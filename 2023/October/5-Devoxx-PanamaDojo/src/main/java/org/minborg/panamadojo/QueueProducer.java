@@ -56,6 +56,7 @@ public interface QueueProducer<T extends Record> extends AutoCloseable {
         public void append(T element) {
             Header header = headerAtPosition();
             int index = header.index();
+            // Seek to the next available slot
             while (header.isCompleted() || !header.acquire()) {
                 position += HEADER.byteSize() + mapper.layout().byteSize();
                 header = headerAtPosition();

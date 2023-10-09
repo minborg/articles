@@ -19,7 +19,7 @@ public class Kata4_MemoryMappingRead {
     public static void main(String[] args) throws IOException {
         MarketInfo mi;
 
-        try (var fc = FileChannel.open(Path.of("market-data"), OPEN_OPTIONS);
+        try (var fc = FileChannel.open(Path.of("market-info-data"), OPEN_OPTIONS);
                 var arena = Arena.ofConfined()) {
 
             MemorySegment mapped = fc.map(READ_ONLY, 0, Util.MARKET_INFO.byteSize(), arena);
@@ -28,7 +28,7 @@ public class Kata4_MemoryMappingRead {
 
         System.out.println(mi);
         // 23 87 09 c9 35 00 00 00 4f 52 43 4c 6b 00 00 00 6a 00 00 00 68 00 00 00
-        // | time=231016111523    | O  R  C  L| high=107  | last=106  | low=104  |
+        // | time=231006111523    | O  R  C  L| high=107  | last=106  | low=104  |
     }
 
 }

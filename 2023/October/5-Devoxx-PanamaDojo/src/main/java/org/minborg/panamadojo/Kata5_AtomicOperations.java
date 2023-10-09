@@ -10,6 +10,8 @@ import java.lang.invoke.VarHandle;
 import static java.lang.foreign.ValueLayout.*;
 
 public class Kata5_AtomicOperations {
+    // QUEUE:
+    // HEADER, PAYLOAD, HEADER, PAYLOAD, ...
 
     static final StructLayout HEADER = MemoryLayout.structLayout(
             // "flags" have "mutex" bits:
@@ -45,6 +47,7 @@ public class Kata5_AtomicOperations {
         }
 
         public boolean acquire() {
+            // Works across all threads/JVMs on the same machine
             return FLAGS.compareAndSet(segment, (int) 0, ACQUIRED);
         }
 
@@ -89,6 +92,8 @@ public class Kata5_AtomicOperations {
             }
             System.out.println("After acquire: " + header);
             // After acquire: Header{mutex=0x80, index=0}
+
+            // Update payload here...
 
             header.index(42);  // Must be done before complete!
             header.complete(); // Establishes HB

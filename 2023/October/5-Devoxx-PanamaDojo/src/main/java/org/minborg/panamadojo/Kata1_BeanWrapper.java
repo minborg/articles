@@ -106,12 +106,13 @@ public class Kata1_BeanWrapper {
 
             System.out.println(Util.toHex(seg));
             // 23 87 09 c9 35 00 00 00 4f 52 43 4c 6b 00 00 00 6a 00 00 00 68 00 00 00
-            // | time=231016111523    | O  R  C  L| high=107  | last=106  | low=104  |
+            // | time=231006111523    | O  R  C  L| high=107  | last=106  | low=104  |
 
             // ☹️ Thread safety
             Thread.ofPlatform().start(() -> System.out.println(mi));
             // Exception in thread "Thread-0" java.lang.WrongThreadException
-        }
+
+        }  // Free the segment
 
         // ☹️ Holds the backing segment
         // System.out.println(mi)

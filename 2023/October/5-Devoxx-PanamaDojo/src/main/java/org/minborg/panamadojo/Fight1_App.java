@@ -50,11 +50,22 @@ public class Fight1_App {
         try (var consumer = QueueConsumer.of(MARKET_INFO_RECORD_MAPPER, QUEUE_PATH)) {
             for (;;) {
                 consumer.next() // Optional<MarketInfoRecord>
-                        .map(mi -> Thread.currentThread().getName() + " : " + mi) // Optional<String>
-                        .ifPresentOrElse(System.out::println, yielder::yield);
+                        .ifPresentOrElse(Fight1_App::onRead, yielder::yield);
             }
         }
 
+    }
+
+    static void onRead(MarketInfo event) {
+        System.out.println(Thread.currentThread().getName() + " : " + event);
+
+        // MAP.merge(event.symbol(), event, (e, n) -> n.time() > e.time() ? n : e);
+
+        /*
+        if (event.symbol() == Util.symbolAsInt("ORCL")) {
+            outQueue.append(event);
+        }
+         */
     }
 
   /*
@@ -68,6 +79,20 @@ public class Fight1_App {
   // 2 seconds
   consumer two : MarketInfo{time = 231006111527, symbol = MSFT, high = 313, last = 310, low = 311}
   consumer one : MarketInfo{time = 231006111527, symbol = MSFT, high = 313, last = 310, low = 311}
+
+
+  hexdump -C market-info/20231006.queue
+
+00000000  c0 00 00 00 01 00 00 00  23 87 09 c9 35 00 00 00  |........#...5...|
+00000010  4f 52 43 4c 6b 00 00 00  6a 00 00 00 68 00 00 00  |ORCLk...j...h...|
+00000020  c0 00 00 00 02 00 00 00  25 87 09 c9 35 00 00 00  |........%...5...|
+00000030  41 41 50 4c ac 00 00 00  aa 00 00 00 a9 00 00 00  |AAPL............|
+00000040  c0 00 00 00 03 00 00 00  27 87 09 c9 35 00 00 00  |........'...5...|
+00000050  4d 53 46 54 39 01 00 00  36 01 00 00 37 01 00 00  |MSFT9...6...7...|
+00000060  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  |................|
+*
+00100000
+
   */
 
 }

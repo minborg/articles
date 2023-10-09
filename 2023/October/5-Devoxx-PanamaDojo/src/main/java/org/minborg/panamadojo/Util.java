@@ -18,6 +18,7 @@ final class Util {
     static final ValueLayout JAVA_INT_LE = JAVA_INT.withOrder(ByteOrder.LITTLE_ENDIAN);
     static final ValueLayout JAVA_LONG_LE = JAVA_LONG.withOrder(ByteOrder.LITTLE_ENDIAN);
 
+    // Models the MarketInfo class layout
     static final StructLayout MARKET_INFO = structLayout(
             JAVA_LONG_LE.withName("time"),
             JAVA_INT_LE.withName("symbol"),
