@@ -11,6 +11,27 @@ Happy Reading! /Per Minborg | image:images/per-brighter.png[alt=Golden Gate,scal
 
 == Articles 2023
 
+=== Presentations at Devoxx BE October 2023
+
+I did two presentations at Devoxx and also participated in the "Ask the Java Architects" presentation.
+
+Here are the videos of the presentations:
+
+link:https://youtu.be/DlTUMjg7DD0[Ask the Java Architects] By Sharat Chander, Alan Bateman, Stuart Marks, Viktor Klang, Brian Goetz, and Per Minborg
+
+link:https://youtu.be/T6X2Yytrzyg[With Java 21, Your Code Runs Even Faster But How is that Possible?] By Per Minborg
+
+link:https://youtu.be/t8c1Q2wJOoM[The Panama Dojo: Black Belt Programming with Java 21 and the FFM API] by Per Minborg
+
+Here is the code I used in my presentations:
+
+link:2023/October/2-Devoxx-Performance/[Code: With Java 21, Your Code Runs Even Faster But How is that Possible?]
+
+link:2023/October/5-Devoxx-PanamaDojo/[Code: The Panama Dojo: Black Belt Programming with Java 21 and the FFM API]
+
+Thanks to all that provided feedback and those who attended
+the presentations. See you next year!
+
 === link:2023/September/14-Trusted-Records/README.adoc[Java Records are "Trusted" and Consequently Faster] (2023-Sep-14)
 
 Did you know Java records are trusted by the Hotspot VM in a special way? This makes their speed superior in some aspects compared to regular Java classes. In this short article, we will take a look at _constant folding of instance fields_ and how this can bolster the performance of your Java application.
