@@ -446,7 +446,7 @@ The often-once process of creating a mapper is not that time critical and might 
 
 == Sketches [[sketches,Sketches]]
 
-Here is an sketch of how a record mapper could be modeled if it resides in the class `GroupLayout`.
+Here is a sketch of how a record mapper could be modeled if it resides in the class `GroupLayout`.
 
 Note:: It is envisioned, the mapper should reside outside (or at least should not be  hard-wired to) the FMM API as it is more high level and less stringent in terms of type conversions.
 
