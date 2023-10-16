@@ -21,11 +21,11 @@ Eventually, groups and/or sequences layouts will have values in their outermost 
 
 === Value Mapping Background
 
-One of the https://github.com/minborg/panama-foreign/blob/555a15addad12e41f71f25d567661cc27efde4a2/src/java.base/share/classes/java/lang/foreign/GroupLayout.java#L112[prototypes of a record mapper], requires the type of each record component element to be *exactly* matched with the type of the corresponding element in a `GroupLayout`. For example, a record class like this:
+One of the https://github.com/minborg/panama-foreign/blob/555a15addad12e41f71f25d567661cc27efde4a2/src/java.base/share/classes/java/lang/foreign/GroupLayout.java#L112[prototypes of an FFM record mapper], requires the type of each record component element to be *exactly* matched with the type of the corresponding element in a `GroupLayout`. For example, a record class like this:
 
 [source, java]
 ----
-public record Point(int x, int y){}
+public record Point(int x, int y) {}
 ----
 
 can be used to create a record mapper using this layout:
@@ -35,11 +35,11 @@ can be used to create a record mapper using this layout:
 var layout = MemoryLayout.structLayout(JAVA_INT.withName("x"), JAVA_INT.withName("y"));
 ----
 
-But not using this other layout:
+but not using this other layout:
 
 [source, java]
 ----
-var layoutByte = MemoryLayout.structLayout(JAVA_BYTE.withName("x"), JAVA_BYTE.withName("y"));
+var layoutLong = MemoryLayout.structLayout(JAVA_LONG.withName("x"), JAVA_LONG.withName("y"));
 ----
 
 As can be seen, the names of the record component and the name of the corresponding layout must equal each other in order to be matched.
@@ -60,14 +60,14 @@ For two-way mappers, it is important to decide if a record mapper should be view
 
 === Widening & Narrowing
 
-A relate issue is if we should allow widening & narrowing. One principle could be that only conversions that is statically _always_ lossless are allowed (e.g. widening an `int` to a `long`) or if a conversion that dynamically _happens_ to be lossless is allowed (e.g. narrowing a `long` in the interval [Integer.MIN_VALUE, Integer.MAX_VALUE] to an `int`) akin to https://openjdk.org/jeps/455[JEP 455: Primitive types in Patterns, instanceof, and switch (Preview)].
+A relate issue is if we should allow widening & narrowing. One principle could be that only conversions that is statically _always_ lossless are allowed (e.g. widening an `int` to a `long`). Another principle could be if a conversion that dynamically _happens_ to be lossless is allowed (e.g. narrowing a `long` in the interval [Integer.MIN_VALUE, Integer.MAX_VALUE] to an `int`) akin to https://openjdk.org/jeps/455[JEP 455: Primitive types in Patterns, instanceof, and switch (Preview)].
 
 == Explicit conversion
-It is possible to allow custom conversion (defined by the user) much like the more https://orahub.oci.oraclecorp.com/raffaello.giulietti/record-mapper/-/blob/master/src/playground/RecordMapper.java#L287[general record mapper] demonstrated by Raffaelo (internal link). This would move the responsibility from the library to the user and would make it much easier to specify.
+It is possible to allow custom conversion (defined by the user) much like the more https://orahub.oci.oraclecorp.com/raffaello.giulietti/record-mapper/-/blob/master/src/playground/RecordMapper.java#L287[general record mapper] demonstrated by Raffaelo (internal link). This would shift the responsibility from the library to the user and would make it much easier to specify.
 
 
 == Configuring Mappers
-One solution would be to start of with a default configuration where names are matched and where the types would have to be identical but then provide a builder-type configuration phase where the mapping requisites could be specified in detail. Configuration could entail:
+One solution would be to start of with a default configuration where names are matched and where the types would have to be identical but then provide a builder-type configuration phase where the mapping requisites could be specified in detail. Other configuration items (e.g. Lookup) could also be added this way. Here is an example of how a builder for a mapper might look like:
 
 [cols="1,1,1, 1"]
 |===
@@ -119,15 +119,161 @@ One solution would be to start of with a default configuration where names are m
 throws a runtime exception if an attempt is made to convert a `long`, `int` or `short` to an `int`, `short` or `byte` and a loss of
 information would be the result. See `Math.toIntExact`. Always throws a runtime exception if an attempt is made to convert a `float` or a `double` to any other primitive representation.
 
-|_matching_
+|_matching types_
+|_types_ identical
+|There `<S, R> Builder<T> mapping(Class<S> sourceType, Class<R> targetType, Function<? super S, ? extends R> mapper)`
+or `<S, R> Builder<T> mapping(Class<S> sourceType, Class<R> targetType, MethodHandle mapper)`
+| These methods allow custom mapping between _all_ values of the specified types.
+
+|_matching names_
+|_types_ identical
+|There `<R> Builder<T> matching(MethodReference<T, R> recordComponent, MemoryLayout.PathElement valueLayout)`
+| There might be overloads for matching operations of depth one (with just a single `PathElement`)
+
+|_matching names and types_
 |_names_ equals and _types_ identical
-|There `matching(SequencedCollection<PathElement> source, MethodReference<T, R> recordTarget, Function<?, ? extends R, ?> mapper)`
-or `matching(SequencedCollection<PathElement> elements, MethodReference<T, R> recordMethod, MethodHandle mapper)` and in the opposite direction `matching(MethodReference<T, R> recordTarget, SequencedCollection<PathElement> source, Function<? super R, ?> mapper)` or `matching(MethodReference<T, R> recordMethod, SequencedCollection<PathElement> elements, MethodHandle mapper)`
-| These methods allow custom mapping of any record fields of arbitrary depth to any value layout in a memory layout regardless of names and types.
+|There `<R> Builder<T> mapping(MethodReference<T, R> recordComponentSource, SequencedCollection<MemoryLayout.PathElement> valueLayoutTarget, Function<? super T, ? extends R> mapper)`
+or `<R> Builder<T> mapping(MethodReference<T, R> recordComponentSource,
+SequencedCollection<MemoryLayout.PathElement> valueLayoutTarget,
+MethodHandle mapper)` and in the opposite direction `<R> Builder<T> mapping(SequencedCollection<MemoryLayout.PathElement> valueLayoutSource, MethodReference<T, R> recordComponentTarget, Function<?, ? extends R> mapper)` or `<R> Builder<T> mapping(SequencedCollection<MemoryLayout.PathElement> valueLayoutSource, MethodReference<T, R> recordComponentTarget, MethodReference mapper)`
+| These methods allow custom mapping of any record components of arbitrary depth to any value layout in a memory layout regardless of names and types. There might be overloads for matching operations of depth one (with just a single `PathElement`)
 
 |===
 
 Note:: The `MethodReference<T, R>` is a _new_ function that is able to return the `java.lang.reflect.Method` referenced. `MethodReference` is also composable such that it is possible to describe constructs of arbitrary depth `MethodReference.of(Line::begin).andThen(Point::x)`. This is related to project Babylon.
+
+Here is an example of how such a builder could be used to map components of a Point record with `int` components but where the memory segment contains `long` values:
+
+[source,java]
+----
+public record Point(int x, int y) {}
+var layoutLong = MemoryLayout.structLayout(JAVA_LONG.withName("x"), JAVA_LONG.withName("y"));
+
+var mapper = Mapper.Builder.ofRecord(Point.class, layoutLong)
+  .withExactNarrowing()
+  .toMapper();
+
+var segment = MemorySegment.ofArray(new long[]{3, 4, 1L << 40, 2L << 40});
+
+var point = mapper.get(segment);      // Point[x=3, y=4];
+var point2 = mapper.get(segment, 16); // ArithmeticException
+
+mapper.set(segment, new Point(0, 0));
+
+----
+
+Here is another example of how the builder could be used to map components of a `Point` record with `BigInteger` components (rather than `long`):
+
+[source,java]
+----
+import java.math.BigInteger;
+public record Point(BigInteger x, BigInteger y) {}
+var layoutLong = MemoryLayout.structLayout(JAVA_LONG.withName("x"), JAVA_LONG.withName("y"));
+
+var unmarshaller = Mapper.Builder.ofRecord(Point.class, layoutLong)
+  .mapping(long.class, BigInteger.class, BigInteger::valueOf)
+  .toUnmarshaller();
+
+var segment = MemorySegment.ofArray(new long[]{3, 4, 1L << 40, 2L << 40});
+
+var point = unmarshaller.get(segment);      // Point[x=3, y=4];
+var point2 = unmarshaller.get(segment, 16); // Point[x=1099511627776, y=1099511627776];
+
+----
+
+Here is yet another example, similar to the previous but where the names are also remapped:
+
+[source,java]
+----
+import java.math.BigInteger;
+public record Point(BigInteger xCoordinate, BigInteger yCoordinate) {}
+var layoutLong = MemoryLayout.structLayout(JAVA_LONG.withName("x"), JAVA_LONG.withName("y"));
+
+var unmarshaller = Mapper.Builder.ofRecord(Point.class, layoutLong)
+  .mapping(Point::xCoordinate, PathElement.groupElement("x"), BigInteger::valueOf)
+  .mapping(Point::yCoordinate, PathElement.groupElement("y"), BigInteger::valueOf)
+  .toUnmarshaller();
+
+var segment = MemorySegment.ofArray(new long[]{3, 4, 1L << 40, 2L << 40});
+
+var point = unmarshaller.get(segment);      // Point[x=3, y=4];
+var point2 = unmarshaller.get(segment, 16); // Point[x=1099511627776, y=1099511627776];
+
+----
+
+== Builder Prototype
+
+Here is a prototype of the builder exemplified above:
+
+[source,java]
+----
+    interface Builder<T extends Record> {
+
+        Builder<T> withLookup(MethodHandles.Lookup lookup);
+
+        Builder<T> withWidening();
+
+        Builder<T> withNarrowing();
+
+        Builder<T> withBoxing();
+
+        Builder<T> withUnboxing();
+
+        Builder<T> withStringConversion();
+
+        Builder<T> withAllConversions();
+
+        Builder<T> withExactNarrowing();
+
+        // General type mapping
+        <S, R> Builder<T> mapping(Class<S> sourceType, Class<R> targetType, Function<? super S, ? extends R> mapper);
+
+        <S, R> Builder<T> mapping(Class<S> sourceType, Class<R> targetType, MethodHandle mapper);
+
+        // Name mapping
+        <R> Builder<T> matching(MethodReference<T, R> recordComponent, MemoryLayout.PathElement valueLayout);
+
+        <R> Builder<T> matching(MethodReference<T, R> recordComponent, SequencedCollection<MemoryLayout.PathElement> valueLayout);
+
+        // Custom name and type mapping (`MethodHandle` overloads not shown for brevity)
+        <R> Builder<T> mapping(MethodReference<T, R> recordComponentSource,
+                               MemoryLayout.PathElement valueLayoutTarget,
+                               Function<? super T, ? extends R> mapper);
+
+        <R> Builder<T> mapping(MethodReference<T, R> recordComponentSource,
+                               SequencedCollection<MemoryLayout.PathElement> valueLayoutTarget,
+                               Function<? super T, ? extends R> mapper);
+
+        <S, R> Builder<T> mapping(MemoryLayout.PathElement valueLayoutSource,
+                                  MethodReference<T, R> recordComponentTarget,
+                                  Function<?, ? extends R> mapper);
+
+        <S, R> Builder<T> mapping(SequencedCollection<MemoryLayout.PathElement> valueLayoutSource,
+                                  MethodReference<T, R> recordComponentTarget,
+                                  Function<?, ? extends R> mapper);
+
+
+        // Get and set operations in a MemorySegment
+        RecordMapper<T> toMapper();
+
+        // Should also provide a long offset coordinate
+        Function<MemorySegment, T> toUnmarshaller();
+
+        // Should also provide a long offset coordinate
+        BiConsumer<MemorySegment, T> toMarshaller();
+
+
+        static <T extends Record> Builder<T> ofRecord(Class<T> type, GroupLayout layout) {
+            Objects.requireNonNull(type);
+            if (Record.class.equals(type)) {
+                throw new IllegalArgumentException();
+            }
+            Objects.requireNonNull(layout);
+            return new BuilderImpl<T>(type, layout) {
+            };
+        }
+    }
+----
 
 == References
 
