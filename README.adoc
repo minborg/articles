@@ -11,6 +11,12 @@ Happy Reading! /Per Minborg | image:images/per-brighter.png[alt=Golden Gate,scal
 
 == Articles 2023
 
+=== link:2024/15-StatisticsFor1brc/[Statistics for the 1BRC] (2024-Jan-15)
+
+How data is distributed in link:https://github.com/gunnarmorling/1brc[Gunnar Morling's "One Billion Row Challenge"]. Know your data and get better performance.
+
+== Articles 2023
+
 === Presentations at Devoxx BE October 2023
 
 I did two presentations at Devoxx and also participated in the "Ask the Java Architects" presentation.
