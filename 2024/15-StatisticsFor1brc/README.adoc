@@ -4,7 +4,7 @@ Per Minborg
 :homepage: http://minborgsjavapot.blogspot.com/
 
 == Introduction
-It is hard to avoid hearing about link:https://github.com/gunnarmorling/1brc[Gunnar Morling's "One Billion Row Challenge"] these days, where the objective is to parse and compute the min, average and max value for various weather stations using the Java language. The data to analyze is a semicolon separated list of rows that looks like this:
+It is hard to avoid hearing about link:https://github.com/gunnarmorling/1brc[Gunnar Morling's "One Billion Row Challenge"] these days, where the objective is to parse and compute the min, average and max value for various weather stations using the Java language. The data to analyze is a semicolon-separated list of rows that looks like this:
 
 [source]
 ----
@@ -28,7 +28,7 @@ Anyway, I suspect there are some gains to be harvested if one knows the distribu
 
 The names are UTF-8 coded and can occupy up 100 bytes of space.
 
-Looking at the file, one can conclude that there are *413 distinct names*. So, the number of stations is actually relatively limited. Holding these in hash tables or the likes is not anticipated to take up a significant amount of memory.
+Looking at the file, one can conclude that there are *413 distinct names*. So, the number of stations is actually relatively limited. Holding these in hash tables or the like is not anticipated to take up a significant amount of memory.
 
 === Length
 
@@ -62,23 +62,23 @@ Here is what a frequency chart with the above figures looks like:
 
 image:FrequencyName.png[Frequency of Name Byte Size]
 
-_Chart 1, Showing the frequency of various name byte sizes._
+_Chart 1, Shows the frequency of various name byte sizes._
 
-The corresponding cumulative frequency chars looks like this:
+The corresponding cumulative frequency chart looks like this:
 
 image:CumulativeFrequencyName.png[Cumulative Frequency of Name Byte Size]
 
-_Chart 2, Showing the cumulative frequency of various name byte sizes._
+_Chart 2, Shows the cumulative frequency of various name byte sizes._
 
 As can be seen, considering only the first 16 bytes will cover more than 99% of the names in the file.
 
 === Appearance
 
-The number of times a station appears in the file very similar ranging from "Roseau" with 2,417,155 to "Chihuahua" with 2,425,899 appearances.
+The number of times a station appears in the file is very similar ranging from "Roseau" with 2,417,155 to "Chihuahua" with 2,425,899 appearances.
 
 === Characters
 
-Character values can (but does not have to) be stored as
+Character values can (but do not have to) be stored as
 link:https://www.asciitable.com/[ASCII-values].
 
 Taking a closer look at the actual characters making up the names using binary encoded values, we can see the following:
@@ -279,7 +279,7 @@ Here is what a frequency chart with the above figures looks like:
 
 image:CharacterFrequency.png[Character Frequency]
 
-_Chart 3, shows a character frequency table._
+_Chart 3, Shows a character frequency table._
 
 
 == Temperature Statistics
