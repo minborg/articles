@@ -6,7 +6,11 @@ import java.lang.foreign.MemorySegment;
 
 public class Kata2_RecordMapper {
 
-    public record MarketInfoRecord(long time, int symbol, int high, int last, int low)
+    public record MarketInfoRecord(@Override long time,
+                                   @Override int symbol,
+                                   @Override int high,
+                                   @Override int last,
+                                   @Override int low)
             implements MarketInfo { // Does *not* implement MarketInfoUpdater!
 
         @Override
