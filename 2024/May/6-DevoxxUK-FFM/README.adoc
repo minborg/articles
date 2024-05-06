@@ -1,0 +1,7 @@
+# Devoxx UK 2024
+
+## Java 22 and the Foreign Function & Memory API
+
+The code for my talk on the FFM API.
+
+All the best, Per Minborg

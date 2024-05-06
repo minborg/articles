@@ -37,11 +37,13 @@ public class Kata5_AtomicOperations {
         static final int ACQUIRED = 1 << 7;  // 0x80
         static final int COMPLETED = 1 << 6; // 0x40
 
+        // https://bugs.openjdk.org/browse/JDK-8331734
+
         static final VarHandle FLAGS =
                 JAVA_INT.varHandle();
                 // HEADER.varHandle(PathElement.groupElement("flags"));
         static final VarHandle INDEX =
-                offset(JAVA_INT.varHandle(), 4);
+                offset(JAVA_INT.varHandle(), HEADER.byteOffset(PathElement.groupElement("index")));
                 //HEADER.varHandle(PathElement.groupElement("index"));
 
         private final MemorySegment segment;
